@@ -1,0 +1,17 @@
+javascript_compressor: closure
+package_path: "javascripts/"
+gzip_assets: off
+
+javascripts:
+  app:
+    - public/javascripts/vendor/jquery-1.8.2.js
+    - public/javascripts/main.js
+
+# stylesheets:
+#   common:
+#     - public/stylesheets/reset.css
+#     - public/stylesheets/widgets/*.css
+#   workspace:
+#     - public/stylesheets/pages/workspace.css
+#   empty:
+#     - public/stylesheets/pages/empty.css

@@ -1,0 +1,8 @@
+html {
+  height: 100%;
+}
+
+///////// global //////////
+.main_body {
+  @extend %grid_12;
+}

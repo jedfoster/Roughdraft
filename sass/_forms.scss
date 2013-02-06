@@ -1,0 +1,30 @@
+input[type=text], input[type=password], input[type="date"], select {
+	@extend %input_fields;
+	height:2.5em;
+}
+
+input[type=text], input[type=password], input[type="date"] {
+	@media #{$mobile} {
+		-webkit-appearance: none;  // this is to remove the default inner shadow
+		-moz-appearance: none; // if this ever works, Moz bug for over a year
+	}
+}
+
+select {
+  font-size: em(12, $font-size);
+}
+
+label {
+	display: block;
+  font-weight: bold;
+  line-height: 1;
+	margin-bottom: 0.5em;
+	font-size: em(12, $font-size);
+	@media #{$mobile} {
+  	display: none;
+	}
+}
+
+input, select, textarea, button {
+  font-family: 'SourceCodePro', monospace;
+}
