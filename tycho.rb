@@ -13,6 +13,10 @@ require 'github_api'
 require 'sass'
 require 'compass'
 require 'yaml'
+require 'github/markup'
+
+require 'redcarpet'
+require 'RedCloth'
 
 
 set :partial_template_engine, :erb
@@ -74,7 +78,16 @@ helpers do
       length < 2 ? first.to_s : "#{self[0..-2] * ', '}, and #{last}"
     end
   end
-end
+  
+  def is_allowed(language)
+    language.match(/(Markdown|Text|Textile)/)
+  end
+  
+  
+  class Gist
+    attr_accessor :content, :created_at, :updated_at, :language
+  end
+end                         
 
 before do
   @github = github(session[:github_token])
@@ -115,26 +128,33 @@ end
 
 get %r{/gist(?:/[\w]*)*/([\d]+)} do
   files = @github.gists.get(params[:captures].first).files
-
-  if( ! files["#{files.keys.grep(/.+\.(scss|sass)/)[0]}"])
-    syntax = plugin = ''
-    sass = "// Sorry, I couldn't find any valid Sass in that Gist."
-
-  else
-    sass = files["#{files.keys.grep(/.+\.(scss|sass)/)[0]}"].content
-
-    if files["#{files.keys.grep(/.+\.(scss|sass)/)[0]}"].filename.end_with?("scss")
-      syntax = 'scss'
+  
+  @gists = Array.new
+  
+  files.each do |file|
+    puts file.first.to_s
+    gist = Gist.new
+    
+    if is_allowed file.last.language
+      # @gist.content = file.last.content
+      # @gist.content = file.first
+      gist.content = GitHub::Markup.render(file.first.to_s, file.last.content.to_s)
+      
+      @gists << gist
     else
-      syntax = 'sass'
+      gist.content = "Hello world #{file.last.language}"
+      @gists << gist
     end
-
-    comments = sass.scan(/^\/\/.+/).each {|x| x.sub!(/\/\/\s*/, '').sub!(/\s{1,}v[\d\.]+.*$/, '')}
-    comments.delete_if { |x| ! @plugins.key?(x)}
-    plugin = comments[0]
-
-    sass.gsub!(/^\s*(@import.*)\s*/, "\n// #{'\1'}\n\n")
   end
+  
+
+  # if( ! files["#{files.keys.grep(/.+\.(scss|sass)/)[0]}"])
+  #   @gist = "Sorry, I couldn't find any valid Sass in that Gist."
+  # 
+  # else
+  #   @gist = files["#{files.keys.grep(/.+\.(scss|sass)/)[0]}"].content
+  # 
+  # end
 
   erb :index
 end
