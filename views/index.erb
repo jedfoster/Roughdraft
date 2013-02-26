@@ -1,3 +1,5 @@
+<h1><%='FROM REDIS' if @used_redis%></h1>
+
 <% @gists.each do |gist| %>
   <%=  gist.content %>
   <% end %>

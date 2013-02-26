@@ -68,8 +68,6 @@ configure :development do
 end
 
 
-
-
 helpers do
   include ERB::Util
   alias_method :code, :html_escape
@@ -79,22 +77,43 @@ helpers do
     def random
       shuffle.first
     end
-    
+
 
     def to_sentence
       length < 2 ? first.to_s : "#{self[0..-2] * ', '}, and #{last}"
     end
   end
-  
+
   def is_allowed(language)
     language.match(/(Markdown|Text|Textile)/)
   end
-  
-  
+
+
   class Gist
     attr_accessor :content, :created_at, :updated_at, :language
   end
-end                         
+
+  def fetch_and_render(id)
+    files = @github.gists.get(id).files
+
+    gists = Array.new
+
+    files.each do |file|
+      puts file.first.to_s
+      gist = Gist.new
+
+      if is_allowed file.last.language
+        gist.content = GitHub::Markup.render(file.first.to_s, file.last.content.to_s)
+
+        gists << gist
+      else
+        gist.content = "Hello world #{file.last.language}"
+        gists << gist
+      end
+    end
+    REDIS.setex(id, 10, Marshal.dump(gists))
+  end
+end
 
 before do
   @github = github(session[:github_token])
@@ -134,24 +153,16 @@ end
 
 
 get %r{/gist(?:/[\w]*)*/([\d]+)} do
-  files = @github.gists.get(params[:captures].first).files
-  
-  @gists = Array.new
-  
-  files.each do |file|
-    puts file.first.to_s
-    gist = Gist.new
-    
-    if is_allowed file.last.language
-      # @gist.content = file.last.content
-      # @gist.content = file.first
-      gist.content = GitHub::Markup.render(file.first.to_s, file.last.content.to_s)
-      
-      @gists << gist
-    else
-      gist.content = "Hello world #{file.last.language}"
-      @gists << gist
-    end
+  id = params[:captures].first
+  @used_redis = false
+
+  content = REDIS.get(id)
+
+  if ! content
+    fetch_and_render(id)
+  else
+    @gists = Marshal.load(content)
+    @used_redis = true
   end
 
   erb :index
