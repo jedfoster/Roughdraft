@@ -33,8 +33,8 @@ configure :production do
       end
     end
 
-    use Rack::Session::Cookie, #:key => 'sassmeister.com',
-                               #:domain => 'sassmeister.com',
+    use Rack::Session::Cookie, #:key => 'example.com',
+                               #:domain => 'example.com',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => ENV['COOKIE_SECRET']
@@ -53,7 +53,7 @@ configure :development do
       end
     end
 
-    use Rack::Session::Cookie, :key => 'sassmeister.dev',
+    use Rack::Session::Cookie, #:key => 'example.dev',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => 'local'
@@ -146,15 +146,6 @@ get %r{/gist(?:/[\w]*)*/([\d]+)} do
       @gists << gist
     end
   end
-  
-
-  # if( ! files["#{files.keys.grep(/.+\.(scss|sass)/)[0]}"])
-  #   @gist = "Sorry, I couldn't find any valid Sass in that Gist."
-  # 
-  # else
-  #   @gist = files["#{files.keys.grep(/.+\.(scss|sass)/)[0]}"].content
-  # 
-  # end
 
   erb :index
 end
