@@ -23,6 +23,13 @@ set :partial_template_engine, :erb
 
 # enable :sessions
 
+configure do
+  require 'redis'
+  redisUri = ENV["REDISTOGO_URL"] || 'redis://localhost:6379'
+  uri = URI.parse(redisUri)
+  REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
+end
+
 configure :production do
   helpers do
     def github(auth_token = '')
