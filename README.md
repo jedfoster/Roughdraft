@@ -1,4 +1,4 @@
 Tycho
 =====
 
-A super-secret project that doesn't do anything yet.
+A Ruby implementation of [Gist.io](https://github.com/idan/gistio) built with Sinatra.
