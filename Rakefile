@@ -27,22 +27,6 @@ task "assets:precompile" do
 end
 
 
-desc "Update bundled gems. Use this in place of bundle update"
-task "bundle:update" do
-  plugins = YAML.load_file("plugins.yml")
-  gemfile = File.new('Gemfile').read
-
-  plugins.each do |plugin|
-    if ! gemfile.match(/^gem '#{plugin.last[:gem]}'/)
-      puts "Adding #{plugin.last[:gem]} to Gemfile..."
-      Utilities.new.append('Gemfile', "\ngem '#{plugin.last[:gem]}'")
-    end
-  end
-  
-  exec "bundle update"
-end
-
-
 class Utilities < Thor
   include Thor::Actions
 
