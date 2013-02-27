@@ -112,6 +112,7 @@ helpers do
       end
     end
     REDIS.setex(id, 10, Marshal.dump(gists))
+    gists
   end
 end
 
@@ -159,7 +160,7 @@ get %r{/gist(?:/[\w]*)*/([\d]+)} do
   content = REDIS.get(id)
 
   if ! content
-    fetch_and_render(id)
+    @gists = fetch_and_render(id)
   else
     @gists = Marshal.load(content)
     @used_redis = true
