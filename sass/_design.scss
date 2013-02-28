@@ -3,6 +3,34 @@ html {
 }
 
 ///////// global //////////
-.main_body {
+.content {
   @extend %grid_12;
+}
+
+
+
+
+
+#description.loading {
+  -webkit-animation: throb 1s infinite alternate linear;
+  -moz-animation: throb 1s infinite alternate linear;
+  -ms-animation: throb 1s infinite alternate linear;
+  -o-animation: throb 1s infinite alternate linear
+}
+
+@-webkit-keyframes throb {
+  0%   { opacity: 0.33; }
+  100% { opacity: 1; }
+}
+@-moz-keyframes throb {
+  0%   { opacity: 0.33; }
+  100% { opacity: 1; }
+}
+@-ms-keyframes throb {
+  0%   { opacity: 0.33; }
+  100% { opacity: 1; }
+}
+@-o-keyframes throb {
+  0%   { opacity: 0.33; }
+  100% { opacity: 1; }
 }
