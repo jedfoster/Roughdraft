@@ -5,6 +5,7 @@ gzip_assets: off
 javascripts:
   app:
     - public/javascripts/vendor/jquery-1.8.2.js
+    - public/javascripts/vendor/gist.io.js
     - public/javascripts/main.js
 
 # stylesheets:
