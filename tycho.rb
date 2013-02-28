@@ -88,31 +88,17 @@ helpers do
     language.match(/(Markdown|Text|Textile)/)
   end
 
-
-  class Gist
-    attr_accessor :content, :created_at, :updated_at, :language
-  end
-
   def fetch_and_render(id)
-    files = @github.gists.get(id).files
+    gist = @github.gists.get(id)
 
-    gists = Array.new
-
-    files.each do |file|
-      puts file.first.to_s
-      gist = Gist.new
-
-      if is_allowed file.last.language
-        gist.content = GitHub::Markup.render(file.first.to_s, file.last.content.to_s)
-
-        gists << gist
-      else
-        gist.content = "Hello world #{file.last.language}"
-        gists << gist
+    gist.files.each do |file, value|
+      if is_allowed value.language
+        value[:rendered] = GitHub::Markup.render(file, value.content.to_s)
       end
     end
-    REDIS.setex(id, 10, Marshal.dump(gists))
-    gists
+    
+    REDIS.setex(id, 60, gist.to_hash.to_json.to_s)
+    gist.to_hash.to_json.to_s
   end
 end
 
@@ -122,7 +108,8 @@ end
 
 
 get '/' do
-  erb :index
+  status, headers, body = call env.merge("PATH_INFO" => '/gist/5052123')
+  [status, headers, body]
 end
 
 
@@ -153,18 +140,15 @@ get '/logout' do
 end
 
 
-get %r{/gist(?:/[\w]*)*/([\d]+)} do
-  id = params[:captures].first
-  @used_redis = false
+get %r{/([\d]+)$} do
+  erb :index, :locals => { :gist_id => params[:captures].first }
+end
 
-  content = REDIS.get(id)
+
+get %r{/([\d]+)/content} do
+  content = REDIS.get(params[:captures].first)
 
   if ! content
-    @gists = fetch_and_render(id)
-  else
-    @gists = Marshal.load(content)
-    @used_redis = true
+    content = fetch_and_render(params[:captures].first)
   end
-
-  erb :index
 end

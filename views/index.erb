@@ -1,7 +1,20 @@
-<h1><%='FROM REDIS' if @used_redis%></h1>
+<section class="content">
+  <header>
+    <h1 id="gistid"><a href="https://gist.github.com/<%=gist_id%>">gist #<%=gist_id%></a></h1>
+    <h2 id="description" class="loading instapaper-title entry-title">Loading…</h2>
+  </header>
+  <div id="gistbody" class="instapaper-body entry-content"></div>
+  <footer>
+    <p><a href="/">gist.io</a> &middot; writing for hackers &middot; zero setup &middot; publish in seconds</p>
+  </footer>
+</section>
 
-<% @gists.each do |gist| %>
-  <%=  gist.content %>
-  <% end %>
 
-<br /><br /><br />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="/javascripts/vendor/jquery-1.8.2.min.js"><\/script>')</script>
+<script src="/javascripts/vendor/gist.io.js"></script>
+<script>
+  $(function() {
+    Gisted.gist("<%=gist_id%>");
+  });
+</script>
