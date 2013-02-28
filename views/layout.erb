@@ -35,12 +35,19 @@
   	<%= yield %>
 	</section>
 	<%= partial :"shared/_footer" %>
-
-  <% if settings.environment == :production %>
-	  <script src="/javascripts/app.js"></script>
-	<% else %>
+	
+	<% if settings.environment == :production %>
+    <script src="/javascripts/app.js"></script>
+  <% else %>
   	<script src="/javascripts/vendor/jquery-1.8.2.js"></script>
+  	<script src="/javascripts/vendor/gist.io.js"></script>
     <script src="/javascripts/main.js"></script>
   <% end %>
+
+  <script>
+    $(function() {
+      Gisted.gist($('#gistid').data('gist-id'));
+    });
+  </script>
 </body>
 </html>
