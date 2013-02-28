@@ -30,10 +30,10 @@
 </head>
 
 <body>
-  <%= partial :"shared/_header" %>
-	<section class="main_body">
+
   	<%= yield %>
-	</section>
+
+	
 	<%= partial :"shared/_footer" %>
 	
 	<% if settings.environment == :production %>
