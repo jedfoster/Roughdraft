@@ -3,10 +3,23 @@ html {
 }
 
 ///////// global //////////
-.content {
-  @extend %grid_12;
+body {
+  box-sizing: border-box;
+  padding: 1.5em 1em;
+  
+  max-width: 40em;
+  margin: 0 auto;
 }
 
+.content {
+  padding-bottom: 3em;
+  margin-bottom: 3em;
+  border-bottom: 1px solid $hotel_gray;
+}
+
+footer {
+  text-align: center;
+}
 
 
 
