@@ -27,11 +27,11 @@
 @import "stipe/media";
 @import "stipe/stipe";
 @import "stipe/typography";
-@import "stipe/grid";
+// @import "stipe/grid";
 @import "stipe/color";
-@import "stipe/gradients";
-@import "stipe/forms";
-@import "stipe/buttons";
+// @import "stipe/gradients";
+// @import "stipe/forms";
+// @import "stipe/buttons";
 @import "color/extends";
 // @import "stipe/toadstool/ui_patterns/prettify";
 
@@ -41,8 +41,8 @@
 // This where you start building your own styles. 
 // ------------------------------------------------------------------------------
 @import "typography";
-@import "forms";
-@import "buttons";
+// @import "forms";
+// @import "buttons";
 @import "design";
-//@import "ui_patterns";
-//@import "modules";
+// @import "ui_patterns";
+// @import "modules";
