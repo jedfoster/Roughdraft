@@ -6,9 +6,9 @@
 
 	<title><%=
 	if gist_id 
-	  "Gist ##{gist_id}, Made Pretty"
+	  "Gist ##{gist_id}, made pretty."
 	else 
-	  'Gists Made Pretty'
+	  'Gists made pretty.'
 	end 
 	%></title>
 
@@ -37,11 +37,12 @@
 
 <body>
 
-  	<%= yield %>
+  <%= yield %>
 
-	
-	<%= partial :"shared/_footer" %>
-	
+	<footer class="site_footer">
+    <p>Tycho is &copy; <%=DateTime.now.year%> <a href="http://jedfoster.com/">Jed Foster</a>. </p>
+  </footer>
+
 	<% if settings.environment == :production %>
     <script src="/javascripts/app.js"></script>
   <% else %>
