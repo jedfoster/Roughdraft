@@ -1,4 +1,4 @@
-ol, ul {
+ol, ul, pre {
   margin-bottom: 1.5em;
 }
 
@@ -6,3 +6,6 @@ ol {
 	list-style: decimal inside;
 }
 
+pre, code {
+  font-family: 'SourceCodePro';
+}

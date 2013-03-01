@@ -1,31 +1,34 @@
-
-// -----------------------------------------------------------
 @import "stipe/typography/mixins"; // Do not edit, needed to pull in necessary mixin
-$webfont_directory: "/stylesheets/fonts/" !default; // edit this directory in the '_config.scss' file if needed.
-
-
-
-// Pre-loaded web fonts for your use, enjoy!
-// Fonts needed to be loaded in path specified above
-// in relation to the rendered CSS file
-// -----------------------------------------------------------
-// To activate 'zocial' uncomment both lines
-// @import "stipe/typography/web_fonts/zocial";
-// @import "stipe/typography/web_fonts/zocial_characters";
-
-// To activate 'font_awesome' uncomment both lines
-// @import "stipe/typography/web_fonts/font_awesome";
-// @import "stipe/typography/web_fonts/font_awesome_pua";
-
+$webfont_directory: "/fonts/" !default; // edit this directory in the '_config.scss' file if needed.
 
 
 // Install your own
 // -----------------------------------------------------------
 
 @font-face {
-	@include font-face ($font_family: 'SourceCodePro', $font-file:  'sourcecodepro-bold-webfont', $font_weight: bold, $font_style: bold);
+	@include font-face ($font_family: 'SourceCodePro', $font-file: 'sourcecodepro-regular-webfont', $font_weight: normal, $font_style: normal);
 }
 
 @font-face {
-	@include font-face ($font_family: 'SourceCodePro', $font-file:  'sourcecodepro-regular-webfont', $font_weight: normal, $font_style: normal);
+	@include font-face ($font_family: 'SourceCodePro', $font-file: 'sourcecodepro-bold-webfont', $font_weight: bold, $font_style: normal);
+}
+
+@font-face {
+	@include font-face ($font_family: 'Crimson', $font-file: 'Crimson-Roman-webfont', $font_weight: normal, $font_style: normal);
+}
+
+@font-face {
+	@include font-face ($font_family: 'Crimson', $font-file: 'Crimson-Italic-webfont', $font_weight: normal, $font_style: italic);
+}
+
+@font-face {
+	@include font-face ($font_family: 'Crimson', $font-file: 'Crimson-Bold-webfont', $font_weight: bold, $font_style: normal);
+}
+
+@font-face {
+	@include font-face ($font_family: 'Crimson', $font-file: 'Crimson-BoldItalic-webfont', $font_weight: bold, $font_style: italic);
+}
+
+@font-face {
+	@include font-face ($font_family: 'Questrial', $font-file: 'questrial-regular-webfont', $font_weight: normal, $font_style: normal);
 }
