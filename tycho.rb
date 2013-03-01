@@ -146,9 +146,20 @@ end
 
 
 get %r{/([\d]+)/content} do
-  content = REDIS.get(params[:captures].first)
+  id = params[:captures].first
+
+  content = REDIS.get(id)
+  from_redis = 'True'
 
   if ! content
-    content = fetch_and_render(params[:captures].first)
+    from_redis = 'False'
+    content = fetch_and_render(id)
   end
+
+  headers 'Content-Type' => "application/json;charset=utf-8",
+    'Cache-Control' => "private, max-age=0, must-revalidate",
+    'X-Cache-Hit' => from_redis,
+    'X-Expire-TTL-Seconds' => REDIS.ttl(id).to_s
+
+  content
 end
