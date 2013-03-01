@@ -13,7 +13,7 @@ require 'github_api'
 require 'sass'
 require 'compass'
 require 'yaml'
-require 'github/markup'
+require 'github/markdown'
 
 require 'redcarpet'
 require 'RedCloth'
@@ -93,7 +93,7 @@ helpers do
 
     gist.files.each do |file, value|
       if is_allowed value.language
-        value[:rendered] = GitHub::Markup.render(file, value.content.to_s)
+        value[:rendered] = GitHub::Markdown.render_gfm(value.content.to_s)
       end
     end
     
@@ -108,7 +108,7 @@ end
 
 
 get '/' do
-  erb GitHub::Markup.render('index.md', File.read('views/index.md')), :locals => { :gist_id => false }
+  erb GitHub::Markdown.render_gfm(File.read('views/index.md')), :locals => { :gist_id => false }
 end
 
 

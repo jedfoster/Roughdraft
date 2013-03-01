@@ -10,7 +10,7 @@ gem 'sass'
 gem 'compass'
 gem 'stipe', "=0.0.5.5"
 
-gem 'github-markup'
+gem 'github-markdown'
 gem 'redcarpet'
 gem 'RedCloth'
 gem 'redis'
