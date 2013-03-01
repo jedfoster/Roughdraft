@@ -108,8 +108,7 @@ end
 
 
 get '/' do
-  status, headers, body = call env.merge("PATH_INFO" => '/gist/5052123')
-  [status, headers, body]
+  erb GitHub::Markup.render('index.md', File.read('views/index.md')), :locals => { :gist_id => false }
 end
 
 
@@ -141,7 +140,7 @@ end
 
 
 get %r{/([\d]+)$} do
-  erb :index, :locals => { :gist_id => params[:captures].first }
+  erb :gist, :locals => { :gist_id => params[:captures].first }
 end
 
 
