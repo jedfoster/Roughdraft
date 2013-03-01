@@ -5,6 +5,28 @@ gzip_assets: off
 javascripts:
   app:
     - public/javascripts/vendor/jquery-1.8.2.js
+    - public/javascripts/vendor/Prettify/prettify.js
+    - public/javascripts/vendor/Prettify/lang-css.js
+    - public/javascripts/vendor/Prettify/lang-scss.js
+    - public/javascripts/vendor/Prettify/lang-sql.js
+    - public/javascripts/vendor/Prettify/lang-vim.js
+    - public/javascripts/vendor/Prettify/lang-yaml.js
+    - public/javascripts/vendor/Prettify/lang-apollo.js
+    - public/javascripts/vendor/Prettify/lang-clj.js
+    - public/javascripts/vendor/Prettify/lang-go.js
+    - public/javascripts/vendor/Prettify/lang-hs.js
+    - public/javascripts/vendor/Prettify/lang-lisp.js
+    - public/javascripts/vendor/Prettify/lang-lua.js
+    - public/javascripts/vendor/Prettify/lang-ml.js
+    - public/javascripts/vendor/Prettify/lang-n.js
+    - public/javascripts/vendor/Prettify/lang-proto.js
+    - public/javascripts/vendor/Prettify/lang-scala.js
+    - public/javascripts/vendor/Prettify/lang-tex.js
+    - public/javascripts/vendor/Prettify/lang-vb.js
+    - public/javascripts/vendor/Prettify/lang-vhdl.js
+    - public/javascripts/vendor/Prettify/lang-wiki.js
+    - public/javascripts/vendor/Prettify/lang-xq.js
+    - public/javascripts/vendor/Prettify/prettify-loader.js
     - public/javascripts/vendor/gist.io.js
     - public/javascripts/main.js
 

@@ -25,7 +25,6 @@ var Gisted = (function($, undefined) {
                     var file = files[keys[i]];
                     if (file['rendered']) {
                         empty = false;
-                        console.log(file);
                         var filediv = $('<article>')
                             .attr('class', 'file')
                             .attr('data-filename', file['filename']);
@@ -38,6 +37,8 @@ var Gisted = (function($, undefined) {
                 if (empty) {
                     apologize("No Content Found");
                 }
+                
+                pretty();
             })
             .fail(function(xhr, status, error) {
                 if (xhr.status == 404) {
