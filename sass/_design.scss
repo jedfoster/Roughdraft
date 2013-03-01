@@ -4,10 +4,14 @@ html {
 
 ///////// global //////////
 body {
-  box-sizing: border-box;
   padding: 1.5em 1em;
+}
+
+%body {
+  box-sizing: border-box;
   
-  max-width: 40em;
+  
+  max-width: em($font_size * 40, $font_size);
   margin: 0 auto;
 }
 
@@ -15,9 +19,47 @@ body {
   padding-bottom: 3em;
   margin-bottom: 3em;
   border-bottom: 1px solid $hotel_gray;
+  
+  > header {
+    @extend %body;
+  }
+}
+
+#gistbody {
+  @extend %body;
+}
+
+#gistid {
+  font-size: em($heading_6);
+  margin-bottom: 1.5em;
+  
+  position: absolute;
+  left: 1.5em;
+  
+  padding-bottom: 1em;
+
+  border-bottom: 1px solid $hotel_gray;
+  
+  @media #{$tablet} {
+    position: relative;
+    left: 0;
+    padding-bottom: 1.5em;
+  }
+}
+#description {
+  //@extend %body;
+  
+  font-size: em($heading_2);
+  color: $echo_gray;
+}
+
+b, strong {
+  color: $charlie_gray;
 }
 
 footer {
+//  @extend %body;
+
   text-align: center;
 }
 
