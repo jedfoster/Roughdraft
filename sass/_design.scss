@@ -2,16 +2,13 @@ html {
   height: 100%;
 }
 
-///////// global //////////
 body {
   padding: 1.5em 1em;
 }
 
-%body {
+%readable-body {
   box-sizing: border-box;
-  
-  
-  max-width: em($font_size * 40, $font_size);
+  max-width: 40em;
   margin: 0 auto;
 }
 
@@ -19,27 +16,24 @@ body {
   padding-bottom: 3em;
   margin-bottom: 3em;
   border-bottom: 1px solid $hotel_gray;
-  
+
   > header {
-    @extend %body;
+    @extend %readable-body;
   }
 }
 
 #gistbody {
-  @extend %body;
+  @extend %readable-body;
 }
 
 #gistid {
   font-size: em($heading_6);
-  margin-bottom: 1.5em;
-  
   position: absolute;
   left: 1.5em;
-  
+  margin-bottom: 1.5em;
   padding-bottom: 1em;
-
   border-bottom: 1px solid $hotel_gray;
-  
+
   @media #{$tablet} {
     position: relative;
     left: 0;
@@ -47,10 +41,15 @@ body {
   }
 }
 #description {
-  //@extend %body;
-  
   font-size: em($heading_2);
   color: $echo_gray;
+
+  &.loading {
+    -webkit-animation: throb 1s infinite alternate linear;
+    -moz-animation: throb 1s infinite alternate linear;
+    -ms-animation: throb 1s infinite alternate linear;
+    -o-animation: throb 1s infinite alternate linear
+  }
 }
 
 b, strong {
@@ -58,20 +57,9 @@ b, strong {
 }
 
 footer {
-//  @extend %body;
-
   text-align: center;
 }
 
-
-
-
-#description.loading {
-  -webkit-animation: throb 1s infinite alternate linear;
-  -moz-animation: throb 1s infinite alternate linear;
-  -ms-animation: throb 1s infinite alternate linear;
-  -o-animation: throb 1s infinite alternate linear
-}
 
 @-webkit-keyframes throb {
   0%   { opacity: 0.33; }
