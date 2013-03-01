@@ -4,7 +4,13 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-	<title>Tycho | Pretty Gists</title>
+	<title><%=
+	if gist_id 
+	  "Gist ##{gist_id}, Made Pretty"
+	else 
+	  'Gists Made Pretty'
+	end 
+	%></title>
 
 	<meta http-equiv="Content-Language" content="en-us">
 	<meta name="description" content="Your Gists, made pretty.">
