@@ -108,7 +108,7 @@ end
 
 
 get '/' do
-  erb GitHub::Markdown.render_gfm(File.read('views/index.md')), :locals => { :gist_id => false }
+  erb :index
 end
 
 

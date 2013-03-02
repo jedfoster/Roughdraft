@@ -12,45 +12,47 @@ body {
   margin: 0 auto;
 }
 
+header {
+  @extend %readable-body;
+  
+  h1 {
+    font-size: em($heading_6);
+    position: absolute;
+    left: 1.5em;
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid $hotel_gray;
+
+    @media #{$tablet} {
+      position: relative;
+      left: 0;
+      padding-bottom: 1.5em;
+    }
+  }
+  h2 {
+    font-size: em($heading_2);
+    color: $echo_gray;
+
+    &.loading {
+      -webkit-animation: throb 1s infinite alternate linear;
+      -moz-animation: throb 1s infinite alternate linear;
+      -ms-animation: throb 1s infinite alternate linear;
+      -o-animation: throb 1s infinite alternate linear
+    }
+  }
+}
+
 .content {
   padding-bottom: 3em;
   margin-bottom: 3em;
   border-bottom: 1px solid $hotel_gray;
-
-  > header {
-    @extend %readable-body;
-  }
 }
 
-#gistbody {
+.entry-content {
   @extend %readable-body;
 }
 
-#gistid {
-  font-size: em($heading_6);
-  position: absolute;
-  left: 1.5em;
-  margin-bottom: 1.5em;
-  padding-bottom: 1em;
-  border-bottom: 1px solid $hotel_gray;
 
-  @media #{$tablet} {
-    position: relative;
-    left: 0;
-    padding-bottom: 1.5em;
-  }
-}
-#description {
-  font-size: em($heading_2);
-  color: $echo_gray;
-
-  &.loading {
-    -webkit-animation: throb 1s infinite alternate linear;
-    -moz-animation: throb 1s infinite alternate linear;
-    -ms-animation: throb 1s infinite alternate linear;
-    -o-animation: throb 1s infinite alternate linear
-  }
-}
 
 b, strong {
   color: $charlie_gray;
