@@ -124,6 +124,29 @@ before do
 end
 
 
+set(:subdomain) { |number_of_subdomains| condition { request.subdomains.count == number_of_subdomains } }
+
+get '/', :subdomain => 1 do
+  user = REDIS.get(request.subdomains[0])
+
+  if ! user
+    user = @github.users.get(user: request.subdomains[0])
+
+    gists = Array.new
+
+    @github.gists.list(user: user['login']).each do |value|
+      gists << value.to_hash
+    end
+
+    REDIS.setex(user['login'], 60, user.to_hash.merge({:gists => gists}).to_json)
+
+    user = REDIS.get(user['login'])
+  end
+
+  erb :list, :locals => {:user => JSON.parse(user)}  
+end
+
+
 get '/' do
   erb :index
 end
