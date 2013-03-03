@@ -161,6 +161,31 @@ get '/' do
 end
 
 
+get %r{/([\d]+)$} do
+  erb :gist, :locals => { :gist_id => params[:captures].first }
+end
+
+
+get %r{/([\d]+)/content} do
+  id = params[:captures].first
+
+  content = REDIS.get(id)
+  from_redis = 'True'
+
+  if ! content
+    from_redis = 'False'
+    content = fetch_and_render(id)
+  end
+
+  headers 'Content-Type' => "application/json;charset=utf-8",
+    'Cache-Control' => "private, max-age=0, must-revalidate",
+    'X-Cache-Hit' => from_redis,
+    'X-Expire-TTL-Seconds' => REDIS.ttl(id).to_s
+
+  content
+end
+
+
 get '/authorize' do
   redirect to @github.authorize_url :scope => ['gist', 'user']
 end
@@ -185,29 +210,4 @@ get '/logout' do
   session[:gravatar_id] = nil
 
   redirect to('/')
-end
-
-
-get %r{/([\d]+)$} do
-  erb :gist, :locals => { :gist_id => params[:captures].first }
-end
-
-
-get %r{/([\d]+)/content} do
-  id = params[:captures].first
-
-  content = REDIS.get(id)
-  from_redis = 'True'
-
-  if ! content
-    from_redis = 'False'
-    content = fetch_and_render(id)
-  end
-
-  headers 'Content-Type' => "application/json;charset=utf-8",
-    'Cache-Control' => "private, max-age=0, must-revalidate",
-    'X-Cache-Hit' => from_redis,
-    'X-Expire-TTL-Seconds' => REDIS.ttl(id).to_s
-
-  content
 end
