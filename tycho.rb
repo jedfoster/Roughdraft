@@ -128,20 +128,29 @@ set(:subdomain) { |number_of_subdomains| condition { request.subdomains.count ==
 
 get '/', :subdomain => 1 do
   user = REDIS.get(request.subdomains[0])
+  from_redis = 'True'
 
   if ! user
     user = @github.users.get(user: request.subdomains[0])
+    from_redis = 'False'
 
     gists = Array.new
 
-    @github.gists.list(user: user['login']).each do |value|
-      gists << value.to_hash
+    @github.gists.list(user: user['login']).each do |gist|
+      gist.files.each do |key, file|
+        if is_allowed(file.language.to_s)
+          gists << gist.to_hash
+          break
+        end
+      end
     end
 
     REDIS.setex(user['login'], 60, user.to_hash.merge({:gists => gists}).to_json)
 
     user = REDIS.get(user['login'])
   end
+
+  headers 'X-Cache-Hit' => from_redis
 
   erb :list, :locals => {:user => JSON.parse(user)}  
 end

@@ -1,0 +1,20 @@
+<section class="content home">
+  <header>
+    <h1><a href="/">Tycho</a></h1>
+    <h2 class="entry-title"><%= user['name'] %>'s Gists</h2>
+  </header>
+  <div id="gistbody" class="instapaper-body entry-content">
+
+    <ul>
+    <% user['gists'].each do |gist| %>
+      <li><a href="/<%= gist['id'] %>"><%#= gist['id'] %> <%=
+        if gist['description'].empty?
+          gist['id']
+        else
+          gist['description']
+        end
+      %></a></li>
+    <% end %>
+    </ul>
+  </div>
+</section>
