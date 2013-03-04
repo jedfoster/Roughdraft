@@ -53,11 +53,7 @@ configure :production do
   
   helpers do
     def github(auth_token = '')
-      github = Github.new do |config|
-        config.client_id = ENV['GITHUB_ID']
-        config.client_secret = ENV['GITHUB_SECRET']
-        config.oauth_token = auth_token
-      end
+      github = Github.new
     end
 
     use Rack::Session::Cookie, #:key => 'example.com',
