@@ -12,12 +12,23 @@ View a list of a GitHub user's Gists at *username*.tycho.dev. Example [jedfoster
 
 If you happen to be on a user subdomain, e.g. jedfoster.tycho.dev, and you paste in a Gist ID that does not belong to that user, you will be redirected to the appropriate subdomain. Example: [jedfoster.tycho.dev/4731881](jedfoster.tycho.dev/4731881) will redirect to [blackfalcon.tycho.dev](blackfalcon.tycho.dev), because `jedfoster` does not own that Gist.
 
+Tycho supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown), including fenced code blocks with syntax highlighting. Example:
+
+
+<pre><code>```ruby
+require 'redcarpet'
+markdown = Redcarpet.new("Hello World!")
+puts markdown.to_html
+```</code></pre>
+
 
 ## To Do ##
 
+- [ ] investigate [HTML::Pipeline](https://github.com/jch/html-pipeline) for rendering
 - [ ] fix bookmarklet, `:user/:id` should forward to `:user.APP_DOMAIN/:id`
 - [ ] method for user index page copy, a specially marked up Gist?
 - [ ] GitHub authentication, to get around API rate limit
+- [ ] Unrenderable files should be shown as links
 
 
 ## Installation: Local ##
