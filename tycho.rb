@@ -68,13 +68,7 @@ end
 configure :development do
   helpers do
     def github(auth_token = '')
-      gh_config = YAML.load_file("github.yml")
-
-      github = Github.new do |config|
-        config.client_id = gh_config['client_id']
-        config.client_secret = gh_config['client_secret']
-        config.oauth_token = auth_token
-      end
+      github = Github.new
     end
 
     use Rack::Session::Cookie, #:key => 'example.dev',
@@ -113,7 +107,7 @@ helpers do
         value[:rendered] = GitHub::Markdown.render_gfm(value.content.to_s)
       end
     end
-    
+
     REDIS.setex(id, 60, gist.to_hash.to_json.to_s)
     gist.to_hash.to_json.to_s
   end
@@ -152,7 +146,7 @@ get '/', :subdomain => 1 do
 
   headers 'X-Cache-Hit' => from_redis
 
-  erb :list, :locals => {:user => JSON.parse(user)}  
+  erb :list, :locals => {:user => JSON.parse(user)}
 end
 
 
