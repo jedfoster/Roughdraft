@@ -38,7 +38,8 @@ end
 
 set :partial_template_engine, :erb
 
-# enable :sessions
+set(:subdomain) { |num_subdomains| condition { request.subdomains.count == num_subdomains } }
+
 
 configure do
   require 'redis'
@@ -117,8 +118,6 @@ before do
   @github = github(session[:github_token])
 end
 
-
-set(:subdomain) { |number_of_subdomains| condition { request.subdomains.count == number_of_subdomains } }
 
 get '/', :subdomain => 1 do
   user = REDIS.get(request.subdomains[0])
