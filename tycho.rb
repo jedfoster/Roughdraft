@@ -49,6 +49,8 @@ configure do
 end
 
 configure :production do
+  APP_DOMAIN = 'showwoff.co'
+  
   helpers do
     def github(auth_token = '')
       github = Github.new do |config|
@@ -67,6 +69,8 @@ configure :production do
 end
 
 configure :development do
+  APP_DOMAIN = 'tycho.dev'
+
   helpers do
     def github(auth_token = '')
       github = Github.new
@@ -100,32 +104,27 @@ helpers do
     language.match(/(Markdown|Text|Textile)/)
   end
 
-  def fetch_and_render(id)
-    gist = @github.gists.get(id)
+  def fetch_and_render_gist(id)
+    begin
+      gist = @github.gists.get(id)
 
-    gist.files.each do |file, value|
-      if is_allowed value.language
-        value[:rendered] = GitHub::Markdown.render_gfm(value.content.to_s)
+      gist.files.each do |file, value|
+        if is_allowed value.language
+          value[:rendered] = GitHub::Markdown.render_gfm(value.content.to_s)
+        end
       end
+    
+      REDIS.setex(id, 60, gist.to_hash.to_json.to_s)
+      gist.to_hash.to_json.to_s
+    
+    rescue Github::Error::NotFound
+      false
     end
-
-    REDIS.setex(id, 60, gist.to_hash.to_json.to_s)
-    gist.to_hash.to_json.to_s
   end
-end
 
-before do
-  @github = github(session[:github_token])
-end
-
-
-get '/', :subdomain => 1 do
-  user = REDIS.get(request.subdomains[0])
-  from_redis = 'True'
-
-  if ! user
-    user = @github.users.get(user: request.subdomains[0])
-    from_redis = 'False'
+  def fetch_and_render_user(user_id)
+    user = @github.users.get(user: user_id)
+    # from_redis = 'False'
 
     gists = Array.new
 
@@ -142,32 +141,69 @@ get '/', :subdomain => 1 do
 
     user = REDIS.get(user['login'])
   end
+end
 
-  headers 'X-Cache-Hit' => from_redis
 
-  erb :list, :locals => {:user => JSON.parse(user)}
+before do
+  @github = github(session[:github_token])
+  
+  @user = false
+end
+
+before :subdomain => 1 do
+  user = REDIS.get(request.subdomains[0])
+
+  if ! user
+    user = fetch_and_render_user(request.subdomains[0])
+  end
+  
+  @user = JSON.parse(user)
 end
 
 
 get '/' do
-  erb :index
+  if @user
+    erb :list, :locals => {:user => @user}
+  else
+    erb :index
+  end  
 end
 
 
 get %r{/([\d]+)$} do
   id = params[:captures].first
+  valid = true
 
   content = REDIS.get(id)
   from_redis = 'True'
 
   if ! content
     from_redis = 'False'
-    content = fetch_and_render(id)
+    content = fetch_and_render_gist(id)
   end
 
-  headers 'X-Cache-Hit' => from_redis
+  if @user
+    valid = false
 
-  erb :gist, :locals => { :gist => JSON.parse(content) }
+    @user['gists'].each do |gist|
+      if gist['id'] == id
+        valid = true
+        break        
+      end
+    end
+  end
+
+  if valid && content
+    headers 'X-Cache-Hit' => from_redis    
+
+    erb :gist, :locals => { :gist => JSON.parse(content) }
+  else
+    if content
+      redirect to("http://#{JSON.parse(content)['owner']['login']}.#{APP_DOMAIN}/#{id}")
+    else
+      erb :invalid_gist, :locals => { :gist_id => id }
+    end
+  end
 end
 
 
@@ -179,7 +215,7 @@ get %r{/([\d]+)/content} do
 
   if ! content
     from_redis = 'False'
-    content = fetch_and_render(id)
+    content = fetch_and_render_gist(id)
   end
 
   headers 'Content-Type' => "application/json;charset=utf-8",
