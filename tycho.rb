@@ -156,7 +156,19 @@ end
 
 
 get %r{/([\d]+)$} do
-  erb :gist, :locals => { :gist_id => params[:captures].first }
+  id = params[:captures].first
+
+  content = REDIS.get(id)
+  from_redis = 'True'
+
+  if ! content
+    from_redis = 'False'
+    content = fetch_and_render(id)
+  end
+
+  headers 'X-Cache-Hit' => from_redis
+
+  erb :gist, :locals => { :gist => JSON.parse(content) }
 end
 
 

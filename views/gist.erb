@@ -1,9 +1,15 @@
 <section class="content">
   <header>
-    <h1 id="gistid" data-gist-id="<%=gist_id%>"><a href="https://gist.github.com/<%= gist_id %>">gist #<%= gist_id %></a></h1>
-    <h2 id="description" class="loading instapaper-title entry-title">Loading…</h2>
+    <h1 id="gistid" data-gist-id="<%= gist['id'] %>"><a href="https://gist.github.com/<%= gist['id'] %>">gist #<%= gist['id'] %></a></h1>
+    <h2 id="description" class=" instapaper-title entry-title"><%= gist['rendered'] %></h2>
   </header>
-  <div id="gistbody" class="instapaper-body entry-content"></div>
+  <div id="gistbody" class="instapaper-body entry-content">
+    <% gist['files'].each do |x, file| %>
+      <article class="file" data-filename="<%= file['filename'] %>">
+        <%= file['rendered'] %>
+      </article>    
+    <% end %>
+  </div>
 </section>
 
 
@@ -33,12 +39,6 @@
   <script src="/javascripts/vendor/Prettify/lang-wiki.js"></script>
   <script src="/javascripts/vendor/Prettify/lang-xq.js"></script>
   <script src="/javascripts/vendor/Prettify/prettify-loader.js"></script>
-	<script src="/javascripts/vendor/gist.io.js"></script>  	
+	<!-- <script src="/javascripts/vendor/gist.io.js"></script> -->
   <script src="/javascripts/main.js"></script>
 <% end %>
-
-<script>
-  $(function() {
-    Gisted.gist($('#gistid').data('gist-id'));
-  });
-</script>
