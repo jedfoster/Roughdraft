@@ -1,6 +1,9 @@
 <section class="content">
   <header>
-    <h1 id="gistid" data-gist-id="<%= gist['id'] %>"><a href="https://gist.github.com/<%= gist['id'] %>">gist #<%= gist['id'] %></a></h1>
+    <h1 id="gistid" data-gist-id="<%= gist['id'] %>"><a href="https://gist.github.com/<%= gist['id'] %>">gist #<%= gist['id'] %></a><%= 
+    if @user
+      "<br /><br /><a href=\"http://#{@user['login']}.#{APP_DOMAIN}/\">#{@user['name']}'s Gists</a>"
+    end %></h1>
     <h2 id="description" class=" instapaper-title entry-title"><%= gist['rendered'] %></h2>
   </header>
   <div id="gistbody" class="instapaper-body entry-content">
