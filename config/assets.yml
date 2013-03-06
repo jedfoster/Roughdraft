@@ -27,7 +27,7 @@ javascripts:
     - public/javascripts/vendor/Prettify/lang-wiki.js
     - public/javascripts/vendor/Prettify/lang-xq.js
     - public/javascripts/vendor/Prettify/prettify-loader.js
-    - public/javascripts/vendor/gist.io.js
+    # - public/javascripts/vendor/gist.io.js
     - public/javascripts/main.js
 
 # stylesheets:
