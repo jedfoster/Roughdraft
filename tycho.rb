@@ -65,7 +65,7 @@ configure :production do
 end
 
 configure :development do
-  APP_DOMAIN = 'tycho.dev'
+  APP_DOMAIN = 'roughdraft.dev'
 
   helpers do
     def github(auth_token = '')

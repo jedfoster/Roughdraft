@@ -1,4 +1,4 @@
-Tycho
+Roughdraft
 =====
 
 A Ruby implementation of [Gist.io](https://github.com/idan/gistio) built with Sinatra.
@@ -6,13 +6,13 @@ A Ruby implementation of [Gist.io](https://github.com/idan/gistio) built with Si
 
 ## Usage ##
 
-View a gist at tycho.dev/*gist-id*. Example: [tycho.dev/4370358](tycho.dev/4370358)
+View a gist at roughdraft.dev/*gist-id*. Example: [roughdraft.dev/4370358](roughdraft.dev/4370358)
 
-View a list of a GitHub user's Gists at *username*.tycho.dev. Example [jedfoster.tycho.dev](jedfoster.tycho.dev). Only **public** Gists with renderable content are listed. 
+View a list of a GitHub user's Gists at *username*.roughdraft.dev. Example [jedfoster.roughdraft.dev](jedfoster.roughdraft.dev). Only **public** Gists with renderable content are listed. 
 
-If you happen to be on a user subdomain, e.g. jedfoster.tycho.dev, and you paste in a Gist ID that does not belong to that user, you will be redirected to the appropriate subdomain. Example: [jedfoster.tycho.dev/4731881](jedfoster.tycho.dev/4731881) will redirect to [blackfalcon.tycho.dev](blackfalcon.tycho.dev), because `jedfoster` does not own that Gist.
+If you happen to be on a user subdomain, e.g. jedfoster.roughdraft.dev, and you paste in a Gist ID that does not belong to that user, you will be redirected to the appropriate subdomain. Example: [jedfoster.roughdraft.dev/4731881](jedfoster.roughdraft.dev/4731881) will redirect to [blackfalcon.roughdraft.dev](blackfalcon.roughdraft.dev), because `jedfoster` does not own that Gist.
 
-Tycho supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown), including fenced code blocks with syntax highlighting. Example:
+Roughdraft supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown), including fenced code blocks with syntax highlighting. Example:
 
 
 <pre><code>```ruby
@@ -47,13 +47,13 @@ If you want to start Redis on login, be sure to read the instructions `brew` giv
 The app:
 
 ````
-git clone https://github.com/jedfoster/Tycho.git
-cd Tycho
+git clone https://github.com/jedfoster/Roughdraft.git
+cd Roughdraft
 mkdir tmp
 touch tmp/restart.txt
 ````
 
-Change the `APP_DOMAIN` constant in tycho.rb, line 68, to whatever local domain you want to use. I recommend using [Pow](http://pow.cx) for local development, especially on this project as the username subdomain feature doesn't work with IP addresses.
+Change the `APP_DOMAIN` constant in roughdraft.rb, line 68, to whatever local domain you want to use. I recommend using [Pow](http://pow.cx) for local development, especially on this project as the username subdomain feature doesn't work with IP addresses.
 
 ````
 # Restart Pow
