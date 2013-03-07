@@ -49,7 +49,7 @@ configure do
 end
 
 configure :production do
-  APP_DOMAIN = 'showwoff.co'
+  APP_DOMAIN = 'roughdraft.io'
   
   helpers do
     def github(auth_token = '')
