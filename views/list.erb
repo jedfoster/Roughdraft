@@ -1,9 +1,8 @@
 <section class="content home">
   <header>
-    <h1><a href="/">Roughdraft</a></h1>
-    <h2 class="entry-title"><%= user['name'] %>'s Gists</h2>
+    <h1 class="entry-title"><%= user['name'] %>'s Gists</h1>
   </header>
-  <div id="gistbody" class="instapaper-body entry-content">
+  <div class="user-gist-list">
 
     <ul>
     <% user['gists'].each do |gist| %>

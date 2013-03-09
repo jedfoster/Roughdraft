@@ -8,36 +8,40 @@ body {
 
 %readable-body {
   box-sizing: border-box;
-  max-width: 40em;
+  max-width: 36em;
   margin: 0 auto;
 }
 
-header {
-  @extend %readable-body;
+.sidebar {
+  border-bottom: 1px solid $hotel_gray;
+  margin-bottom: 1.5em;
+  padding-bottom: 0.5em;
+  
+  @media #{$desktop} {
+    position: absolute;
+    width: 10em;
+    left: 1.5em;
+    
+    margin-right: 1.5em;
+  }  
   
   h1 {
-    font-size: em($heading_6);
-    position: absolute;
-    left: 1.5em;
-    margin-bottom: 1.5em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid $hotel_gray;
+    font-size: em($heading_3);
 
-    @media #{$tablet} {
-      position: relative;
-      left: 0;
-      padding-bottom: 1.5em;
-    }
   }
   h2 {
-    font-size: em($heading_2);
+    font-size: em($heading_6);
     color: $echo_gray;
-
-    &.loading {
-      -webkit-animation: throb 1s infinite alternate linear;
-      -moz-animation: throb 1s infinite alternate linear;
-      -ms-animation: throb 1s infinite alternate linear;
-      -o-animation: throb 1s infinite alternate linear
+  }  
+  
+  @media #{$tablet} {
+    h1, h2 {
+      display: inline;
+    }
+    h2 {
+      margin-left: 1em;
+      padding-left: 1em;
+      border-left: 1px solid $hotel_gray;
     }
   }
 }
@@ -46,13 +50,34 @@ header {
   padding-bottom: 3em;
   margin-bottom: 3em;
   border-bottom: 1px solid $hotel_gray;
+  
+  header {
+    @extend %readable-body;
+
+    h1 {
+      font-size: em($heading_2);
+      margin-bottom: 1.5em;
+      //padding-bottom: 1em;
+      //border-bottom: 1px solid $hotel_gray;
+    }
+    h2 {
+      font-size: em($heading_2);
+      color: $echo_gray;
+    }
+  }
 }
 
 .entry-content {
   @extend %readable-body;
 }
 
-
+.user-gist-list {
+  @extend %readable-body;
+  
+  li {
+    padding: 0.5em 0;
+  }
+}
 
 b, strong {
   color: $charlie_gray;
@@ -60,22 +85,4 @@ b, strong {
 
 footer {
   text-align: center;
-}
-
-
-@-webkit-keyframes throb {
-  0%   { opacity: 0.33; }
-  100% { opacity: 1; }
-}
-@-moz-keyframes throb {
-  0%   { opacity: 0.33; }
-  100% { opacity: 1; }
-}
-@-ms-keyframes throb {
-  0%   { opacity: 0.33; }
-  100% { opacity: 1; }
-}
-@-o-keyframes throb {
-  0%   { opacity: 0.33; }
-  100% { opacity: 1; }
 }

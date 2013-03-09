@@ -1,5 +1,3 @@
-Roughdraft is GitHub Gists, made pretty. 
-
 Sometimes you have something to say that won't fit on Twitter, but is too small to justify a Tumblr. Enter Roughdraft.  
 
 ### How it works

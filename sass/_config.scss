@@ -51,7 +51,7 @@ $alpha_primary:   #c82829;        // red
 $bravo_primary:   #718c00;        // green
 $charlie_primary: #f5871f;        // yellow
 $delta_primary:   #4271ae;        // blue
-$echo_primary:    #8959a8;        // accent
+$echo_primary:    #8959a8;        // purple
 
 $alpha_gray:      #212121;           //black
 
@@ -107,6 +107,8 @@ $primary_header_color:                 $charlie_gray;
 // default <a href="#"> link color
 $href_color:                           $charlie_color;
 // $href_color_alt:                       $delta_color_bravo;
+$href-hover: $bravo_color;
+$href-visited: $echo_color;
 
 // used with the <ins> tag
 // http://www.w3schools.com/tags/tag_ins.asp
@@ -212,11 +214,11 @@ $mobile:                    "screen and (max-width: 40em)" !default;
 $mobile_portrait:	          "screen and (max-width: 40em) and (orientation : portrait)" !default;
 $mobile_landscape:	        "screen and (max-width: 40em) and (orientation : landscape)" !default; 
 
-$tablet:                    "screen and (max-width: 64em)" !default;
-$tablet_portrait:           "screen and (max-width: 64em) and (orientation: portrait)" !default;
-$tablet_landscape:          "screen and (max-width: 64em) and (orientation: landscape)" !default;
+$tablet:                    "screen and (max-width: 67.99em)" !default;
+$tablet_portrait:           "screen and (max-width: 67.99em) and (orientation: portrait)" !default;
+$tablet_landscape:          "screen and (max-width: 67.99em) and (orientation: landscape)" !default;
 
-$desktop:                   "screen and (max-width: 120em) and (min-width: 50em)" !default;
+$desktop:                   "screen and (min-width: 68em)" !default;
 
 
 

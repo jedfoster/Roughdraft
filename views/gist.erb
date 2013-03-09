@@ -6,7 +6,7 @@
     end %></h1>
     <h2 id="description" class=" instapaper-title entry-title"><%= gist['rendered'] %></h2>
   </header>
-  <div id="gistbody" class="instapaper-body entry-content">
+  <div class="instapaper-body entry-content">
     <% gist['files'].each do |x, file| %>
       <article class="file" data-filename="<%= file['filename'] %>">
         <%= file['rendered'] %>
