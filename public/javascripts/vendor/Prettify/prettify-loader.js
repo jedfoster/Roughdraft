@@ -12,3 +12,5 @@ pretty = function() {
   // Activate pretty presentation.
   prettyPrint();
 }
+
+pretty();
