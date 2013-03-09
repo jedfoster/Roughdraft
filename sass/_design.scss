@@ -13,32 +13,42 @@ body {
 }
 
 .sidebar {
-  border-bottom: 1px solid $hotel_gray;
   margin-bottom: 1.5em;
-  padding-bottom: 0.5em;
   
+  hgroup {
+    border-bottom: 1px solid $hotel_gray;
+    margin-bottom: 1.5em;
+    padding-bottom: 0.5em;
+  }
+
+  h1 {
+    font-size: em($heading_3);
+  }
+  h2 {
+    font-size: em($heading_6);
+    color: $echo_gray;
+  }
+
+  a {
+    display: block;
+    width: 100%;
+  }
+
   @media #{$desktop} {
     position: absolute;
     width: 10em;
     left: 1.5em;
     
-    margin-right: 1.5em;
-  }  
-  
-  h1 {
-    font-size: em($heading_3);
-
+    a {
+      margin-bottom: 1em;
+    }
   }
-  h2 {
-    font-size: em($heading_6);
-    color: $echo_gray;
-  }  
-  
+
   @media #{$tablet} {
-    h1, h2 {
+    h1, h2, a {
       display: inline;
     }
-    h2 {
+    h2, a:last-child {
       margin-left: 1em;
       padding-left: 1em;
       border-left: 1px solid $hotel_gray;
@@ -50,7 +60,7 @@ body {
   padding-bottom: 3em;
   margin-bottom: 3em;
   border-bottom: 1px solid $hotel_gray;
-  
+
   header {
     @extend %readable-body;
 
@@ -73,9 +83,15 @@ body {
 
 .user-gist-list {
   @extend %readable-body;
-  
+
   li {
     padding: 0.5em 0;
+    clear: both;
+    
+    time {
+      display: inline-block;
+      width: 5.5em;
+    }
   }
 }
 

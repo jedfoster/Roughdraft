@@ -143,7 +143,7 @@ end
 before do
   @github = github(session[:github_token])
   
-  @user = false
+  @user = @gist = false
 end
 
 before :subdomain => 1 do
@@ -192,7 +192,9 @@ get %r{/([\d]+)$} do
   if valid && content
     headers 'X-Cache-Hit' => from_redis    
 
-    erb :gist, :locals => { :gist => JSON.parse(content) }
+    @gist = JSON.parse(content)
+
+    erb :gist
   else
     if content
       redirect to("http://#{JSON.parse(content)['owner']['login']}.#{APP_DOMAIN}/#{id}")

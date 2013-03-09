@@ -39,8 +39,18 @@
 
 <body>
   <header class="sidebar">
-    <h1>Roughdraft</h1>
-    <h2>Gist-powered writing</h2>
+    <hgroup>
+      <h1>Roughdraft</h1>
+      <h2>Gist-powered writing</h2>
+    </hgroup>
+    
+    <% if @gist %>
+    <nav>
+      <a href="https://gist.github.com/<%= @gist['id'] %>" id="gistid" data-gist-id="<%= @gist['id'] %>">See the original Gist</a>
+      
+      <%= "<a href=\"http://#{@user['login']}.#{APP_DOMAIN}/\">#{@user['name']}'s other Drafts</a>" if @user %>
+    </nav>
+    <% end %>
   </header>
 
   <%= yield %>

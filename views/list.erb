@@ -1,19 +1,19 @@
-<section class="content home">
+<section class="content user-gist-list home">
   <header>
-    <h1 class="entry-title"><%= user['name'] %>'s Gists</h1>
+    <h1 class="entry-title"><%= user['name'] %>'s Drafts</h1>
   </header>
-  <div class="user-gist-list">
 
-    <ul>
-    <% user['gists'].each do |gist| %>
-      <li><a href="/<%= gist['id'] %>"><%#= gist['id'] %> <%=
-        if gist['description'].empty?
-          gist['id']
-        else
-          gist['description']
-        end
-      %></a></li>
-    <% end %>
-    </ul>
-  </div>
+  <ul>
+  <% user['gists'].each do |gist| %>
+    <li>
+      <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time>
+      <a href="/<%= gist['id'] %>"><%=
+      if gist['description'].empty?
+        gist['id']
+      else
+        gist['description']
+      end %></a>
+    </li>
+  <% end %>
+  </ul>
 </section>
