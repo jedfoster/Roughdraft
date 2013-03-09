@@ -49,7 +49,7 @@ configure do
 end
 
 configure :production do
-  APP_DOMAIN = 'roughdraft.io'
+  APP_DOMAIN = 'www.roughdraft.io'
   
   helpers do
     def github(auth_token = '')
@@ -65,7 +65,7 @@ configure :production do
 end
 
 configure :development do
-  APP_DOMAIN = 'roughdraft.dev'
+  APP_DOMAIN = 'www.roughdraft.dev'
 
   helpers do
     def github(auth_token = '')
@@ -153,7 +153,7 @@ before :subdomain => 1 do
     user = fetch_and_render_user(request.subdomains[0])
   end
   
-  @user = JSON.parse(user)
+  @user = JSON.parse(user) if request.subdomains[0] != 'www'
 end
 
 
