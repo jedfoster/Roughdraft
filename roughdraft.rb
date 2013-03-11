@@ -85,7 +85,7 @@ helpers do
   end
   
   def is_allowed(language)
-    language.match(/(Markdown|Text|Textile)/)
+    language.match(/(Markdown|Text)/)
   end
 
   def pipeline(html)
