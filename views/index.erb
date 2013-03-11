@@ -3,24 +3,65 @@
     <h1 class="entry-title">Roughdraft is GitHub Gists, made pretty.</h1>
   </header>
 
-  <p>Sometimes you have something to say that won&#8217;t fit on Twitter, but is too small to justify a Tumblr. Enter Roughdraft.  </p>
+  <p>Sometimes you have something to say that won&#8217;t fit on Twitter, but is too small to justify a Tumblr. Enter Roughdraft.</p>
 
   <h3 id="how_it_works">How it works</h3>
 
+  <ol>
+    <li><a href="https://gist.github.com">Create a public Gist</a> on Github with one or more <a href="http://daringfireball.net/projects/markdown/">Markdown</a> files.</li>
+    <li>Note the Gist ID number. It’s usually a longish number like <code>12345678</code>.</li>
+    <li>View your writing presented nicely at roughdraft.dev/<em>gist-id</em></li>
+  </ol>
+
   <p>Alternatively, you can drag this <a href="javascript: (function(e,a,g,h,f,c,b,d){if(!(f=e.jQuery)||g>f.fn.jquery||h(f)){c=a.createElement('script');c.type='text/javascript';c.src='http://ajax.googleapis.com/ajax/libs/jquery/'+g+'/jquery.min.js';c.onload=c.onreadystatechange=function(){if(!b&&(!(d=this.readyState)||d=='loaded'||d=='complete')){h((f=e.jQuery).noConflict(1),b=1);f(c).remove()}};a.documentElement.childNodes[0].appendChild(c)}})(window,document,'1.4.2',function($,L){var gist_re=/^https:\/\/gist\.github\.com\/([\w-]+)*?\/*?(\d+)$/i,rel_re=/^\/?(\d+)$/,on_gist=gist_re.test(location.href);if(on_gist){i=location.pathname.split(/\/([\w-]+)\/(\d+)/);location.href='http://'+i[1]+'.roughdraft.dev/'+i[2];}else{$('a').each(function(){var b=$(this).attr('href')||'',a=b.match(gist_re);if(on_gist&&!(a&&a[2])){a=b.match(rel_re)} if(a&&a[2]){if(typeof(a[1])=='undefined'){a[1]='www';} $(this).after(' <a href=&quot;http://'+a[1]+'.roughdraft.dev/'+a[2]+'&quot;>[roughdraft.io]</a>')}});}});" title="Roughdraft bookmarklet">bookmarklet</a> to your bookmarks bar. Click it when you’re on a Gist page, and it will take you to the corresponding Roughdraft page. Click it when you aren’t on a Gist page, and it will append Roughdraft links to every Gist link it finds on the page.</p>
 
-  <ol>
-  <li><a href="https://gist.github.com">Create a public Gist</a> on Github with one or more <a href="http://daringfireball.net/projects/markdown/">Markdown</a> files.</li>
-  <li>Note the Gist ID number. It’s usually a longish number like <code>12345678</code>.</li>
-  <li>View your writing presented nicely at roughdraft.dev/<em>gist-id</em></li>
-  </ol>
+  <h3 id="user_pages">User Pages</h3>
+
+  <p>Since Roughdraft is built with the GitHub API, we can do some really cool stuff, like give every GitHub user their own Roughdraft subdomain! Visit <em>username</em>.roughdraft.io</code> to see a list of all the public, Markdown-formatted Gists belonging to <em>username</em>. Example: <a href="http://idan.roughdraft.io">idan.roughdraft.io</a>.</p>
 
   <h3 id="content">Content</h3>
 
-  <p>Roughdraft supports Markdown-formatted Gists. Your Gist&#8217;s <em>description</em> field will be used as the headline for your post. </p>
+  <p>Roughdraft supports Markdown-formatted Gists. You can use images and even emoji! <img class="emoji" title=":metal:" alt=":metal:" src="/images/emoji/metal.png" height="20" width="20" align="absmiddle"> Your Gist&#8217;s <em>description</em> field will be used as the headline for your post.</p>
+  
+  <p>Fenced code blocks and syntax highlighting are supported using <a href="https://help.github.com/articles/github-flavored-markdown" target="new">GitHub-flavored Markdown</a>. Like this:</p>
+  
+  <pre><code>```ruby
+require 'redcarpet'
+markdown = Redcarpet.new("Hello World!")
+puts markdown.to_html
+```</code></pre>
 
   <h2 id="mad_props">Mad Props</h2>
 
   <p>This project is a deliberate and painstaking rip-off of <a href="http://gazit.me">Idan Gazit&#8217;s</a> <a href="http://gist.io">gist.io</a>, which is wonderful and you should check it out. I ported gist.io to Ruby both as a coding exercise and to build out some additional features I wanted. My thanks to Idan for his work on the original, which is very well done. You should follow him on <a href="http://twitter.com/idangazit">Twitter</a>. </p>
   
 </section>
+
+<% if settings.environment == :production %>
+  <script src="/javascripts/app.js"></script>
+<% else %>
+	<script src="/javascripts/vendor/jquery-1.8.2.js"></script>
+	<script src="/javascripts/vendor/Prettify/prettify.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-css.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-scss.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-sql.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-vim.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-yaml.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-apollo.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-clj.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-go.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-hs.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-lisp.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-lua.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-ml.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-n.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-proto.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-scala.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-tex.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-vb.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-vhdl.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-wiki.js"></script>
+  <script src="/javascripts/vendor/Prettify/lang-xq.js"></script>
+  <script src="/javascripts/vendor/Prettify/prettify-loader.js"></script>
+  <script src="/javascripts/main.js"></script>
+<% end %>
