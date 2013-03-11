@@ -1,4 +1,7 @@
 require 'yaml'
+require 'gemoji'
+
+load 'tasks/emoji.rake'
 
 desc "Run the app's server in either development or production mode"
 task :server do

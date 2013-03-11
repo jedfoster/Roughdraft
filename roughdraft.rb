@@ -97,7 +97,8 @@ helpers do
     pipe = HTML::Pipeline.new [
       HTML::Pipeline::MarkdownFilter,
       HTML::Pipeline::SanitizationFilter,
-      HTML::Pipeline::ImageMaxWidthFilter
+      HTML::Pipeline::ImageMaxWidthFilter,
+      HTML::Pipeline::EmojiFilter
     ], context.merge(:gfm => true)
 
     pipe.call(html)[:output].to_s
