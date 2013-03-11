@@ -1,14 +1,32 @@
-  <% @gist['files'].each do |x, file| %>
-    <% if ! @gist['description'].empty? %>
-    <header>
-      <h2 id="description" class=" instapaper-title entry-title"><%= @gist['description'] %></h2>
-    </header>
-    <% end %>
 <section class="content instapaper-body">
+<% if ! @gist['description'].empty? %>
+  <header>
+    <h2 id="description" class=" instapaper-title entry-title"><%= @gist['description'] %></h2>
+  </header>
+<% end
+
+unrenderable = Array.new
+
+@gist['files'].each do |x, file| 
+  if file['rendered'].nil?
+    unrenderable << file
+    
+  else %>
     <article class="file" data-filename="<%= file['filename'] %>">
       <%= file['rendered'] %>
-    </article>    
-  <% end %>
+    </article><%
+  end
+end 
+
+if ! unrenderable.empty? %>
+  <aside class="unrenderable-files">
+    <ul>
+      <% unrenderable.each do |file| %>
+      <li><%= file['filename'] %></li>
+      <% end %>
+    </ul>
+  </aside>
+<% end %>
 </section>
 
 
@@ -38,6 +56,5 @@
   <script src="/javascripts/vendor/Prettify/lang-wiki.js"></script>
   <script src="/javascripts/vendor/Prettify/lang-xq.js"></script>
   <script src="/javascripts/vendor/Prettify/prettify-loader.js"></script>
-	<!-- <script src="/javascripts/vendor/gist.io.js"></script> -->
   <script src="/javascripts/main.js"></script>
 <% end %>
