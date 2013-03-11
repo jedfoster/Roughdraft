@@ -5,12 +5,9 @@ gem 'sinatra-partial'
 gem 'thin'
 gem 'jammit'
 gem 'github_api'
-
 gem 'sass'
 gem 'compass'
-gem 'stipe', "=0.0.5.5"
-
-gem 'github-markdown'
-gem 'redcarpet'
-gem 'RedCloth'
+gem 'stipe'
 gem 'redis'
+gem 'html-pipeline'
+gem 'gemoji'

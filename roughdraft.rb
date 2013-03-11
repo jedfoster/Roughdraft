@@ -1,25 +1,14 @@
-# Those little ditties that Sinara needs to make the magic happen
-# -----------------------------------------------------------------------
 require 'rubygems'
-
-# If you're using bundler, you will need to add this
 require 'bundler/setup'
-
 require 'sinatra'
 require 'sinatra/partial'
 require 'json'
 require 'github_api'
-
 require 'rack/request'
-
 require 'sass'
 require 'compass'
 require 'yaml'
-require 'github/markdown'
-
-require 'redcarpet'
-require 'RedCloth'
-
+require 'html/pipeline'
 
 module Rack
   class Request
@@ -90,14 +79,28 @@ helpers do
       shuffle.first
     end
 
-
     def to_sentence
       length < 2 ? first.to_s : "#{self[0..-2] * ', '}, and #{last}"
     end
   end
-
+  
   def is_allowed(language)
     language.match(/(Markdown|Text|Textile)/)
+  end
+
+  def pipeline(html)
+    context = {
+      :asset_root => "http://#{APP_DOMAIN}/images",
+      # :base_url   => "#{APP_DOMAIN}"
+    }
+
+    pipe = HTML::Pipeline.new [
+      HTML::Pipeline::MarkdownFilter,
+      HTML::Pipeline::SanitizationFilter,
+      HTML::Pipeline::ImageMaxWidthFilter
+    ], context.merge(:gfm => true)
+
+    pipe.call(html)[:output].to_s
   end
 
   def fetch_and_render_gist(id)
@@ -106,7 +109,7 @@ helpers do
 
       gist.files.each do |file, value|
         if is_allowed value.language
-          value[:rendered] = GitHub::Markdown.render_gfm(value.content.to_s)
+          value[:rendered] = pipeline value.content.to_s
         end
       end
     
