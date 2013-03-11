@@ -38,7 +38,7 @@ configure do
 end
 
 configure :production do
-  APP_DOMAIN = 'www.roughdraft.io'
+  APP_DOMAIN = 'roughdraft.io'
   
   helpers do
     def github(auth_token = '')
@@ -54,7 +54,7 @@ configure :production do
 end
 
 configure :development do
-  APP_DOMAIN = 'www.roughdraft.dev'
+  APP_DOMAIN = 'roughdraft.dev'
 
   helpers do
     def github(auth_token = '')
