@@ -12,7 +12,7 @@
 		a.documentElement.childNodes[0].appendChild(c)
 	}
 })(window, document, '1.4.2', function($, L) {
-	var gist_re = /^https:\/\/gist\.github\.com\/([\w-]+)\/(\d+)/i,
+	var gist_re = /^https:\/\/gist\.github\.com\/([\w-]+)*?\/*?(\d+)$/i,
 		rel_re = /^\/?(\d+)$/,
 		on_gist = gist_re.test(location.href);
 	if (on_gist) {
@@ -27,6 +27,10 @@
 				a = b.match(rel_re)
 			}
 			if (a && a[2]) {
+			  if(typeof(a[1]) == 'undefined') {
+			    a[1] = 'www';
+			  }
+
 				$(this).after(' <a href=&quot;http://' + a[1] + '.roughdraft.dev/' + a[2] + '&quot;>[roughdraft.io]</a>')
 			}
 		});
