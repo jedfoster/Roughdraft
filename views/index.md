@@ -11,7 +11,7 @@ Sometimes you have something to say that won't fit on Twitter, but is too small 
 
 ### Content
 
-Roughdraft currently only supports Markdown Gists, but will soon also support a limited number of other formats. Your Gist's *description* field will be used as the headline for your post. 
+Roughdraft supports Markdown-formatted Gists. Your Gist's *description* field will be used as the headline for your post. 
 
 
 ## Mad Props
