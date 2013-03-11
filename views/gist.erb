@@ -20,10 +20,11 @@ end
 
 if ! unrenderable.empty? %>
   <aside class="unrenderable-files">
+    <h3>Other files in this Gist:</h3>
     <ul>
-      <% unrenderable.each do |file| %>
-      <li><%= file['filename'] %></li>
-      <% end %>
+    <% unrenderable.each do |file| %>
+      <li><a href="<%= @gist['html_url'] %>#file-<%= file['filename'].gsub(/\./, '-') %>" target="gist"><%= file['filename'] %></a></li>
+    <% end %>
     </ul>
   </aside>
 <% end %>
