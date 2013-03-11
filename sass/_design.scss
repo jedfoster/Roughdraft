@@ -14,7 +14,7 @@ body {
 
 .sidebar {
   margin-bottom: 1.5em;
-  
+
   hgroup {
     border-bottom: 1px solid $hotel_gray;
     margin-bottom: 1.5em;
@@ -24,6 +24,7 @@ body {
   h1 {
     font-size: em($heading_3);
   }
+
   h2 {
     font-size: em($heading_6);
     color: $echo_gray;
@@ -38,7 +39,7 @@ body {
     position: fixed;
     width: 10em;
     left: 1.5em;
-    
+
     a {
       margin-bottom: 1em;
     }
@@ -58,7 +59,7 @@ body {
 
 .content {
   @extend %readable-body;
-  
+
   padding-bottom: 3em;
   margin-bottom: 3em;
   border-bottom: 1px solid $hotel_gray;
@@ -68,12 +69,13 @@ body {
 
     h1 {
       font-size: em($heading_2);
+      color: $echo_gray;
       margin-bottom: 1.5em;
-      //padding-bottom: 1em;
-      //border-bottom: 1px solid $hotel_gray;
     }
     h2 {
-      font-size: em($heading_2);
+      font-size: em($heading_3);
+    }
+  }
 
   .unrenderable-files {
     padding-top: 3em;
