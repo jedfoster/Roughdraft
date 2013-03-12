@@ -5,8 +5,6 @@
 
   <p>Sometimes you have something to say that's longer than a Tweet, but too small for a blog. Enter Roughdraft. The concept is simple: writing for the web, backed by <a href="https://gist.github.com">GitHub Gists</a>.</p>
 
-  <p>Roughdraft was inspired by <a href="http://gazit.me">Idan Gazit&#8217;s</a> <a href="http://gist.io">gist.io</a>.</p>
-
   <h3 id="how_it_works">How it works</h3>
 
   <ol>
@@ -19,8 +17,8 @@
 
   <ol>
     <li>Drag the bookmarklet to your bookmarks bar.</li>
-    <li>From a Gist page, clicking the bookmarklet will open that Gist in Roughdraft.
-    <li>Clicking it elsewhere on the web will append Roughdraft links to every Gist link on the page.</li>
+    <li>From a Gist page, click the bookmarklet to open the Gist in Roughdraft.
+    <li>Click it elsewhere on the web to append Roughdraft links to every Gist link on the page.</li>
   </ol>
 
   <p id="bookmarklet"><a href="javascript: (function(e,a,g,h,f,c,b,d){if(!(f=e.jQuery)||g>f.fn.jquery||h(f)){c=a.createElement('script');c.type='text/javascript';c.src='http://ajax.googleapis.com/ajax/libs/jquery/'+g+'/jquery.min.js';c.onload=c.onreadystatechange=function(){if(!b&&(!(d=this.readyState)||d=='loaded'||d=='complete')){h((f=e.jQuery).noConflict(1),b=1);f(c).remove()}};a.documentElement.childNodes[0].appendChild(c)}})(window,document,'1.4.2',function($,L){var gist_re=/^https:\/\/gist\.github\.com\/([\w-]+)*?\/*?(\d+)$/i,rel_re=/^\/?(\d+)$/,on_gist=gist_re.test(location.href);if(on_gist){i=location.pathname.split(/\/([\w-]+)\/(\d+)/);location.href='http://'+i[1]+'.roughdraft.io/'+i[2];}else{$('a').each(function(){var b=$(this).attr('href')||'',a=b.match(gist_re);if(on_gist&&!(a&&a[2])){a=b.match(rel_re)} if(a&&a[2]){if(typeof(a[1])=='undefined'){a[1]='www';} $(this).after(' <a href=&quot;http://'+a[1]+'.roughdraft.io/'+a[2]+'&quot;>[roughdraft.io]</a>')}});}});" title="Drag me to your bookmarks bar.">Roughdraft Bookmarklet</a></p>
@@ -57,9 +55,11 @@ puts markdown.to_html
 
   <p>Visit <code><b>username</b>.roughdraft.io</code> to see a list of all the public, Markdown-formatted Gists belonging to <code><b>username</b></code>. Example: <code class="no-prettify"><a href="http://idan.roughdraft.io"><b>idan</b>.roughdraft.io</a></code>.</p>
 
+  <hr>
+
   <h2 id="mad_props">Mad Props</h2>
 
-  <p>This project was inspired by, and borrows some code and conventions from, <a href="http://gazit.me">Idan Gazit&#8217;s</a> <a href="http://gist.io">gist.io</a>, which is wonderful and you should check it out. I ported gist.io to Ruby both as a coding exercise and to build out some additional features I wanted. My thanks to Idan for his work on the original, which is very well done. You should follow him on <a href="http://twitter.com/idangazit">Twitter</a>. </p>
+  <p>This project was inspired by, and borrows code from, <a href="http://gazit.me">Idan Gazit&#8217;s</a> <a href="http://gist.io">gist.io</a>. My thanks to Idan for the original. </p>
   
 </section>
 
