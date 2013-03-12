@@ -71,9 +71,9 @@ p {
 }
 
 b {
-	// &:after {
-	// 	content: " ";
-	// }
+	&:after {
+		content: ""; // Override something coming from Stipe.
+	}
 }
 
 
@@ -91,4 +91,22 @@ a {
 	//&:visited {
 	//	color: $href-visited;
 	//}
+	
+	b, strong {
+	  color: inherit;
+	}
+}
+
+code {
+  @include border-radius(0.25em);
+
+  background: #FBFAF7;
+  font-size: 0.7em;
+  border: 1px solid $golf_gray;
+  padding: 0.1em 0.5em 0;
+}
+
+pre code {
+  border: 0;
+  padding: 0;
 }
