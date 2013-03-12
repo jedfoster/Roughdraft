@@ -136,3 +136,27 @@ b, strong {
 footer {
   text-align: center;
 }
+
+#bookmarklet {
+  a {
+    @include border-radius(0.25em);
+    
+    border: 1px solid transparentize($bravo_primary, 0.6);
+    background: transparentize($bravo_primary, 0.9);
+    display: block;
+    text-align: center;
+    font-family: $heading_font_family;
+    color: $bravo_primary;
+  }  
+  
+  @media #{$desktop} {
+    position: absolute;
+    width: 10em;
+    top: 0;
+    right: 1.5em;
+    padding-top: 3em;
+    margin-top: 0;
+    border-top: 0;
+
+  }
+}
