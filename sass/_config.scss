@@ -96,19 +96,19 @@ $alpha_gray:      #212121;           //black
 // $shadow_color:                         fade-out($alpha_gray, 0.5);
 
 // primary header font color
-$primary_header_color:                 $charlie_gray;
+$primary_header_color:                  $charlie_gray;
 
 // default heading font weight
 // $heading_font_weight:                  normal;
 
 // primary font color for the app
-// $primary_text:                         $bravo_gray;
+$primary_text:                          $bravo_gray;
 
 // default <a href="#"> link color
-$href_color:                           $charlie_color;
+$href_color:                            $charlie_color;
 // $href_color_alt:                       $delta_color_bravo;
-$href-hover: $bravo_color;
-$href-visited: $echo_color;
+$href-hover:                            $bravo_color;
+$href-visited:                          $echo_color;
 
 // used with the <ins> tag
 // http://www.w3schools.com/tags/tag_ins.asp
@@ -122,8 +122,8 @@ $href-visited: $echo_color;
 // $webkit_tap_hightlight:                $delta_color_bravo;
 
 // overrides the default content selection color in the browser
-$selection_color:                      $bravo_color_charlie;
-$selection_text_color:                 $primary_text;
+$selection_color:                       $bravo_color_charlie;
+$selection_text_color:                  $primary_text;
 
 // default border color
 // $border_color:                         $charlie_gray;
