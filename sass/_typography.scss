@@ -146,7 +146,7 @@ tr:nth-child(2n) {
 }
 
 th, td {
-  border: 1px solid $hotel_gray;
+  border: 1px solid $border_color;
   padding: 0.5em 0.75em;
   vertical-align: middle;
 }
@@ -158,7 +158,7 @@ th {
 }
 
 hr {
-  background: $hotel_gray;
+  background: $border_color;
   clear: both;
   float: none;
   width: 100%;
@@ -169,7 +169,7 @@ hr {
 
 blockquote {
   padding: 0 1.5em;
-  border-left: 0.25em solid $hotel_gray;
+  border-left: 0.25em solid $border_color;
   color: $echo_gray;
 }
 
