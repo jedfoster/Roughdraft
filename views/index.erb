@@ -12,7 +12,7 @@
     <li>Note the Gist ID. It’s at the end of the URL: <code class="no-prettify">gist.github.com/jedfoster/<b>4339935</b></code>.</li>
     <li>See your Gist, made pretty, at <code>roughdraft.io/<b>gist-id</b></code></li>
   </ol>
-  
+
   <h5 id="bookmarklet_steps"><b>Or</b></h5>
 
   <ol>
@@ -25,29 +25,13 @@
 
   <h2 id="formatting">Formatting</h2>
 
-  <p>Roughdraft supports <a href="https://help.github.com/articles/github-flavored-markdown" target="new">GitHub-flavored Markdown</a>. In addition to all of the usual Markdown syntax, GFM supports fenced code blocks and syntax highlighting.</p>
-  
-  <p>This:</p>
-  
-  <pre><code>```ruby
-require 'redcarpet'
-markdown = Redcarpet.new("Hello World!")
-puts markdown.to_html
-```</code></pre>
+  <ul>
+    <li>Roughdraft uses <a href="https://help.github.com/articles/github-flavored-markdown" target="new">GitHub-flavored Markdown</a>. In addition to all of the usual Markdown syntax, GFM supports fenced code blocks and syntax highlighting.</li>
+    <li>Use images and even <a href="http://www.emoji-cheat-sheet.com/" target="new">emoji</a>! <img class="emoji" title=":metal:" alt=":metal:" src="/images/emoji/metal.png" height="20" width="20" align="absmiddle"></li>
+    <li>Your Gist&#8217;s <code>description</code> field will be used as the headline for your post.</li>
+  </ul>
 
-  <p>Becomes:</p>
-
-  <pre><code lang="ruby">require 'redcarpet'
-markdown = Redcarpet.new("Hello World!")
-puts markdown.to_html
-</code></pre>
-    
-    
-  <p>You can also use images and even <a href="http://www.emoji-cheat-sheet.com/" target="new">emoji</a>! <img class="emoji" title=":metal:" alt=":metal:" src="/images/emoji/metal.png" height="20" width="20" align="absmiddle"> </p>
-
-  <p>Your Gist&#8217;s <em>description</em> field will be used as the headline for your post.</p>
-  
-  
+  <p>More detailed information on formatting our Gist is coming soon.</p>
 
   <h2 id="user_pages">User Pages</h2>
 
@@ -60,7 +44,7 @@ puts markdown.to_html
   <h2 id="mad_props">Mad Props</h2>
 
   <p>This project was inspired by, and borrows code from, <a href="http://gazit.me">Idan Gazit&#8217;s</a> <a href="http://gist.io">gist.io</a>. My thanks to Idan for the original. </p>
-  
+
 </section>
 
 <% if settings.environment == :production %>
