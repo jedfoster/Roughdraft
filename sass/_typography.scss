@@ -34,33 +34,28 @@ html {
 }
 
 h1 {
-	// font-size: 2em;  // user agent default
-	// @extend %headings_1;
+  color: $echo_gray;
 }
 
 h2 {
-	// font-size: 1.5em;  // user agent default
-	// @extend %headings_2;
+	color: $echo_gray;
 }
 
 h3 {
-	// font-size:  1.17em;  // user agent default
-	// @extend %headings_3;
+	color: $echo_gray;
 }
 
 h4 {
-	// font-size:  1em;  // user agent default
-	// @extend %headings_4;
+	color: $delta_gray;
 }
 
 h5 {
-	// font-size:  0.83em;  // user agent default
-	// @extend %headings_5;
+	color: $charlie_gray;
 }
 
 h6 {
-	 // font-size:  0.75em;  // user agent default
-	 // @extend %headings_6;
+  font-weight: bold;
+  color: $alpha_gray;
 }
 
 // Standard body text support

@@ -23,11 +23,11 @@ body {
 
   h1 {
     font-size: em($heading_3);
+    color: $charlie_gray;
   }
 
   h2 {
     font-size: em($heading_6);
-    color: $echo_gray;
   }
 
   a {
@@ -68,12 +68,7 @@ body {
     @extend %readable-body;
 
     h1 {
-      font-size: em($heading_2);
-      color: $echo_gray;
       margin-bottom: 1.5em;
-    }
-    h2 {
-      font-size: em($heading_3);
     }
   }
 
