@@ -92,16 +92,28 @@ a {
 	}
 }
 
-code {
+pre, code {
   @include border-radius(0.25em);
 
-  background: #FBFAF7;
-  font-size: 0.7em;
   border: 1px solid $golf_gray;
-  padding: 0.1em 0.5em 0;
+  font-family: $code_font_family;
+  background: #FBFAF7;
+}
+
+pre {
+  padding: 0.75em;
+}
+
+code {
+  padding: 0.15em 0.5em 0;
+  font-size: 0.7em;
 }
 
 pre code {
   border: 0;
   padding: 0;
+}
+
+ol, ul, pre {
+  margin-bottom: 1.5em;
 }
