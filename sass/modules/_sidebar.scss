@@ -22,13 +22,7 @@
   }
 
   @media #{$desktop} {
-    position: fixed;
-    width: 10em;
-    left: 1.5em;
-
-    a {
-      margin-bottom: 1em;
-    }
+    @extend %right-responsive-sidebar;
   }
 
   @media #{$tablet} {
