@@ -7,28 +7,6 @@ body {
 }
 
 
-
-
-
-
-
-
-.content {
-  @extend %readable-body;
-
-  padding-bottom: 3em;
-  margin-bottom: 3em;
-  border-bottom: 1px solid $border_color;
-
-  header {
-    @extend %readable-body;
-
-    h1 {
-      margin-bottom: 1.5em;
-    }
-  }
-}
-
 .unrenderable-files {
   padding-top: 3em;
   margin-top: 3em;
