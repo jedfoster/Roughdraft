@@ -7,8 +7,8 @@
   <% user['gists'].each do |gist| %>
     <li>
       <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time>
-      <a href="/<%= gist['id'] %>"><%=
-      if gist['description'].empty?
+      <a href="/<%= gist['id'] %>"><%=gist['id']
+      if gist['description'].nil? || gist['description'].empty?
         gist['id']
       else
         gist['description']

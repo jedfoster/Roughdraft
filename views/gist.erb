@@ -1,5 +1,5 @@
 <section class="content instapaper-body">
-<% if ! @gist['description'].empty? %>
+<% if ! ( @gist['description'].nil? || @gist['description'].empty? ) %>
   <header>
     <h1 id="description" class=" instapaper-title entry-title"><%= @gist['description'] %></h1>
   </header>
