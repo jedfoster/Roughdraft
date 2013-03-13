@@ -6,50 +6,12 @@ body {
   padding: 1.5em 1em;
 }
 
-.sidebar {
-  margin-bottom: 1.5em;
 
-  hgroup {
-    border-bottom: 1px solid $border_color;
-    margin-bottom: 1.5em;
-    padding-bottom: 0.5em;
-  }
 
-  h1 {
-    font-size: em($heading_3);
-    color: $charlie_gray;
-  }
 
-  h2 {
-    font-size: em($heading_6);
-  }
 
-  a {
-    display: block;
-    width: 100%;
-  }
 
-  @media #{$desktop} {
-    position: fixed;
-    width: 10em;
-    left: 1.5em;
 
-    a {
-      margin-bottom: 1em;
-    }
-  }
-
-  @media #{$tablet} {
-    h1, h2, a {
-      display: inline;
-    }
-    h2, a:last-child {
-      margin-left: 1em;
-      padding-left: 1em;
-      border-left: 1px solid $border_color;
-    }
-  }
-}
 
 .content {
   @extend %readable-body;
