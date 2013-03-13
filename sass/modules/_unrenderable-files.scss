@@ -1,0 +1,29 @@
+.unrenderable-files {
+  padding-top: 3em;
+  margin-top: 3em;
+  border-top: 1px solid $border_color;
+
+  h3 {
+    @extend %headings_5;
+  }
+
+  @media #{$desktop} {
+    position: fixed;
+    width: 10em;
+    top: 1.5em;
+    right: 1.5em;
+    padding-top: 0;
+    margin-top: 0;
+    border-top: 0;
+
+    h3 {
+      padding-bottom: 1.5em;
+      margin-bottom: 1.5em;
+      border-bottom: 1px solid $border_color;
+    }
+
+    a {
+      margin-bottom: 1em;
+    }
+  }
+}
