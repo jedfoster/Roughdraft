@@ -1,0 +1,13 @@
+.user-gist-list {
+  @extend %readable-body;
+
+  li {
+    padding: 0.5em 0;
+    clear: both;
+
+    time {
+      display: inline-block;
+      width: 5.5em;
+    }
+  }
+}
