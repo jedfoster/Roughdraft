@@ -135,3 +135,25 @@ li ul ul{
   list-style-type: square;
 }
 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  font-size: inherit;
+}
+
+tr:nth-child(2n) {
+  background: desaturate(#FBFAF7, 30%);
+}
+
+th, td {
+  border: 1px solid $hotel_gray;
+  padding: 0.5em 0.75em;
+  vertical-align: middle;
+}
+
+th {
+  font-family: $heading_font_family;
+  font-weight: bold;
+  text-align: center;
+}
+
