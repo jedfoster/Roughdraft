@@ -71,6 +71,7 @@ body {
       margin-bottom: 1.5em;
     }
   }
+}
 
   .unrenderable-files {
     padding-top: 3em;
@@ -106,13 +107,14 @@ body {
   }
 }
 
+
 .user-gist-list {
   @extend %readable-body;
 
   li {
     padding: 0.5em 0;
     clear: both;
-    
+
     time {
       display: inline-block;
       width: 5.5em;
@@ -120,9 +122,7 @@ body {
   }
 }
 
-b, strong {
-  color: $charlie_gray;
-}
+
 
 footer {
   text-align: center;
@@ -131,15 +131,15 @@ footer {
 #bookmarklet {
   a {
     @include border-radius(0.25em);
-    
+
     border: 1px solid transparentize($bravo_primary, 0.6);
     background: transparentize($bravo_primary, 0.9);
     display: block;
     text-align: center;
     font-family: $heading_font_family;
     color: $bravo_primary;
-  }  
-  
+  }
+
   @media #{$desktop} {
     position: absolute;
     width: 10em;

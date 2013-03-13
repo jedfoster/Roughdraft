@@ -65,7 +65,9 @@ p {
 	// text-indent: 0;
 }
 
-b {
+b, strong {
+  color: $charlie_gray;
+
 	&:after {
 		content: ""; // Override something coming from Stipe.
 	}
@@ -75,18 +77,14 @@ b {
 // :link Pseudo-class is totally not necessary as I can tell
 // code here to combat legacy code
 a {
-	&:link {
-		color: $href_color;
-		text-decoration: none;
-	}
+	color: $href_color;
+	text-decoration: none;
+
 	&:hover, &:active {
 		color: $href-hover;
 		text-decoration: underline;
 	}
-	//&:visited {
-	//	color: $href-visited;
-	//}
-	
+
 	b, strong {
 	  color: inherit;
 	}
