@@ -1,0 +1,22 @@
+#bookmarklet {
+  a {
+    @include border-radius(0.25em);
+
+    border: 1px solid transparentize($bookmarklet_color, 0.6);
+    background: transparentize($bookmarklet_color, 0.9);
+    display: block;
+    text-align: center;
+    font-family: $heading_font_family;
+    color: $bookmarklet_color;
+  }
+
+  @media #{$desktop} {
+    position: absolute;
+    width: 10em;
+    top: 0;
+    right: 1.5em;
+    padding-top: 3em;
+    margin-top: 0;
+    border-top: 0;
+  }
+}
