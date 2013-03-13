@@ -157,3 +157,31 @@ th {
   text-align: center;
 }
 
+hr {
+  background: $hotel_gray;
+  clear: both;
+  float: none;
+  width: 100%;
+  height: 1px;
+  margin: 0 0 1.49em;
+  border: none;
+}
+
+blockquote {
+  padding: 0 1.5em;
+  border-left: 0.25em solid $hotel_gray;
+  color: $echo_gray;
+}
+
+dl {
+  margin:0 0 1.5em 0;
+}
+
+dt {
+  font-weight: bold;
+  font-style: italic;
+}
+
+dd {
+  margin: 0 0 1.5em 1.5em;
+}
