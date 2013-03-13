@@ -79,7 +79,7 @@ body {
   border-top: 1px solid $border_color;
 
   h3 {
-    font-size: em($heading_5);
+    @extend %headings_5;
   }
 
   @media #{$desktop} {
