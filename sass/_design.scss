@@ -73,36 +73,32 @@ body {
   }
 }
 
-  .unrenderable-files {
-    padding-top: 3em;
-    margin-top: 3em;
-    border-top: 1px solid $hotel_gray;
+.unrenderable-files {
+  padding-top: 3em;
+  margin-top: 3em;
+  border-top: 1px solid $hotel_gray;
+
+  h3 {
+    font-size: em($heading_5);
+  }
+
+  @media #{$desktop} {
+    position: fixed;
+    width: 10em;
+    top: 1.5em;
+    right: 1.5em;
+    padding-top: 0;
+    margin-top: 0;
+    border-top: 0;
 
     h3 {
-      font-size: em($heading_4);
-      color: $echo_gray;
+      padding-bottom: 1.5em;
+      margin-bottom: 1.5em;
+      border-bottom: 1px solid $hotel_gray;
     }
 
-    @media #{$desktop} {
-      position: fixed;
-      width: 10em;
-      top: 1.5em;
-      right: 1.5em;
-      padding-top: 0;
-      margin-top: 0;
-      border-top: 0;
-      
-      h3 {
-        font-size: em($heading_4);
-        color: $echo_gray;
-        padding-bottom: 1.5em;
-        margin-bottom: 1.5em;
-        border-bottom: 1px solid $hotel_gray;
-      }
-
-      a {
-        margin-bottom: 1em;
-      }
+    a {
+      margin-bottom: 1em;
     }
   }
 }
