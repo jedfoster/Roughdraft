@@ -117,3 +117,23 @@ pre code {
 ol, ul, pre {
   margin-bottom: 1.5em;
 }
+
+ol, ul {
+  display: block;
+  list-style-type: decimal;
+  list-style-position: outside;
+  padding-left: 1.5em;
+}
+
+ul {
+  list-style: disc;
+}
+
+li ul {
+  list-style-type: circle;
+}
+
+li ul ul{
+  list-style-type: square;
+}
+

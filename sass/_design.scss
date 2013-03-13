@@ -77,10 +77,6 @@ body {
     margin-top: 3em;
     border-top: 1px solid $hotel_gray;
 
-    ul {
-    	list-style: disc inside;
-    }
-    
     h3 {
       font-size: em($heading_4);
       color: $echo_gray;
