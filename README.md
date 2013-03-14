@@ -24,11 +24,7 @@ puts markdown.to_html
 
 ## To Do ##
 
-- [ ] investigate [HTML::Pipeline](https://github.com/jch/html-pipeline) for rendering
-- [ ] fix bookmarklet, `:user/:id` should forward to `:user.APP_DOMAIN/:id`
 - [ ] method for user index page copy, a specially marked up Gist?
-- [ ] GitHub authentication, to get around API rate limit
-- [ ] Unrenderable files should be shown as links
 
 
 ## Installation: Local ##
