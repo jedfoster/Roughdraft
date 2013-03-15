@@ -4,7 +4,7 @@
   hgroup {
     border-bottom: 1px solid $border_color;
     margin-bottom: 1.5em;
-    padding-bottom: 0.5em;
+    padding: 0.5em 0 0.5em; 
   }
 
   h1 {
@@ -19,10 +19,15 @@
   a {
     display: block;
     width: 100%;
+    font-family: $heading_font_family;
   }
 
   @media #{$desktop} {
     @extend %right-responsive-sidebar;
+    
+    hgroup {
+      padding-top: 0;
+    }
   }
 
   @media #{$tablet} {
