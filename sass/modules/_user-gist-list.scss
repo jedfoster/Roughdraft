@@ -1,0 +1,11 @@
+.user-gist-list {
+  li {
+    padding: 0.75em 0;
+    clear: both;
+
+    time {
+      display: inline-block;
+      width: 6em;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@media #{$desktop} {
+  %responsive-sidebar {
+    position: fixed;
+    width: 10em;
+    top: 1.5em;
+
+    a {
+      margin-bottom: 1em;
+    }
+  }
+
+  %right-responsive-sidebar {
+    @extend %responsive-sidebar;
+
+    left: 1.5em;
+  }
+
+  %left-responsive-sidebar {
+    @extend %responsive-sidebar;
+
+    right: 1.5em;
+  }
+}

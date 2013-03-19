@@ -33,20 +33,12 @@ html {
 	// color: $primary_text;
 }
 
-h1 {
-  color: $echo_gray;
-}
-
-h2 {
-	color: $echo_gray;
-}
-
-h3 {
-	color: $echo_gray;
+h1, h2, h3 {
+	color: $charlie_gray;
 }
 
 h4 {
-	color: $delta_gray;
+	color: $charlie_gray;
 }
 
 h5 {
@@ -146,7 +138,7 @@ tr:nth-child(2n) {
 }
 
 th, td {
-  border: 1px solid $hotel_gray;
+  border: 1px solid $border_color;
   padding: 0.5em 0.75em;
   vertical-align: middle;
 }
@@ -158,7 +150,7 @@ th {
 }
 
 hr {
-  background: $hotel_gray;
+  background: $border_color;
   clear: both;
   float: none;
   width: 100%;
@@ -169,7 +161,7 @@ hr {
 
 blockquote {
   padding: 0 1.5em;
-  border-left: 0.25em solid $hotel_gray;
+  border-left: 0.25em solid $border_color;
   color: $echo_gray;
 }
 

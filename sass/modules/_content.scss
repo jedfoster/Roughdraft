@@ -1,0 +1,14 @@
+.content {
+  @extend %readable-body;
+
+  margin-top: 1.5em;
+  padding-bottom: 3em;
+  margin-bottom: 3em;
+  border-bottom: 1px solid $border_color;
+
+  header {
+    h1 {
+      margin-bottom: 1.5em;
+    }
+  }
+}

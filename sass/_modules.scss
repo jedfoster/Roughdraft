@@ -1,12 +1,5 @@
-
-// Resource file that will import designated mixin and extend files
-// --------------------------------------------
-
-// List mixins to import here
-// --------------------------------------------
-@import "modules/example_module/mixins";
-
-
-// List extends to import here
-// --------------------------------------------
-@import "modules/example_module/extends";
+@import 'modules/site-header';
+@import 'modules/content';
+@import 'modules/user-gist-list';
+@import 'modules/unrenderable-files';
+@import 'modules/bookmarklet';

@@ -41,8 +41,19 @@ configure :production do
   APP_DOMAIN = 'roughdraft.io'
   
   helpers do
-    def github(auth_token = '')
-      github = Github.new
+    # def github(auth_token = '')
+    #   github = Github.new do |config|
+    #     config.client_id = ENV['GITHUB_ID']
+    #     config.client_secret = ENV['GITHUB_SECRET']
+    #     config.oauth_token = auth_token
+    #   end
+    # end
+    
+    def gh_config
+      {
+        client_id: ENV['GITHUB_ID'], 
+        client_secret: ENV['GITHUB_SECRET']
+      }
     end
 
     use Rack::Session::Cookie, #:key => 'example.com',
@@ -57,8 +68,18 @@ configure :development do
   APP_DOMAIN = 'roughdraft.dev'
 
   helpers do
-    def github(auth_token = '')
-      github = Github.new
+    # def github(auth_token = '')
+    #   gh_config = YAML.load_file("github.yml")
+    # 
+    #   github = Github.new do |config|
+    #     config.client_id = gh_config['client_id']
+    #     config.client_secret = gh_config['client_secret']
+    #     config.oauth_token = auth_token
+    #   end
+    # end
+    
+    def gh_config
+      YAML.load_file("github.yml")
     end
 
     use Rack::Session::Cookie, #:key => 'example.dev',
@@ -106,7 +127,7 @@ helpers do
 
   def fetch_and_render_gist(id)
     begin
-      gist = @github.gists.get(id)
+      gist = Github::Gists.new.get(id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
 
       gist.files.each do |file, value|
         if is_allowed value.language
@@ -123,12 +144,12 @@ helpers do
   end
 
   def fetch_and_render_user(user_id)
-    user = @github.users.get(user: user_id)
+    user = Github::Users.new.get(user: user_id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
     # from_redis = 'False'
 
     gists = Array.new
 
-    @github.gists.list(user: user['login']).each do |gist|
+    Github::Gists.new.list(user: user['login'], client_id: gh_config['client_id'], client_secret: gh_config['client_secret']).each do |gist|
       gist.files.each do |key, file|
         if is_allowed(file.language.to_s)
           gists << gist.to_hash
@@ -145,7 +166,7 @@ end
 
 
 before do
-  @github = github(session[:github_token])
+  # @github = github()
   
   @user = @gist = false
 end

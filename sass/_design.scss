@@ -3,147 +3,16 @@ html {
 }
 
 body {
-  padding: 1.5em 1em;
+  padding: 0 1em 1.5em;
 }
-
-%readable-body {
-  box-sizing: border-box;
-  max-width: 36em;
-  margin: 0 auto;
-}
-
-.sidebar {
-  margin-bottom: 1.5em;
-
-  hgroup {
-    border-bottom: 1px solid $hotel_gray;
-    margin-bottom: 1.5em;
-    padding-bottom: 0.5em;
-  }
-
-  h1 {
-    font-size: em($heading_3);
-    color: $charlie_gray;
-  }
-
-  h2 {
-    font-size: em($heading_6);
-  }
-
-  a {
-    display: block;
-    width: 100%;
-  }
-
-  @media #{$desktop} {
-    position: fixed;
-    width: 10em;
-    left: 1.5em;
-
-    a {
-      margin-bottom: 1em;
-    }
-  }
-
-  @media #{$tablet} {
-    h1, h2, a {
-      display: inline;
-    }
-    h2, a:last-child {
-      margin-left: 1em;
-      padding-left: 1em;
-      border-left: 1px solid $hotel_gray;
-    }
-  }
-}
-
-.content {
-  @extend %readable-body;
-
-  padding-bottom: 3em;
-  margin-bottom: 3em;
-  border-bottom: 1px solid $hotel_gray;
-
-  header {
-    @extend %readable-body;
-
-    h1 {
-      margin-bottom: 1.5em;
-    }
-  }
-}
-
-.unrenderable-files {
-  padding-top: 3em;
-  margin-top: 3em;
-  border-top: 1px solid $hotel_gray;
-
-  h3 {
-    font-size: em($heading_5);
-  }
-
-  @media #{$desktop} {
-    position: fixed;
-    width: 10em;
-    top: 1.5em;
-    right: 1.5em;
-    padding-top: 0;
-    margin-top: 0;
-    border-top: 0;
-
-    h3 {
-      padding-bottom: 1.5em;
-      margin-bottom: 1.5em;
-      border-bottom: 1px solid $hotel_gray;
-    }
-
-    a {
-      margin-bottom: 1em;
-    }
-  }
-}
-
-
-.user-gist-list {
-  @extend %readable-body;
-
-  li {
-    padding: 0.5em 0;
-    clear: both;
-
-    time {
-      display: inline-block;
-      width: 5.5em;
-    }
-  }
-}
-
-
 
 footer {
+  font-family: $heading_font_family;
+  font-size: em($heading-6);
+  color: $fox_gray;
   text-align: center;
 }
 
-#bookmarklet {
-  a {
-    @include border-radius(0.25em);
-
-    border: 1px solid transparentize($bravo_primary, 0.6);
-    background: transparentize($bravo_primary, 0.9);
-    display: block;
-    text-align: center;
-    font-family: $heading_font_family;
-    color: $bravo_primary;
-  }
-
-  @media #{$desktop} {
-    position: absolute;
-    width: 10em;
-    top: 0;
-    right: 1.5em;
-    padding-top: 3em;
-    margin-top: 0;
-    border-top: 0;
-
-  }
+.legal {
+  color: $delta_gray;
 }
