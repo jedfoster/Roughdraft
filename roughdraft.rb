@@ -106,6 +106,8 @@ helpers do
   end
   
   def is_allowed(language)
+    return false if language.nil?
+    
     language.match(/(Markdown|Text)/)
   end
 
@@ -130,7 +132,7 @@ helpers do
       gist = Github::Gists.new.get(id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
 
       gist.files.each do |file, value|
-        if is_allowed value.language
+        if is_allowed value.language.to_s
           value[:rendered] = pipeline value.content.to_s
         end
       end
@@ -151,7 +153,7 @@ helpers do
 
     Github::Gists.new.list(user: user['login'], client_id: gh_config['client_id'], client_secret: gh_config['client_secret']).each do |gist|
       gist.files.each do |key, file|
-        if is_allowed(file.language.to_s)
+        if is_allowed file.language.to_s
           gists << gist.to_hash
           break
         end
