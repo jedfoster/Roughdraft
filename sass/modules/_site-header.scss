@@ -4,7 +4,7 @@
   hgroup {
     border-bottom: 1px solid $border_color;
     margin-bottom: 1.5em;
-    padding: 0.5em 0 0.5em; 
+    padding: 0.5em 0 0.5em;
   }
 
   h1 {
@@ -24,7 +24,7 @@
 
   @media #{$desktop} {
     @extend %right-responsive-sidebar;
-    
+
     hgroup {
       padding-top: 0;
     }
@@ -34,7 +34,10 @@
     h1, h2, a {
       display: inline;
     }
-    h2, a:last-child {
+    h2 {
+      display: block
+    }
+    a:last-child {
       margin-left: 1em;
       padding-left: 1em;
       border-left: 1px solid $border_color;
