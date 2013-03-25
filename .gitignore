@@ -10,3 +10,4 @@ sass/.sass-cache/
 /github.yml
 tmp/*
 .rvmrc
+dump.rdb

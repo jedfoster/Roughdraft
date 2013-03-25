@@ -9,6 +9,9 @@
   header {
     h1 {
       margin-bottom: 1.5em;
+      @media #{$mobile} {
+        margin-bottom: 0.5em;
+      }
     }
   }
 }
