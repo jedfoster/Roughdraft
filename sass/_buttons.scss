@@ -9,24 +9,3 @@
 // Cupid-green
 // @import "buttons/cupid_config"; // Minimal config options
 // @import "stipe/buttons/lib/cupid-green"; // Sass UI code
-
-
-
-// buttons
-// --------------------------------------------------------------------
-//* toadstool buttons */
-%sassmeister_buttons {
-	@extend %minimal;
-	margin-right: em(10);
-	padding: 0.5em 0.75em;
-
-  @include linear_gradient_w3c(scale-color($alpha_gray, $lightness: 92%), #{scale-color($alpha_gray, $lightness: 95%) 0%, $india_gray 100%});
-}
-
-button, a.button {
-	@extend %sassmeister_buttons; // pre-loaded silent class, I know you want to nuke this!
-	width: auto;
-	@media #{$mobile} {
-  	font-size: em(16);
-	}
-}
