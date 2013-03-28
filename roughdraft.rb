@@ -51,8 +51,8 @@ configure :production do
     
     def gh_config
       {
-        client_id: ENV['GITHUB_ID'], 
-        client_secret: ENV['GITHUB_SECRET']
+        "client_id" => ENV['GITHUB_ID'], 
+        "client_secret" => ENV['GITHUB_SECRET']
       }
     end
 
