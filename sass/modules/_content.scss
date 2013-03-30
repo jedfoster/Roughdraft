@@ -1,9 +1,8 @@
 .content {
   @extend %readable-body;
 
-  margin-top: 1.5em;
+  margin-top: 1.5em auto 3em;
   padding-bottom: 3em;
-  margin-bottom: 3em;
   border-bottom: 1px solid $border_color;
 
   header {
