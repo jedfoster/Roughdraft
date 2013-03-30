@@ -41,14 +41,6 @@ configure :production do
   APP_DOMAIN = 'roughdraft.io'
   
   helpers do
-    # def github(auth_token = '')
-    #   github = Github.new do |config|
-    #     config.client_id = ENV['GITHUB_ID']
-    #     config.client_secret = ENV['GITHUB_SECRET']
-    #     config.oauth_token = auth_token
-    #   end
-    # end
-    
     def gh_config
       {
         "client_id" => ENV['GITHUB_ID'], 
@@ -68,16 +60,6 @@ configure :development do
   APP_DOMAIN = 'roughdraft.dev'
 
   helpers do
-    # def github(auth_token = '')
-    #   gh_config = YAML.load_file("github.yml")
-    # 
-    #   github = Github.new do |config|
-    #     config.client_id = gh_config['client_id']
-    #     config.client_secret = gh_config['client_secret']
-    #     config.oauth_token = auth_token
-    #   end
-    # end
-    
     def gh_config
       YAML.load_file("github.yml")
     end
