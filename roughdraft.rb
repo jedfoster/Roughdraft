@@ -73,20 +73,6 @@ end
 
 
 helpers do
-  include ERB::Util
-  alias_method :code, :html_escape
-
-  # From: http://rubyquicktips.com/post/2625525454/random-array-item
-  class Array
-    def random
-      shuffle.first
-    end
-
-    def to_sentence
-      length < 2 ? first.to_s : "#{self[0..-2] * ', '}, and #{last}"
-    end
-  end
-  
   def is_allowed(language)
     return false if language.nil?
     
