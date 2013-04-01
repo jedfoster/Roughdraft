@@ -34,13 +34,21 @@
     h1, h2, a {
       display: inline;
     }
+
     h2 {
       display: block
     }
+
     a:last-child {
       margin-left: 1em;
       padding-left: 1em;
       border-left: 1px solid $border_color;
+    }
+
+    a:only-child {
+      margin-left: 0;
+      padding-left: 0;
+      border-left: 0;
     }
   }
 }
