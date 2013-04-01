@@ -136,8 +136,6 @@ end
 
 
 before do
-  # @github = github()
-  
   @user = @gist = false
 end
 
