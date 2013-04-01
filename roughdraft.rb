@@ -140,13 +140,17 @@ before do
 end
 
 before :subdomain => 1 do
-  user = REDIS.get(request.subdomains[0])
+  if request.subdomains[0] != 'www'  
+    user = REDIS.get(request.subdomains[0])
 
-  if ! user
-    user = fetch_and_render_user(request.subdomains[0])
-  end
+    if ! user
+      puts request.subdomains[0]
+    
+      user = fetch_and_render_user(request.subdomains[0])
+    end
   
-  @user = JSON.parse(user) if request.subdomains[0] != 'www'
+    @user = JSON.parse(user)
+  end
 end
 
 
