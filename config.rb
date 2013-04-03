@@ -1,5 +1,6 @@
 # Require any additional compass plugins here.
 require 'stipe'
+require 'toadstool' # locally as a Compass extension
 
 # Set this to the root of your project when deployed:
 http_path = "/"
