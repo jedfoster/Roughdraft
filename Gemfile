@@ -11,4 +11,4 @@ gem 'stipe'
 gem 'redis'
 gem 'html-pipeline'
 gem 'gemoji'
-gem 'toadstool', :group => :development
+gem 'toadstool'

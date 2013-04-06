@@ -24,25 +24,27 @@
 
 // Following sequence will load the necessary Stipe libraries
 // ------------------------------------------------------------------------------
-@import "stipe/media";
-@import "stipe/stipe";
-@import "stipe/typography";
+//@import "stipe/media";
+//@import "stipe/stipe";
+//@import "stipe/typography";
 // @import "stipe/grid";
-@import "stipe/color";
+//@import "stipe/color";
 // @import "stipe/gradients";
 // @import "stipe/forms";
 // @import "stipe/buttons";
-@import "color/extends";
+//@import "color/extends";
 // @import "stipe/toadstool/ui_patterns/prettify";
 
-
+@import "compass/css3";                      // Including the Compass CSS3 mixins
+@import "stipe/manifest";
+@import "color/extends";
 
 
 // This where you start building your own styles. 
 // ------------------------------------------------------------------------------
 @import "typography";
-// @import "forms";
-// @import "buttons";
+@import "forms";
+@import "buttons";
 @import "design";
 @import "ui_patterns";
 @import "modules";
