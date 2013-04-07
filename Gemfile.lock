@@ -43,6 +43,7 @@ GEM
     multi_json (1.7.2)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
+    newrelic_rpm (3.6.0.78)
     nokogiri (1.5.9)
     oauth2 (0.9.1)
       faraday (~> 0.8)
@@ -92,6 +93,7 @@ DEPENDENCIES
   github_api
   html-pipeline
   jammit
+  newrelic_rpm
   redis
   sass
   sinatra
