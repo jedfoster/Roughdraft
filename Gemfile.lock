@@ -10,15 +10,13 @@ GEM
       fssm (>= 0.2.7)
       sass (~> 3.1)
     cssmin (1.0.3)
-    daemons (1.1.9)
     escape_utils (0.3.2)
-    eventmachine (1.0.3)
     faraday (0.8.7)
       multipart-post (~> 1.1)
     fssm (0.2.10)
     gemoji (1.4.0)
     github-markdown (0.5.3)
-    github_api (0.9.5)
+    github_api (0.9.6)
       faraday (~> 0.8.1)
       hashie (>= 1.2)
       multi_json (~> 1.4)
@@ -41,6 +39,7 @@ GEM
     jsmin (1.0.1)
     jwt (0.1.8)
       multi_json (>= 1.5)
+    kgio (2.8.0)
     multi_json (1.7.2)
     multi_xml (0.5.3)
     multipart-post (1.2.0)
@@ -55,6 +54,7 @@ GEM
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
+    raindrops (0.10.0)
     redis (3.0.3)
     rinku (1.7.2)
     sanitize (2.0.3)
@@ -69,10 +69,6 @@ GEM
     stipe (0.0.5.7.5)
       compass (>= 0.11)
       sass (>= 3.2.1)
-    thin (1.5.1)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     thor (0.18.1)
     tilt (1.3.6)
     toadstool (0.0.0.7)
@@ -82,6 +78,10 @@ GEM
       sinatra-partial
       stipe (>= 0.0.5.7.4)
       thor
+    unicorn (4.6.2)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -97,5 +97,5 @@ DEPENDENCIES
   sinatra
   sinatra-partial
   stipe
-  thin
   toadstool
+  unicorn
