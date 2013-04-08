@@ -29,6 +29,7 @@ set :partial_template_engine, :erb
 
 set(:subdomain) { |num_subdomains| condition { request.subdomains.count == num_subdomains } }
 
+ENV["DEBUG"] = "true"
 
 configure do
   require 'redis'
@@ -115,11 +116,14 @@ helpers do
 
   def fetch_and_render_user(user_id)
     user = Github::Users.new.get(user: user_id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
-    # from_redis = 'False'
 
     gists = Array.new
+    
+    g = Github::Gists.new.list(user: user['login'], client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
 
-    Github::Gists.new.list(user: user['login'], client_id: gh_config['client_id'], client_secret: gh_config['client_secret']).each do |gist|
+    
+
+    g.each do |gist|
       gist.files.each do |key, file|
         if is_allowed file.language.to_s
           gists << gist.to_hash
@@ -128,7 +132,17 @@ helpers do
       end
     end
 
-    REDIS.setex(user['login'], 60, user.to_hash.merge({:gists => gists}).to_json)
+    REDIS.setex(user['login'], 60, user.to_hash.merge({
+      :gists => gists,
+      # :has_next_page => g.has_next_page?.to_s,
+      :page_count => g.count_pages,
+      :links => {
+        #:first => g.links.first,
+        :next => g.links.next ? g.links.next.split('page=').last : nil,
+        :prev => g.links.prev ? g.links.prev.split('page=').last : nil,
+        #:last => g.links.last
+      }
+    }).to_json)
 
     user = REDIS.get(user['login'])
   end
@@ -144,8 +158,6 @@ before :subdomain => 1 do
     user = REDIS.get(request.subdomains[0])
 
     if ! user
-      puts request.subdomains[0]
-    
       user = fetch_and_render_user(request.subdomains[0])
     end
   
@@ -155,6 +167,15 @@ end
 
 
 get '/' do
+  if @user
+    erb :list, :locals => {:user => @user}
+  else
+    erb :index
+  end  
+end
+
+
+get '/page/:page' do
   if @user
     erb :list, :locals => {:user => @user}
   else

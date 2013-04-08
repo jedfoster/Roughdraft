@@ -17,4 +17,13 @@
     </li>
   <% end %>
   </ul>
+  
+
+  <% if user['links']['prev'] %>
+    <a href="/page/<%= user['links']['prev'] %>">prev</a>
+  <% end %>
+  
+  <% if user['links']['next'] %>
+    <a href="/page/<%= user['links']['next'] %>">next</a>
+  <% end %>
 </section>
