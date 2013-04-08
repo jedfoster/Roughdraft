@@ -117,11 +117,40 @@ helpers do
   def fetch_and_render_user(user_id)
     user = Github::Users.new.get(user: user_id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
 
+    # gists = Array.new
+    #     
+    #     g = Github::Gists.new.list(user: user['login'], client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
+    # 
+    #     
+    # 
+    #     g.each do |gist|
+    #       gist.files.each do |key, file|
+    #         if is_allowed file.language.to_s
+    #           gists << gist.to_hash
+    #           break
+    #         end
+    #       end
+    #     end
+
+    REDIS.setex(user['login'], 60, user.to_hash.merge({
+      # :gists => gists,
+      # # :has_next_page => g.has_next_page?.to_s,
+      # :page_count => g.count_pages,
+      # :links => {
+      #   #:first => g.links.first,
+      #   :next => g.links.next ? g.links.next.split('page=').last : nil,
+      #   :prev => g.links.prev ? g.links.prev.split('page=').last : nil,
+      #   #:last => g.links.last
+      # }
+    }).to_json)
+
+    user = REDIS.get(user['login'])
+  end
+
+  def fetch_gist_list(user_id)
     gists = Array.new
     
-    g = Github::Gists.new.list(user: user['login'], client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
-
-    
+    g = Github::Gists.new.list(user: user_id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
 
     g.each do |gist|
       gist.files.each do |key, file|
@@ -132,8 +161,8 @@ helpers do
       end
     end
 
-    REDIS.setex(user['login'], 60, user.to_hash.merge({
-      :gists => gists,
+    REDIS.setex('gist-list: ' + user_id, 60, {
+      :list => gists,
       # :has_next_page => g.has_next_page?.to_s,
       :page_count => g.count_pages,
       :links => {
@@ -142,9 +171,9 @@ helpers do
         :prev => g.links.prev ? g.links.prev.split('page=').last : nil,
         #:last => g.links.last
       }
-    }).to_json)
+    }.to_json)
 
-    user = REDIS.get(user['login'])
+    gistList = REDIS.get('gist-list: ' + user_id)
   end
 end
 
@@ -159,16 +188,18 @@ before :subdomain => 1 do
 
     if ! user
       user = fetch_and_render_user(request.subdomains[0])
+      
     end
   
     @user = JSON.parse(user)
+    
   end
 end
 
 
 get '/' do
   if @user
-    erb :list, :locals => {:user => @user}
+    erb :list, :locals => {:user => @user, :gists => JSON.parse(fetch_gist_list(@user['login']))}
   else
     erb :index
   end  

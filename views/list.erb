@@ -4,7 +4,7 @@
   </header>
 
   <ul class="gists">
-  <% user['gists'].each do |gist| %>
+  <% gists['list'].each do |gist| %>
     <li>
       <a href="/<%= gist['id'] %>"><%=gist['id']
       if gist['description'].nil? || gist['description'].empty?
@@ -18,12 +18,11 @@
   <% end %>
   </ul>
   
-
-  <% if user['links']['prev'] %>
-    <a href="/page/<%= user['links']['prev'] %>">prev</a>
+  <% if gists['links']['prev'] %>
+    <a href="/page/<%= gists['links']['prev'] %>">prev</a>
   <% end %>
   
-  <% if user['links']['next'] %>
-    <a href="/page/<%= user['links']['next'] %>">next</a>
+  <% if gists['links']['next'] %>
+    <a href="/page/<%= gists['links']['next'] %>">next</a>
   <% end %>
 </section>
