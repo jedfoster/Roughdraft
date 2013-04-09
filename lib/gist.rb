@@ -18,7 +18,7 @@ class Gist
     return false if language.nil?
 
     language.match(/(Markdown|Text)/)
-  end
+  end    
 
 private
   def pipeline(html)

@@ -9,7 +9,7 @@
   }
 }
 
-.gists {
+.latest-gist {
   li {
     a {
       font-size: 1.3em;
@@ -24,12 +24,42 @@
         margin-bottom: em(20);
       }
       &:after {
-        content: "Archive drafts ...";
-        font-style: italic;
+        //content: "Archive drafts ...";
+        //font-style: italic;
         display: block;
         border-bottom: 1px solid $border_color;
         margin-top: em(20);
         padding-top: em(40);
+      }
+      a {
+        font-size: 1.6em;
+      }
+    }
+  }
+}
+
+.gists {
+  li {
+    a {
+      font-size: 1.3em;
+    }
+    &:first-of-type {
+      //&:before {
+      //  content: "Latest draft:";
+      //  font-style: italic;
+      //  font-size: 1.2em;
+      //  display: block;
+      //  border-bottom: 1px solid $border_color;
+      //  margin-bottom: em(20);
+      //}
+      &:before {
+        content: "Archive drafts ...";
+        font-style: italic;
+        display: block;
+        border-bottom: 1px solid $border_color;
+        margin-bottom: em(20);
+        margin-top: em(20);
+        //padding-top: em(40);
       }
       a {
         font-size: 1.6em;
