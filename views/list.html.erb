@@ -22,7 +22,7 @@
   <ul class="gists" id="list">
   <% gists['list'].each do |gist| %>
     <li>
-      <a href="/<%= gist['id'] %>"><%=gist['id']
+      <a href="/<%= gist['id'] %>"><%=
       if gist['description'].nil? || gist['description'].empty?
         gist['id']
       else

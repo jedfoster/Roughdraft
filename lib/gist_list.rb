@@ -7,6 +7,7 @@ class GistList
     @page = page
     @list = REDIS.get("gist-list: #{user_id}, pg: #{page}")
 
+
     if ! @list
       @from_redis = 'False'
 
@@ -22,12 +23,22 @@ class GistList
     @list['list'].each do |gist|
       gists << {
         :id => gist["id"],
-        :description => gist["description"],
-        :created_at => gist["created_at"]
+        :description => gist["description"] || false,
+        :created_at => gist["created_at"],
+        :created_at_rendered => Time.parse(gist['created_at']).strftime("%b %-d, %Y")
       }
     end
     
-    gists
+    hash = {
+      "list" => gists,
+      "page_count" => @list["page_count"],
+      "links" => {
+        "next" => @list["links"]["next"],
+        "prev" => @list["links"]["prev"],
+      }
+    }
+    
+    hash
   end
 
 
