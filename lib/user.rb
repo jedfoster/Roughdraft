@@ -1,8 +1,9 @@
 class User < Hash
-  attr_reader :user
+  attr_reader :user, :id
 
   def initialize(id)
     @user = REDIS.get(id)
+    @id = id
 
     if ! @user
       @user = fetch id
@@ -10,6 +11,15 @@ class User < Hash
       @user = JSON.parse(@user)
     end
   end
+
+  def latest_gist
+    GistList.new(@user['login'], 1).list
+  end
+  
+  def name
+    @user['name']
+  end
+
 
 private
   def fetch(id)

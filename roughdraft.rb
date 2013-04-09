@@ -98,7 +98,7 @@ end
 
 before :subdomain => 1 do
   if request.subdomains[0] != 'www'
-    @user = User.new(request.subdomains[0]).user
+    @user = User.new(request.subdomains[0])
   end
 end
 
@@ -115,14 +115,14 @@ end
 
 get '/page/:page' do
   if @user
-    gists = GistList.new(@user['login'], params[:page])
+    gists = GistList.new(@user.id, params[:page])
 
     headers 'X-Cache-Hit' => gists.from_redis
 
     # erb :list, :locals => {:user => @user, :gists => gists.list}
     
     respond_to do |wants|
-      wants.html { erb :list, :locals => {:user => @user, :gists => gists.list} }    # => views/comment.html.haml, also sets content_type to text/html
+      wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
       wants.json { gists.listify.to_json } # => sets content_type to application/json
       # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
     end
@@ -140,7 +140,7 @@ get %r{/([\d]+)$} do
 
   @gist = Gist.new(id)
 
-  if @user && @gist.content["owner"]["login"].to_s != @user["login"].to_s
+  if @user && @gist.content["owner"]["login"].to_s != @user.id.to_s
     valid = false
   end
 

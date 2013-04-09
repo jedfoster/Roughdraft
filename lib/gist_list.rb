@@ -1,5 +1,11 @@
 class GistList
-  attr_reader :list, :from_redis
+  include Enumerable
+
+  attr_reader :from_redis, :page
+  
+  def each
+    @list.each { |i| yield i }
+  end
 
   def initialize(user_id, page = 1)
     @user_id = user_id
@@ -33,12 +39,20 @@ class GistList
       "list" => gists,
       "page_count" => @list["page_count"],
       "links" => {
-        "next" => @list["links"]["next"],
-        "prev" => @list["links"]["prev"],
+        "next" => links["next"],
+        "prev" => links["prev"],
       }
     }
     
     hash
+  end
+
+  def list
+    @list["list"]
+  end
+
+  def links
+    @list["links"]
   end
 
 
@@ -57,6 +71,8 @@ private
           end
         end
       end
+
+      
 
       hash = {
         "list" => gists,

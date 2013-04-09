@@ -1,11 +1,10 @@
 <section class="content user-gist-list">
   <header>
-    <h1><%= user['name'] %>'s Drafts</h1>
+    <h1><%= @user.name %>'s Drafts</h1>
   </header>
 
-  
   <ul class="latest-gist">
-  <% gist = gists['list'].shift %>
+  <% gist = @user.latest_gist.first %>
     <li>
       <a href="/<%= gist['id'] %>"><%=gist['id']
       if gist['description'].nil? || gist['description'].empty?
@@ -20,7 +19,11 @@
   </ul>
   
   <ul class="gists" id="list">
-  <% gists['list'].each do |gist| %>
+  <% 
+
+  gists.list.shift if gists.page.to_i == 1
+
+  gists.list.each do |gist| %>
     <li>
       <a href="/<%= gist['id'] %>"><%=
       if gist['description'].nil? || gist['description'].empty?
@@ -35,12 +38,12 @@
   </ul>
 
   <nav id="list-nav">
-    <% if gists['links']['prev'] %>
-    <a href="/page/<%= gists['links']['prev'] %>" class="prev-link">prev</a>
+    <% if gists.links['prev'] %>
+    <a href="/page/<%= gists.links['prev'] %>" class="prev-link">prev</a>
     <% end %>
   
-    <% if gists['links']['next'] %>
-    <a href="/page/<%= gists['links']['next'] %>" class="next-link">next</a>
+    <% if gists.links['next'] %>
+    <a href="/page/<%= gists.links['next'] %>" class="next-link">next</a>
     <% end %>
   </nav>
 </section>
