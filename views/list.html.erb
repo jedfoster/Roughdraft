@@ -4,7 +4,7 @@
   </header>
 
   <ul class="latest-gist">
-  <% gist = @user.latest_gist.first %>
+  <% gist = @user.latest_gist %>
     <li>
       <a href="/<%= gist['id'] %>"><%=gist['id']
       if gist['description'].nil? || gist['description'].empty?
@@ -39,7 +39,7 @@
 
   <nav id="list-nav">
     <% if gists.links['prev'] %>
-    <a href="/page/<%= gists.links['prev'] %>" class="prev-link">prev</a>
+    <a href="/page/<%= gists.links['prev'] %>" class="prev-link">previous</a>
     <% end %>
   
     <% if gists.links['next'] %>

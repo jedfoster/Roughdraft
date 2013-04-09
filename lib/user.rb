@@ -13,7 +13,7 @@ class User < Hash
   end
 
   def latest_gist
-    GistList.new(@user['login'], 1).list
+    GistList.new(@user['login'], 1).list.first
   end
   
   def name
