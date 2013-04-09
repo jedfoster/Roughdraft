@@ -16,6 +16,21 @@ class GistList
     end
   end
 
+  def listify
+    gists = Array.new
+
+    @list['list'].each do |gist|
+      gists << {
+        :id => gist["id"],
+        :description => gist["description"],
+        :created_at => gist["created_at"]
+      }
+    end
+    
+    gists
+  end
+
+
 private
   def fetch
     begin

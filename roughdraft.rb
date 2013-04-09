@@ -14,6 +14,10 @@ require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
 
+require 'sinatra/respond_to'
+
+Sinatra::Application.register Sinatra::RespondTo
+
 module Rack
   class Request
     def subdomains(tld_len=1) # we set tld_len to 1, use 2 for co.uk or similar
@@ -115,7 +119,15 @@ get '/page/:page' do
 
     headers 'X-Cache-Hit' => gists.from_redis
 
-    erb :list, :locals => {:user => @user, :gists => gists.list}
+    # erb :list, :locals => {:user => @user, :gists => gists.list}
+    
+    respond_to do |wants|
+      wants.html { erb :list, :locals => {:user => @user, :gists => gists.list} }    # => views/comment.html.haml, also sets content_type to text/html
+      wants.json { gists.listify.to_json } # => sets content_type to application/json
+      # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+    end
+    
+    
   else
     redirect '/'
   end
