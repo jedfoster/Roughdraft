@@ -88,41 +88,6 @@ configure :development do
 end
 
 
-helpers do
-  def is_allowed(language)
-    return false if language.nil?
-
-    language.match(/(Markdown|Text)/)
-  end
-
-  def fetch_gist_list(user_id, page = 1)
-    gists = Array.new
-
-    g = Github::Gists.new.list(user: user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret']).page(page)
-
-    g.each do |gist|
-      gist.files.each do |key, file|
-        if is_allowed file.language.to_s
-          gists << gist.to_hash
-          break
-        end
-      end
-    end
-
-    REDIS.setex("gist-list: #{user_id}, pg: #{page}", 60, {
-      :list => gists,
-      :page_count => g.count_pages,
-      :links => {
-        :next => g.links.next ? g.links.next.scan(/&page=(\d)/).first.first : nil,
-        :prev => g.links.prev ? g.links.prev.scan(/&page=(\d)/).first.first : nil,
-      }
-    }.to_json)
-
-    gistList = REDIS.get("gist-list: #{user_id}, pg: #{page}")
-  end
-end
-
-
 before do
   @user = @gist = false
 end
