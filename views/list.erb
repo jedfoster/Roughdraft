@@ -33,12 +33,14 @@
     </li>
   <% end %>
   </ul>
+
+  <nav id="list-nav">
+    <% if gists['links']['prev'] %>
+    <a href="/page/<%= gists['links']['prev'] %>" class="prev-link">prev</a>
+    <% end %>
   
-  <% if gists['links']['prev'] %>
-    <a href="<%= gists['links']['prev'].to_i > 1 ? "/page/#{gists['links']['prev']}" : "/"%>">prev</a>
-  <% end %>
-  
-  <% if gists['links']['next'] %>
-    <a href="/page/<%= gists['links']['next'] %>">next</a>
-  <% end %>
+    <% if gists['links']['next'] %>
+    <a href="/page/<%= gists['links']['next'] %>" class="next-link">next</a>
+    <% end %>
+  </nav>
 </section>
