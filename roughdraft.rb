@@ -154,6 +154,8 @@ get %r{/([\d]+)$} do
     if @gist.content
       redirect to("http://#{@gist.content["owner"]["login"].to_s}.#{APP_DOMAIN}/#{id}")
     else
+      @gist = false
+
       erb :invalid_gist, :locals => { :gist_id => id }
     end
   end

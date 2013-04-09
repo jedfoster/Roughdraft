@@ -42,12 +42,12 @@ private
       gist = Github::Gists.new.get(@gist_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
 
       gist.files.each do |file, value|
-        if is_allowed value.language.to_s
+        if Gist.is_allowed value.language.to_s
           value[:rendered] = pipeline value.content.to_s
         end
       end
 
-      REDIS.setex(id, 60, gist.to_hash.to_json.to_s)
+      REDIS.setex(@gist_id, 60, gist.to_hash.to_json.to_s)
       gist.to_hash
 
     rescue Github::Error::NotFound
