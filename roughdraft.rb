@@ -11,6 +11,7 @@ require 'yaml'
 require 'html/pipeline'
 
 require './lib/gist.rb'
+require './lib/user.rb'
 
 module Rack
   class Request
@@ -93,47 +94,13 @@ helpers do
     language.match(/(Markdown|Text)/)
   end
 
-  def pipeline(html)
-    context = {
-      :asset_root => "http://#{APP_DOMAIN}/images",
-      # :base_url   => "#{APP_DOMAIN}"
-    }
-
-    pipe = HTML::Pipeline.new [
-      HTML::Pipeline::MarkdownFilter,
-      HTML::Pipeline::SanitizationFilter,
-      HTML::Pipeline::ImageMaxWidthFilter,
-      HTML::Pipeline::EmojiFilter
-    ], context.merge(:gfm => true)
-
-    pipe.call(html)[:output].to_s
-  end
-
-  def fetch_and_render_gist(id)
-    begin
-      gist = Github::Gists.new.get(id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
-
-      gist.files.each do |file, value|
-        if is_allowed value.language.to_s
-          value[:rendered] = pipeline value.content.to_s
-        end
-      end
-
-      REDIS.setex(id, 60, gist.to_hash.to_json.to_s)
-      gist.to_hash.to_json.to_s
-
-    rescue Github::Error::NotFound
-      false
-    end
-  end
-
-  def fetch_and_render_user(user_id)
-    user = Github::Users.new.get(user: user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
-
-    REDIS.setex(user['login'], 60, user.to_hash.to_json)
-
-    user = REDIS.get(user['login'])
-  end
+  # def fetch_and_render_user(user_id)
+  #   user = Github::Users.new.get(user: user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
+  # 
+  #   REDIS.setex(user['login'], 60, user.to_hash.to_json)
+  # 
+  #   user = REDIS.get(user['login'])
+  # end
 
   def fetch_gist_list(user_id, page = 1)
     gists = Array.new
@@ -169,13 +136,7 @@ end
 
 before :subdomain => 1 do
   if request.subdomains[0] != 'www'
-    user = REDIS.get(request.subdomains[0])
-
-    if ! user
-      user = fetch_and_render_user(request.subdomains[0])
-    end
-
-    @user = JSON.parse(user)
+    @user = User.new(request.subdomains[0]).user
   end
 end
 
