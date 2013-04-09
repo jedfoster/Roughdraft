@@ -10,6 +10,8 @@ require 'compass'
 require 'yaml'
 require 'html/pipeline'
 
+require './lib/gist.rb'
+
 module Rack
   class Request
     def subdomains(tld_len=1) # we set tld_len to 1, use 2 for co.uk or similar
@@ -25,11 +27,16 @@ module Rack
 end
 
 
+
+
+
+
+
 set :partial_template_engine, :erb
 
 set(:subdomain) { |num_subdomains| condition { request.subdomains.count == num_subdomains } }
 
-ENV["DEBUG"] = "true"
+# ENV["DEBUG"] = "true"
 
 configure do
   require 'redis'
@@ -42,11 +49,14 @@ configure :production do
   APP_DOMAIN = 'roughdraft.io'
 
   helpers do
-    def gh_config
-      {
-        "client_id" => ENV['GITHUB_ID'],
-        "client_secret" => ENV['GITHUB_SECRET']
-      }
+
+    module Roughdraft
+      def self.gh_config
+        {
+          "client_id" => ENV['GITHUB_ID'],
+          "client_secret" => ENV['GITHUB_SECRET']
+        }
+      end
     end
 
     use Rack::Session::Cookie, #:key => 'example.com',
@@ -61,8 +71,11 @@ configure :development do
   APP_DOMAIN = 'roughdraft.dev'
 
   helpers do
-    def gh_config
-      YAML.load_file("github.yml")
+
+    module Roughdraft
+      def self.gh_config
+        YAML.load_file("github.yml")
+      end
     end
 
     use Rack::Session::Cookie, #:key => 'example.dev',
@@ -115,7 +128,7 @@ helpers do
   end
 
   def fetch_and_render_user(user_id)
-    user = Github::Users.new.get(user: user_id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret'])
+    user = Github::Users.new.get(user: user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
 
     REDIS.setex(user['login'], 60, user.to_hash.to_json)
 
@@ -125,7 +138,7 @@ helpers do
   def fetch_gist_list(user_id, page = 1)
     gists = Array.new
 
-    g = Github::Gists.new.list(user: user_id, client_id: gh_config['client_id'], client_secret: gh_config['client_secret']).page(page)
+    g = Github::Gists.new.list(user: user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret']).page(page)
 
     g.each do |gist|
       gist.files.each do |key, file|
@@ -136,7 +149,7 @@ helpers do
       end
     end
 
-    REDIS.setex('gist-list: ' + user_id + ', pg: ' + page, 60, {
+    REDIS.setex("gist-list: #{user_id}, pg: #{page}", 60, {
       :list => gists,
       :page_count => g.count_pages,
       :links => {
@@ -145,7 +158,7 @@ helpers do
       }
     }.to_json)
 
-    gistList = REDIS.get('gist-list: ' + user_id + ', pg: ' + page)
+    gistList = REDIS.get("gist-list: #{user_id}, pg: #{page}")
   end
 end
 
@@ -177,7 +190,7 @@ get '/' do
 
       gists = fetch_gist_list(@user['login'])
     end
-    
+
     headers 'X-Cache-Hit' => from_redis
 
     gists = JSON.parse(gists)
@@ -199,7 +212,7 @@ get '/page/:page' do
 
       gists = fetch_gist_list(@user['login'], params[:page])
     end
-    
+
     headers 'X-Cache-Hit' => from_redis
 
     gists = JSON.parse(gists)
@@ -215,34 +228,21 @@ get %r{/([\d]+)$} do
   id = params[:captures].first
   valid = true
 
-  content = REDIS.get(id)
-  from_redis = 'True'
+  @gist = Gist.new(id)
 
-  if ! content
-    from_redis = 'False'
-    content = fetch_and_render_gist(id)
-  end
-
-  if @user
+  if @user && @gist.content["owner"]["login"].to_s != @user["login"].to_s
     valid = false
-
-    @user['gists'].each do |gist|
-      if gist['id'] == id
-        valid = true
-        break
-      end
-    end
   end
 
-  if valid && content
-    headers 'X-Cache-Hit' => from_redis
+  if valid && @gist.content
+    headers 'X-Cache-Hit' => @gist.from_redis
 
-    @gist = JSON.parse(content)
+    @gist = @gist.content
 
     erb :gist
   else
-    if content
-      redirect to("http://#{JSON.parse(content)['owner']['login']}.#{APP_DOMAIN}/#{id}")
+    if @gist.content
+      redirect to("http://#{@gist.content["owner"]["login"].to_s}.#{APP_DOMAIN}/#{id}")
     else
       erb :invalid_gist, :locals => { :gist_id => id }
     end
