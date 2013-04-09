@@ -12,6 +12,7 @@ require 'html/pipeline'
 
 require './lib/gist.rb'
 require './lib/user.rb'
+require './lib/gist_list.rb'
 
 module Rack
   class Request
@@ -94,14 +95,6 @@ helpers do
     language.match(/(Markdown|Text)/)
   end
 
-  # def fetch_and_render_user(user_id)
-  #   user = Github::Users.new.get(user: user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
-  # 
-  #   REDIS.setex(user['login'], 60, user.to_hash.to_json)
-  # 
-  #   user = REDIS.get(user['login'])
-  # end
-
   def fetch_gist_list(user_id, page = 1)
     gists = Array.new
 
@@ -143,20 +136,11 @@ end
 
 get '/' do
   if @user
-    gists = REDIS.get('gist-list: ' + @user['login'] + ', pg: 1')
-    from_redis = 'True'
+    gists = GistList.new(@user['login'])
 
-    if ! gists
-      from_redis = 'False'
+    headers 'X-Cache-Hit' => gists.from_redis
 
-      gists = fetch_gist_list(@user['login'])
-    end
-
-    headers 'X-Cache-Hit' => from_redis
-
-    gists = JSON.parse(gists)
-
-    erb :list, :locals => {:user => @user, :gists => gists}
+    erb :list, :locals => {:user => @user, :gists => gists.list}
   else
     erb :index
   end
@@ -165,20 +149,11 @@ end
 
 get '/page/:page' do
   if @user
-    gists = REDIS.get('gist-list: ' + @user['login'] + ', pg: ' + params[:page])
-    from_redis = 'True'
+    gists = GistList.new(@user['login'], params[:page])
 
-    if ! gists
-      from_redis = 'False'
+    headers 'X-Cache-Hit' => gists.from_redis
 
-      gists = fetch_gist_list(@user['login'], params[:page])
-    end
-
-    headers 'X-Cache-Hit' => from_redis
-
-    gists = JSON.parse(gists)
-
-    erb :list, :locals => {:user => @user, :gists => gists}
+    erb :list, :locals => {:user => @user, :gists => gists.list}
   else
     redirect '/'
   end

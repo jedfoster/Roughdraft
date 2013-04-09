@@ -1,25 +1,26 @@
 class Gist
   attr_reader :from_redis, :content
-  
-  def initialize(id)
+
+  def initialize(gist_id)
     @from_redis = 'True'
-    @content = REDIS.get(id)
+    @content = REDIS.get(gist_id)
+    @gist_id = gist_id
 
     if ! @content
       @from_redis = 'False'
-      @content = fetch id
+      @content = fetch
     else
       @content = JSON.parse(@content)
     end
   end
 
-private
-  def is_allowed(language)
+  def self.is_allowed(language)
     return false if language.nil?
 
     language.match(/(Markdown|Text)/)
   end
-  
+
+private
   def pipeline(html)
     context = {
       :asset_root => "http://#{APP_DOMAIN}/images",
@@ -36,9 +37,9 @@ private
     pipe.call(html)[:output].to_s
   end
 
-  def fetch(id)
+  def fetch
     begin
-      gist = Github::Gists.new.get(id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
+      gist = Github::Gists.new.get(@gist_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
 
       gist.files.each do |file, value|
         if is_allowed value.language.to_s

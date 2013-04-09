@@ -1,6 +1,6 @@
 class User < Hash
   attr_reader :user
-  
+
   def initialize(id)
     @user = REDIS.get(id)
 
@@ -10,7 +10,7 @@ class User < Hash
       @user = JSON.parse(@user)
     end
   end
-  
+
 private
   def fetch(id)
     user = Github::Users.new.get(user: id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
