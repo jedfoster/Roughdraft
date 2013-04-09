@@ -101,11 +101,8 @@ end
 
 get '/' do
   if @user
-    gists = GistList.new(@user['login'])
-
-    headers 'X-Cache-Hit' => gists.from_redis
-
-    erb :list, :locals => {:user => @user, :gists => gists.list}
+    status, headers, body = call env.merge("PATH_INFO" => '/page/1')
+    [status, headers, body]
   else
     erb :index
   end
