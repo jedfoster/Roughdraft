@@ -19,7 +19,7 @@
   </ul>
   
   <% if gists['links']['prev'] %>
-    <a href="/page/<%= gists['links']['prev'] %>">prev</a>
+    <a href="<%= gists['links']['prev'].to_i > 1 ? "/page/#{gists['links']['prev']}" : "/"%>">prev</a>
   <% end %>
   
   <% if gists['links']['next'] %>
