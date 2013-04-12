@@ -119,15 +119,12 @@ get '/page/:page' do
 
     headers 'X-Cache-Hit' => gists.from_redis
 
-    # erb :list, :locals => {:user => @user, :gists => gists.list}
-    
     respond_to do |wants|
       wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
       wants.json { gists.listify.to_json } # => sets content_type to application/json
       # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
     end
-    
-    
+
   else
     redirect '/'
   end
@@ -150,8 +147,6 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
 
   if request.url == @gist.roughdraft_url
     headers 'X-Cache-Hit' => @gist.from_redis
-
-    @gist = @gist.content
 
     erb :gist
   else
