@@ -2,6 +2,8 @@ class User < Hash
   attr_reader :user, :id
 
   def initialize(id)
+    return false unless id
+
     @user = REDIS.get(id)
     @id = id
 

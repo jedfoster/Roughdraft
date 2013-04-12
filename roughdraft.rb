@@ -134,9 +134,11 @@ get '/page/:page' do
 end
 
 
-get %r{/([\d]+)$} do
-  id = params[:captures].first
+get %r{(?:/)?([\w-]+)?/([\d]+)$} do
+  id = params[:captures].last
   valid = true
+
+  @user = User.new(params[:captures].first) unless @user
 
   @gist = Gist.new(id)
 
