@@ -142,7 +142,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
 
   @gist = Gist.new(id)
 
-  if @user && @gist.content["owner"]["login"].to_s != @user.id.to_s
+  if @user && @gist.content["owner"]["login"].to_s.downcase != @user.id.to_s.downcase
     valid = false
   end
 
@@ -154,7 +154,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
     erb :gist
   else
     if @gist.content
-      redirect to("http://#{@gist.content["owner"]["login"].to_s}.#{APP_DOMAIN}/#{id}")
+      redirect to("http://#{@gist.content["owner"]["login"].to_s.downcase}.#{APP_DOMAIN}/#{id}")
     else
       @gist = false
 
