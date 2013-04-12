@@ -138,28 +138,24 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
   id = params[:captures].last
   valid = true
 
-  @user = User.new(params[:captures].first) unless @user
-
   @gist = Gist.new(id)
 
-  if @user && @gist.content["owner"]["login"].to_s.downcase != @user.id.to_s.downcase
-    valid = false
+  if ! @gist.content
+    @gist = false
+
+    return erb :invalid_gist, :locals => { :gist_id => id }
   end
 
-  if valid && @gist.content
+  @user = User.new(params[:captures].first) unless @user
+
+  if request.url == @gist.roughdraft_url
     headers 'X-Cache-Hit' => @gist.from_redis
 
     @gist = @gist.content
 
     erb :gist
   else
-    if @gist.content
-      redirect to("http://#{@gist.content["owner"]["login"].to_s.downcase}.#{APP_DOMAIN}/#{id}")
-    else
-      @gist = false
-
-      erb :invalid_gist, :locals => { :gist_id => id }
-    end
+    redirect to(@gist.roughdraft_url)
   end
 end
 

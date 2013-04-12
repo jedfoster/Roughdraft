@@ -18,7 +18,21 @@ class Gist
     return false if language.nil?
 
     language.match(/(Markdown|Text)/)
-  end    
+  end
+
+  def owner
+    @content["owner"]["login"].to_s
+  end
+
+  def belongs_to?(user_login)
+    return false unless user_login
+
+    owner.downcase == user_login.downcase
+  end
+
+  def roughdraft_url
+    "http://#{owner.downcase}.#{APP_DOMAIN}/#{@gist_id}"
+  end
 
 private
   def pipeline(html)

@@ -17,11 +17,14 @@ class User < Hash
   def latest_gist
     GistList.new(@user['login'], 1).list.first
   end
-  
+
   def name
-    @user['name']
+    @user['name'].to_s
   end
 
+  def login
+    @user['login'].to_s
+  end
 
 private
   def fetch(id)
