@@ -34,6 +34,22 @@ class Gist
     "http://#{owner.downcase}.#{APP_DOMAIN}/#{@gist_id}"
   end
 
+  def id
+    @gist_id
+  end
+  
+  def description
+    @content["description"].to_s
+  end
+
+  def files
+    @content["files"]
+  end
+
+  def html_url
+    @content["html_url"].to_s
+  end
+
 private
   def pipeline(html)
     context = {

@@ -1,13 +1,13 @@
 <section class="content instapaper-body">
-<% if ! ( @gist['description'].nil? || @gist['description'].empty? ) %>
+<% if ! ( @gist.description.nil? || @gist.description.empty? ) %>
   <header>
-    <h1 class=" instapaper-title"><%= @gist['description'] %></h1>
+    <h1 class=" instapaper-title"><%= @gist.description %></h1>
   </header>
 <% end
 
 unrenderable = Array.new
 
-@gist['files'].each do |x, file| 
+@gist.files.each do |x, file| 
   if file['rendered'].nil?
     unrenderable << file
     
@@ -23,7 +23,7 @@ if ! unrenderable.empty? %>
     <h3>Other files in this Gist:</h3>
     <ul>
     <% unrenderable.each do |file| %>
-      <li><a href="<%= @gist['html_url'] %>#file-<%= file['filename'].gsub(/\./, '-') %>" target="gist"><%= file['filename'] %></a></li>
+      <li><a href="<%= @gist.html_url %>#file-<%= file['filename'].gsub(/\./, '-') %>" target="gist"><%= file['filename'] %></a></li>
     <% end %>
     </ul>
   </aside>

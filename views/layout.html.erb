@@ -5,12 +5,14 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
 	<title><%=
-	gist_id ||= false
-	
-	if gist_id 
-	  "Gist ##{gist_id} on Roughdraft"
+	if @gist
+	  if ! @gist.description.empty?
+	    @gist.description << " | Roughdraft"
+	  else
+	    "Gist ##{@gist.id} on Roughdraft"
+	  end
 	else 
-	  'Roughdraft | Gist-powered writing.'
+	  'Roughdraft. Gist-powered writing.'
 	end 
 	%></title>
 
@@ -46,7 +48,7 @@
     
     <% if @gist %>
     <nav>
-      <a href="https://gist.github.com/<%= @gist['id'] %>" id="gistid" data-gist-id="<%= @gist['id'] %>">See the original Gist</a>
+      <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
       
       <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
     </nav>
