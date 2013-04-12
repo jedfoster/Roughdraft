@@ -26,6 +26,10 @@ class User < Hash
     @user['login'].to_s
   end
 
+  def gravatar
+    @user['gravatar_id'].to_s
+  end
+
 private
   def fetch(id)
     begin

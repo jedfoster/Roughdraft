@@ -11,14 +11,18 @@
 	  else
 	    "Gist ##{@gist.id} on Roughdraft"
 	  end
-	else 
+	else
 	  'Roughdraft. Gist-powered writing.'
-	end 
+	end
 	%></title>
 
-	<meta http-equiv="Content-Language" content="en-us">
+<% if @gist %>
+  <%= partial :_gist_header %>
+<% else %>
+  <meta http-equiv="Content-Language" content="en-us">
 	<meta name="description" content="Your Gists, made pretty.">
 	<meta name="author" content="Jed Foster">
+<% end %>
 
 	<!--  Mobile Viewport Fix, use at own risk -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5 maximum-scale=1.0">
@@ -45,11 +49,11 @@
       <h1>Roughdraft</h1>
       <h2>Gist-powered writing</h2>
     </hgroup>
-    
+
     <% if @gist %>
     <nav>
       <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
-      
+
       <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
     </nav>
     <% end %>

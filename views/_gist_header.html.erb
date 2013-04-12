@@ -1,0 +1,18 @@
+<% if ! @gist.description.empty?%>
+<meta name="description" content="<%= @gist.description %>">
+<% end%>
+
+<% if @user %>
+<meta name="author" content="<%= @user.name %>">
+<% end%>
+
+<link rel="canonical" href="<%= @gist.roughdraft_url %>">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@RoughdraftIO">
+<meta property="og:title" content="<%= "#{@user.id}/#{@gist.files.first[0]}" %>">
+<meta property="og:url" content="<%= @gist.roughdraft_url %>">
+<meta property="og:image" content="http://www.gravatar.com/avatar/<%= @user.gravatar %>?s=140">
+<meta property="og:site_name" content="Roughdraft">
+<meta property="og:description" content="<%= @gist.description %> - Roughdraft.io | Gist-powered writing.">
+<meta name="description" content="<%= @gist.description %> - Roughdraft.io | Gist-powered writing.">
