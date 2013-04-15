@@ -61,7 +61,7 @@ private
     begin
       gists = Array.new
 
-      github_response = Github::Gists.new.list(user: @user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret']).page(@page)
+      github_response = Github::Gists.new.list(user: @user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'], page: @page)
 
       github_response.each do |gist|
         gist.files.each do |key, file|
