@@ -1,0 +1,38 @@
+<header class="toadstool_header">
+  <h1>Modules</h1>
+</header>
+
+<%#= render :partial => 'admin/styleguide/example_list', :locals => { :presenter => @presenter } %>
+
+<div class="dashboard-wrapper">
+  <% @presenter.categories.each do |category| %>
+  <div>
+    <h4><%= category.display_name %></h4>
+    
+    <ul>
+      <% category.files.each do |file| %>
+        <li><%= link_to file.display_name, file.slug %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+</div>
+
+
+
+
+%div.dashboard-wrapper
+  - @presenter.categories.each do |category|
+    %div
+      %h4= category.display_name
+      - category.files.each do |file|
+        %ul
+          %li= link_to file.display_name, file.slug
+
+<div class="markdown-content">
+  <%= markdown( File.new('views/modules/readme.md').read ) %>
+</div>
+
+.markdown-content
+  :markdown
+    #{File.new(File.join(Rails.root,'app/views/application/modules/readme.md')).read}

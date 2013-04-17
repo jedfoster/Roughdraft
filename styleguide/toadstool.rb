@@ -12,6 +12,236 @@ require 'sinatra/partial'
 require 'rdiscount'
 
 set :partial_template_engine, :erb
+set :public_folder, '../public'
+
+
+
+class String
+  def humanize
+    gsub(/_id$/, "").gsub(/_/, " ").capitalize
+  end
+end
+
+module Styleguide
+  class Category
+    attr_reader :files
+    def initialize(dir, root, files)
+      @files = files
+      @dir = dir
+      @root = root
+    end
+
+    def display_name
+      return 'Misc' if root?
+      join_category_names
+    end
+
+    private
+
+    def root?
+      @dir == @root
+    end
+
+    def relative_to_root
+      @dir.relative_path_from(@root)
+    end
+
+    def join_category_names
+      relative_to_root.each_filename.map { |name| name.to_s.humanize }.join(' - ')
+    end
+  end
+end
+
+
+module Styleguide
+  class CategoryPresenter
+    def initialize(files, root)
+      @files = files
+      @root = root
+    end
+
+    def categories
+      directories_sorted_alphabetically.map { |dir| Styleguide::Category.new(dir, @root, files_sorted_alphabetically(dir)) }
+    end
+
+    private
+
+    def directories_sorted_alphabetically
+      @files.map { |file| file.directory }.uniq.sort
+    end
+
+    def files_sorted_alphabetically(dir)
+      @files.select { |file| file.directory == dir }.sort { |a,b| a.file_name <=> b.file_name }
+    end
+  end
+end
+
+module Styleguide
+  class FileLocator
+    def self.patterns
+      templates_in_directory(Styleguide::Patterns.directory).map { |file| Styleguide::Pattern.new(file) }
+    end
+
+    def self.modules
+      templates_in_directory(Styleguide::Modules.directory).map { |file| Styleguide::Module.new(file) }
+    end
+
+    def self.get(path, type)
+      if type == 'pattern'
+        Styleguide::Pattern.new(File.join(Styleguide::Patterns.directory, path))
+      else
+        Styleguide::Module.new(File.join(Styleguide::Modules.directory, path))
+      end
+    end
+
+    private
+
+    def self.templates_in_directory(directory)
+      Dir.glob(File.join(directory, '**', '*.{haml,erb}'))
+    end
+  end
+end
+
+module Styleguide
+  module Modules
+    @@module_directory = File.join(Sinatra::Application.root, 'views', 'modules')
+    @@module_sass_directory = File.join(Sinatra::Application.root, 'assets', 'stylesheets', 'modules')
+
+    def self.directory
+      Pathname.new(@@module_directory)
+    end
+
+    def self.sass_directory
+      Pathname.new(@@module_sass_directory)
+    end
+  end
+end
+
+
+
+
+module Styleguide
+  module Example
+
+    attr_reader :full_path
+
+    def define_location(full_path, root_directory, sass_directory)
+      @full_path = Pathname.new(full_path)
+      @root_directory = root_directory
+      @sass_directory = sass_directory
+    end
+
+    def display_name
+      friendly_name.humanize
+    end
+
+    def friendly_name
+      file_name.to_s.match(/_([a-zA-Z0-9_-]*)\..*/)[1]
+    end
+
+    def partial
+      path = @full_path.relative_path_from(Pathname.new(views_folder))
+      File.join(path.dirname, friendly_name)
+    end
+
+    def sass_path
+      Dir.glob(File.join(@sass_directory , relative_to_root.dirname,  friendly_name, '*.{sass,scss}'))
+    end
+
+    def directory
+      @full_path.dirname
+    end
+
+    def file_name
+      @full_path.basename
+    end
+
+    def relative_to_root
+      @full_path.relative_path_from(@root_directory)
+    end
+
+    def markdown
+      instructions = Dir.glob(File.join(@full_path.dirname, '*.{md,markdown}'))
+      return if instructions.empty?
+      IO.read(instructions[0]) if File.exists?(instructions[0])
+    end
+
+    private
+
+    def views_folder
+      File.join(Rails.root, 'app', 'views')
+    end
+  end
+end
+
+
+
+module Styleguide
+  module Patterns
+
+    @@pattern_directory = File.join(Sinatra::Application.root, 'views', 'ui_patterns')
+    @@pattern_sass_directory = File.join(Sinatra::Application.root, 'assets', 'stylesheets', 'ui_patterns')
+
+    def self.directory
+      Pathname.new(@@pattern_directory)
+    end
+
+    def self.sass_directory
+      Pathname.new(@@pattern_sass_directory)
+    end
+  end
+end
+
+module Styleguide
+  class Module
+    include Styleguide::Example
+
+    def initialize(full_path)
+      define_location(full_path, Styleguide::Modules.directory, Styleguide::Modules.sass_directory)
+    end
+
+    def slug
+      "#{relative_to_root}.module"
+    end
+  end
+end
+
+module Styleguide
+  class Pattern
+    include Styleguide::Example
+
+    def initialize(full_path)
+      define_location(full_path, Styleguide::Patterns.directory, Styleguide::Patterns.sass_directory)
+    end
+
+    def slug
+      "#{relative_to_root}.pattern"
+    end
+  end
+end
+
+
+
+
+module Styleguide
+  class ModulesPresenter < Styleguide::CategoryPresenter
+    def initialize(files)
+      super(files, Styleguide::Modules.directory)
+    end
+  end
+end
+
+module Styleguide
+  class PatternsPresenter < Styleguide::CategoryPresenter
+    def initialize(files)
+      super(files, Styleguide::Patterns.directory)
+    end
+  end
+end
+
+
+
+
 
 
 # Helpers to add a new horn section to the band
@@ -19,6 +249,7 @@ set :partial_template_engine, :erb
 helpers do
   include ERB::Util
   alias_method :code, :html_escape
+  alias_method :md, :markdown
 
   # write better links
   def link_to_unless_current(location, text )
@@ -87,10 +318,21 @@ get '/' do
   erb :typography
 end
 
-get %r{/stylesheets/([\w/_-]+)\.css} do
-  content_type 'text/css', :charset => 'utf-8'
-    File.read("#{File.dirname(Sinatra::Application.root)}/public/stylesheets/#{params[:captures].first}.css")
+get %r{(modules|patterns)([\w\./_-]*)}i do
+  if ! params[:captures].last.to_s.empty?
+    return params[:captures].last.to_s
+  else
+    if params[:captures].first.to_s == 'modules'
+      @presenter = Styleguide::ModulesPresenter.new(Styleguide::FileLocator.modules)
+    else
+      @presenter = Styleguide::ModulesPresenter.new(Styleguide::FileLocator.modules)
+    end
+
+    
+    erb :"#{params[:captures].first.to_s}"
+  end
 end
+  
 
 get %r{([\w\./_-]+)} do
   if File.exists?('views' + params[:captures].first.gsub(/.(\/)$/, '') + '/index.erb')
