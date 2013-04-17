@@ -11,6 +11,7 @@ GEM
     rack-protection (1.5.0)
       rack
     rake (10.0.4)
+    rdiscount (2.0.7.2)
     sass (3.2.7)
     sinatra (1.4.2)
       rack (~> 1.5, >= 1.5.2)
@@ -37,6 +38,7 @@ PLATFORMS
 DEPENDENCIES
   compass
   rake
+  rdiscount
   sass
   sinatra
   sinatra-partial

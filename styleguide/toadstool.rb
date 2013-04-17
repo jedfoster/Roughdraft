@@ -9,6 +9,8 @@ require 'bundler/setup'
 require 'sinatra'
 require 'sinatra/partial'
 
+require 'rdiscount'
+
 set :partial_template_engine, :erb
 
 
