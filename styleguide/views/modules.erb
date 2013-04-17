@@ -11,7 +11,7 @@
     
     <ul>
       <% category.files.each do |file| %>
-        <li><%= link_to file.display_name, file.slug %></li>
+        <li><%= link_to file.friendly_name, file.slug %></li>
       <% end %>
     </ul>
   </div>
@@ -21,13 +21,7 @@
 
 
 
-%div.dashboard-wrapper
-  - @presenter.categories.each do |category|
-    %div
-      %h4= category.display_name
-      - category.files.each do |file|
-        %ul
-          %li= link_to file.display_name, file.slug
+
 
 <div class="markdown-content">
   <%= markdown( File.new('views/modules/readme.md').read ) %>
@@ -36,3 +30,13 @@
 .markdown-content
   :markdown
     #{File.new(File.join(Rails.root,'app/views/application/modules/readme.md')).read}
+
+
+
+    %div.dashboard-wrapper
+      - @presenter.categories.each do |category|
+        %div
+          %h4= category.display_name
+          - category.files.each do |file|
+            %ul
+              %li= link_to file.display_name, admin_styleguide_example_path(:example => file.slug)

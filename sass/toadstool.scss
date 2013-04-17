@@ -14,3 +14,44 @@
 
 
 @import "ui_patterns/prettify.tomorrow";
+
+.markdown-content {
+  @extend %grid_12;
+  ol {
+    list-style-type: decimal;
+    margin-left: em(20);
+    margin-bottom: 1em;
+  }
+}
+
+// .colorcode
+//   font-family: Arial
+
+// .alpha_texture
+//   @extend %alpha_texture
+
+.markdown-block {
+  margin-top: 1em;
+}
+
+.dashboard-wrapper {
+  @extend %grid_5;
+  margin-bottom: 1em;
+  + .markdown-content {
+    @extend %grid_7;
+  }
+  h4 {
+    margin-bottom: 0.5em;
+  }
+  div {
+    -webkit-column-count: 3;
+    -webkit-column-gap: em(20);
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid $india_gray;
+  }
+}
+
+ul {
+  margin-bottom: 0.5em;
+}
