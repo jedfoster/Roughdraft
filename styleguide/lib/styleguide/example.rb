@@ -47,7 +47,7 @@ module Styleguide
     private
 
     def views_folder
-      File.join(Rails.root, 'app', 'views')
+      File.join(Sinatra::Application.root, 'styleguide', 'views')
     end
   end
 end

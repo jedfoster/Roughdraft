@@ -11,7 +11,7 @@
     
     <ul>
       <% category.files.each do |file| %>
-        <li><%= link_to file.friendly_name, file.slug %></li>
+        <li><%= link_to "examples/#{file.slug}", file.display_name %></li>
       <% end %>
     </ul>
   </div>

@@ -59,6 +59,11 @@ helpers do
     opts.each { |key,value| attributes << key.to_s << "=\"" << value << "\" "}
     "<a href=\"#{url}\" #{attributes}>#{text}</a>"
   end
+  
+  def example_file(file_name)
+    file = File.new(file_name)
+    render :partial => 'admin/styleguide/module_example', :locals => file_hash(file)
+  end
 
 
   # html_example is a convenienence method that wraps ERB partial @file in our standard example markup
@@ -125,6 +130,12 @@ get %r{(modules|patterns)([\w\./_-]*)}i do
     
     erb :"#{params[:captures].first.to_s}"
   end
+end
+
+get %r{/examples/([\w\./_-]+?)\.(module|pattern)} do
+  @example = Styleguide::FileLocator.get(params[:captures].first.to_s, params[:captures].last.to_s)
+  @data = ''
+  erb :show
 end
   
 
