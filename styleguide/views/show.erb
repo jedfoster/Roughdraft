@@ -3,25 +3,9 @@
 </div>
 
 <article class="element_example">
-  <%= @example.partial.to_s %>
-  
-  <%#= partial :"#{@example.partial}", :locals => @data %>
+  <%= html_example @example.partial %>
 </article>
 
-<%#= html_example @example.full_path %>
-
-<% @example.sass_path.each do |path| 
-  puts path
-end
-%>
-
-%div.toadstool_header.toadstool_subheader
-  :markdown
-    #{@example.markdown}
-
-%article.element_example
-  = render :partial => @example.partial, :locals => @data
-
-= example_file @example.full_path
-- @example.sass_path.each do |path|
-  = sass_full_path_example path
+<% @example.sass_path.each do |path| %>
+  <%= sass_example path %>
+<% end %>

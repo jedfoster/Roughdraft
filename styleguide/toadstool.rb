@@ -91,9 +91,9 @@ helpers do
   #             e.g.: 'forms/_extends'
 
   def sass_example(file)
-    file = File.new(File.join('../sass', file + '.scss'))
+    file = File.new(file)
 
-    code_toggle file.read(), file.path, file.mtime
+    code_toggle file.read(), Pathname.new(file.path).relative_path_from(Pathname.new(Sinatra::Application.root)), file.mtime
   end
 
 
