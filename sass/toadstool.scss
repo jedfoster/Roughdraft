@@ -55,3 +55,14 @@
 ul {
   margin-bottom: 0.5em;
 }
+
+
+
+li.L0, li.L1, li.L2, li.L3, li.L4, li.L5, li.L6, li.L7, li.L8, li.L9
+{
+    color: $bravo_gray;
+}
+
+li.L1, li.L3, li.L5, li.L7, li.L9 {
+    background: transparent;
+}
