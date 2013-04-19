@@ -15,11 +15,10 @@
       <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>
 
     </li>
-
   </ul>
-  
+
   <ul class="gists" id="list">
-  <% 
+  <%
 
   gists.list.shift if gists.page.to_i == 1
 
@@ -41,7 +40,7 @@
     <% if gists.links['prev'] %>
     <a href="/page/<%= gists.links['prev'] %>" class="prev-link">previous</a>
     <% end %>
-  
+
     <% if gists.links['next'] %>
     <a href="/page/<%= gists.links['next'] %>" class="next-link">next</a>
     <% end %>
