@@ -7,12 +7,12 @@
 	<title><%=
 	if @gist
 	  if ! @gist.description.empty?
-	    @gist.description << " | Roughdraft"
+	    @gist.description << " | Roughdraft.io"
 	  else
-	    "Gist ##{@gist.id} on Roughdraft"
+	    "Gist ##{@gist.id} | Roughdraft.io"
 	  end
 	else
-	  'Roughdraft. Gist-powered writing.'
+	  'Roughdraft.io | Gist-powered writing.'
 	end
 	%></title>
 
@@ -20,7 +20,7 @@
   <%= partial :_gist_header %>
 <% else %>
   <meta http-equiv="Content-Language" content="en-us">
-	<meta name="description" content="Your Gists, made pretty.">
+	<meta name="description" content="Gist-powered writing.">
 	<meta name="author" content="Jed Foster">
 <% end %>
 
