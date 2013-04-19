@@ -22,11 +22,6 @@ puts markdown.to_html
 ```</code></pre>
 
 
-## To Do ##
-
-- [ ] method for user index page copy, a specially marked up Gist?
-
-
 ## Installation: Local ##
 
 Redis is a pre-requisite. Skip the following steps if you already have Redis installed and running.
