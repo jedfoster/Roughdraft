@@ -51,18 +51,21 @@ class Gist
   end
 
 private
-  def pipeline(html)
+  def pipeline(html, gist)
     context = {
+      :gfm => true, 
+      :gist => gist,
       :asset_root => "http://#{APP_DOMAIN}/images",
       # :base_url   => "#{APP_DOMAIN}"
     }
 
     pipe = HTML::Pipeline.new [
       HTML::Pipeline::MarkdownFilter,
+      HTML::Pipeline::GistFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::ImageMaxWidthFilter,
       HTML::Pipeline::EmojiFilter
-    ], context.merge(:gfm => true)
+    ], context
 
     pipe.call(html)[:output].to_s
   end
@@ -73,7 +76,7 @@ private
 
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s
-          value[:rendered] = pipeline value.content.to_s
+          value[:rendered] = pipeline value.content.to_s, gist
         end
       end
 

@@ -13,6 +13,7 @@ require 'html/pipeline'
 require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
+require './lib/html/pipeline/gist.rb'
 
 require 'sinatra/respond_to'
 
