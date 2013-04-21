@@ -4,6 +4,8 @@ module Styleguide
     attr_reader :full_path
 
     def define_location(full_path, root_directory, sass_directory)
+      
+      
       @full_path = Pathname.new(full_path)
       @root_directory = root_directory
       @sass_directory = sass_directory
@@ -18,6 +20,8 @@ module Styleguide
     end
 
     def partial
+      puts "path: #{@full_path.relative_path_from(Pathname.new(views_folder))}"
+      
       path = @full_path.relative_path_from(Pathname.new(views_folder))
       File.join(path.dirname, file_name).to_s.match(/([\w\/_-]+)/).to_s
     end

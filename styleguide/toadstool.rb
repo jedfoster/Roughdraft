@@ -76,7 +76,7 @@ helpers do
   #             e.g.: 'ui_patterns/typography/_body_copy'
 
   def html_example(file)
-    file = File.new(File.join('views', file + '.erb'))
+    file = File.new(File.join('views', "#{file}.erb"))
 
     partial :'shared/_html_example', :locals => { :content => file.read(), :mtime => file.mtime, :path => file.path }
   end
