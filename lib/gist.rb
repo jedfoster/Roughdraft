@@ -76,7 +76,7 @@ private
 
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s
-          value[:rendered] = pipeline value.content.to_s, gist
+          value[:rendered] = pipeline(value.content.to_s, gist)
         end
       end
 
