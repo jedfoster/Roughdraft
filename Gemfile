@@ -11,6 +11,7 @@ gem 'stipe'
 gem 'redis'
 gem 'html-pipeline'
 gem 'gemoji'
-gem 'toadstool'
 gem 'newrelic_rpm'
 gem 'sinatra-respond_to'
+
+gem 'toadstool', :group => :development
