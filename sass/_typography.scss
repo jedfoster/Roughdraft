@@ -112,12 +112,28 @@ ol, ul {
   display: block;
 }
 
-li ul {
-  list-style-type: circle;
-}
 
-li ul ul{
-  list-style-type: square;
+
+.content {
+  ol, ul {
+    padding-left: 2em;
+  }
+  
+  ol {
+    list-style-type: decimal;
+  }
+  
+  ul {
+    list-style-type: disc;
+  }
+  
+  li ul {
+    list-style-type: circle;
+  }
+
+  li ul ul{
+    list-style-type: square;
+  }
 }
 
 table {
