@@ -1,4 +1,9 @@
 .user-gist-list {
+  &.content ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
   li {
     padding: 0.75em 0;
     clear: both;
