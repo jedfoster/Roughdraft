@@ -30,7 +30,7 @@
 
       if(data.links.prev) {
         if($('#list-nav a.prev-link').length == 0) {
-          $('#list-nav').prepend('<a href="" class="prev-link">previous</a>');
+          $('#list-nav').prepend('<a href="" class="prev-link">Newer</a>');
         }
 
         $('#list-nav a.prev-link').attr('href', '/page/' + data.links.prev).show();
@@ -41,7 +41,7 @@
 
       if(data.links.next) {
         if($('#list-nav a.next-link').length == 0) {
-          $('#list-nav').append('<a href="" class="next-link">next</a>');
+          $('#list-nav').append('<a href="" class="next-link">Older</a>');
         }
 
         $('#list-nav a.next-link').attr('href', '/page/' + data.links.next).show();

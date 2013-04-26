@@ -1,0 +1,47 @@
+#list-nav {
+  width: 45%;
+  margin: 3em auto 0;
+  position: relative;
+  font-family: $heading_font_family;
+
+  @media #{$tablet} {
+    width: 65%;
+  }
+  @media #{$mobile} {
+    width: 75%;
+    margin-top: 4.5em;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  %list-nav-link {
+    position: absolute;
+
+    &:before, &:after {
+      margin: 0 0.33333em;
+      vertical-align: middle;
+    }
+  }
+
+  .prev-link {
+    @extend %list-nav-link;
+
+    left: 0;
+
+    &:before {
+      content: "\2190";
+    }
+  }
+
+  .next-link {
+    @extend %list-nav-link;
+
+    right: 0;
+
+    &:after {
+      content: "\2192";
+    }
+  }
+}
