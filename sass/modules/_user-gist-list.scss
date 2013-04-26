@@ -3,71 +3,55 @@
     list-style: none;
     padding-left: 0;
   }
-  
+
   li {
     padding: 0.75em 0;
     clear: both;
   }
+
+  a {
+    font-size: em($heading_4);
+  }
+
   .posted {
     display: block;
     font-style: italic;
   }
 }
 
-.latest-gist {
+%gist-list-section {
   li {
-    a {
-      font-size: 1.3em;
-    }
     &:first-of-type {
       &:before {
-        content: "Latest draft:";
         font-style: italic;
-        font-size: 1.2em;
         display: block;
         border-bottom: 1px solid $border_color;
         margin-bottom: em(20);
       }
-      &:after {
-        //content: "Archive drafts ...";
-        //font-style: italic;
-        display: block;
-        border-bottom: 1px solid $border_color;
-        margin-top: em(20);
-        padding-top: em(40);
-      }
-      a {
-        font-size: 1.6em;
+    }
+  }
+}
+
+.latest-gist {
+  @extend %gist-list-section;
+
+  li {
+    &:first-of-type {
+      &:before {
+        content: "Latest draft:";
+        font-size: em($heading_4);
       }
     }
   }
 }
 
 .gists {
+  @extend %gist-list-section;
+
   li {
-    a {
-      font-size: 1.3em;
-    }
     &:first-of-type {
-      //&:before {
-      //  content: "Latest draft:";
-      //  font-style: italic;
-      //  font-size: 1.2em;
-      //  display: block;
-      //  border-bottom: 1px solid $border_color;
-      //  margin-bottom: em(20);
-      //}
       &:before {
-        content: "Archive drafts ...";
-        font-style: italic;
-        display: block;
-        border-bottom: 1px solid $border_color;
-        margin-bottom: em(20);
-        margin-top: em(20);
-        //padding-top: em(40);
-      }
-      a {
-        font-size: 1.6em;
+        content: "From the archives:";
       }
     }
   }
