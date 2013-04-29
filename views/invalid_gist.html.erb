@@ -2,7 +2,7 @@
   <header>
     <h1><a href="http://<%= 
     if @user
-      "#{@user['login']}.#{APP_DOMAIN}"
+      "#{@user.id}.#{APP_DOMAIN}"
     else 
       APP_DOMAIN
     end %>">Roughdraft</a></h1>
