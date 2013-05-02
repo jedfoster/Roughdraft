@@ -1,73 +1,47 @@
-// Twitter's 'Font-Awesome' is installed in Toadstool
-// see http://goo.gl/4JkBd for list of icon options
-// Stipe has all icon classes loaded as silent classes, to activate use the following example
-// -----------------------------------------------------------------------
-// .icon-glass {
-// 	@extend %icon-glass;
-// }
-
-
-
-// Zocial's icon font is installed in Toadstool
-// see http://goo.gl/t92t5 for list of icon options
-// Stipe has all icon classes loaded as silent classes, to activate use the following example
-// -----------------------------------------------------------------------
-// .zocial-amazon {
-// 	@extend %zocial-amazon;
-// }
-
-
-
-// Import of default text bootstrap settings
-// -----------------------------------------------------------------------
-@import "stipe/typography/default"; // Comment out if unwanted
-
-
-
-// Customize the following to fit your specifications
-// Commented out styles represent Toadstool's default bootstrap styles
-// -----------------------------------------------------------------------
 html {
-	// font: em($font_size, 16) $primary_font_family;
-	// line-height: baseline($font_size);
-	// color: $primary_text;
+  font: em($font_size, 16) $primary_font_family;
+  line-height: baseline($font_size);
+  color: $primary_text;
+  @media #{$mobile} {
+    -webkit-text-size-adjust: none; /* Prevent font scaling in landscape */
+  }
 }
 
-h1, h2, h3 {
-	color: $charlie_gray;
+h1 {
+  @extend %headings_1;
+}
+
+h2 {
+  @extend %headings_2;
+}
+
+h3 {
+  @extend %headings_3;
 }
 
 h4 {
-	color: $charlie_gray;
+  @extend %headings_4;
 }
 
 h5 {
-	color: $charlie_gray;
+  @extend %headings_5;
 }
 
 h6 {
-  font-weight: bold;
-  color: $alpha_gray;
+   @extend %headings_6;
+   font-weight: bold;
+   color: $alpha_gray;
 }
 
-// Standard body text support
-// --------------------------------
 p {
-	// margin-bottom: baseline-margin($font_size);
-	// text-indent: 0;
+  margin-bottom: baseline-margin($font_size);
+  text-indent: 0;
 }
 
 b, strong {
   color: $charlie_gray;
-
-	&:after {
-		content: ""; // Override something coming from Stipe.
-	}
 }
 
-
-// :link Pseudo-class is totally not necessary as I can tell
-// code here to combat legacy code
 a {
 	color: $href_color;
 	text-decoration: none;
