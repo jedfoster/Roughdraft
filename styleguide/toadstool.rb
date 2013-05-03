@@ -91,7 +91,7 @@ helpers do
   #             e.g.: 'forms/_extends'
 
   def sass_example(file)
-    file = File.new(file)
+    file = File.new(File.join(Sinatra::Application.root, '../sass', "#{file}.scss"))
 
     code_toggle file.read(), Pathname.new(file.path).relative_path_from(Pathname.new(Sinatra::Application.root)), file.mtime
   end
@@ -140,6 +140,8 @@ end
   
 
 get %r{([\w\./_-]+)} do
+  puts params[:captures].first
+  
   if File.exists?('views' + params[:captures].first.gsub(/.(\/)$/, '') + '/index.erb')
     erb :"#{params[:captures].first.gsub(/.(\/)$/, '')}/index"
   else
