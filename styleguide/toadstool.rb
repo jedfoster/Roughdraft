@@ -76,9 +76,9 @@ helpers do
   #             e.g.: 'ui_patterns/typography/_body_copy'
 
   def html_example(file)
-    file = File.new(File.join('views', "#{file}.erb"))
+    file = File.new(File.join(Sinatra::Application.root, '../views', "#{file}.erb"))
 
-    partial :'shared/_html_example', :locals => { :content => file.read(), :mtime => file.mtime, :path => file.path }
+    partial :'shared/_html_example', :locals => { :content => file.read(), :mtime => file.mtime, :path => Pathname.new(file.path).relative_path_from(Pathname.new(Sinatra::Application.root)) }
   end
 
 
@@ -91,7 +91,7 @@ helpers do
   #             e.g.: 'forms/_extends'
 
   def sass_example(file)
-    file = File.new(File.join(Sinatra::Application.root, '../sass', "#{file}.scss"))
+    file = File.new(Dir.glob(File.join(Sinatra::Application.root , '../sass', "#{file}.{sass,scss}").to_s).first)
 
     code_toggle file.read(), Pathname.new(file.path).relative_path_from(Pathname.new(Sinatra::Application.root)), file.mtime
   end
@@ -118,13 +118,15 @@ get '/' do
 end
 
 get %r{(modules|patterns)([\w\./_-]*)}i do
+  
+
   if ! params[:captures].last.to_s.empty?
     return params[:captures].last.to_s
   else
-    if params[:captures].first.to_s == 'modules'
+    if params[:captures].first.to_s.downcase == 'modules'
       @presenter = Styleguide::ModulesPresenter.new(Styleguide::FileLocator.modules)
     else
-      @presenter = Styleguide::ModulesPresenter.new(Styleguide::FileLocator.modules)
+      @presenter = Styleguide::PatternsPresenter.new(Styleguide::FileLocator.patterns)
     end
 
     

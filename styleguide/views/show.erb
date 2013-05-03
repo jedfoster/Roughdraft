@@ -3,9 +3,10 @@
 </div>
 
 <article class="element_example">
+  
   <%= html_example @example.partial %>
 </article>
 
-<% @example.sass_path.each do |path| %>
+<% @example.sass.each do |path| %>
   <%= sass_example path %>
 <% end %>

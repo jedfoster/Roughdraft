@@ -12,18 +12,11 @@ module Styleguide
     end
 
     def display_name
-      friendly_name.humanize
+      friendly_name.humanize.strip
     end
 
     def friendly_name
-      file_name.to_s.match(/([[:alnum:]-]+)/)[0].to_s
-    end
-
-    def partial
-      puts "path: #{@full_path.relative_path_from(Pathname.new(views_folder))}"
-      
-      path = @full_path.relative_path_from(Pathname.new(views_folder))
-      File.join(path.dirname, file_name).to_s.match(/([\w\/_-]+)/).to_s
+      file_name.to_s.match(/([[:alnum:]_-]+)/)[0].to_s
     end
 
     def sass_path

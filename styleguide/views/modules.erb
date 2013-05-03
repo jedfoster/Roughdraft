@@ -2,8 +2,6 @@
   <h1>Modules</h1>
 </header>
 
-<%#= render :partial => 'admin/styleguide/example_list', :locals => { :presenter => @presenter } %>
-
 <div class="dashboard-wrapper">
   <% @presenter.categories.each do |category| %>
   <div>
@@ -18,25 +16,6 @@
   <% end %>
 </div>
 
-
-
-
-
-
 <div class="markdown-content">
   <%= markdown( File.new('../views/modules/readme.md').read ) %>
 </div>
-
-.markdown-content
-  :markdown
-    #{File.new(File.join(Rails.root,'app/views/application/modules/readme.md')).read}
-
-
-
-    %div.dashboard-wrapper
-      - @presenter.categories.each do |category|
-        %div
-          %h4= category.display_name
-          - category.files.each do |file|
-            %ul
-              %li= link_to file.display_name, admin_styleguide_example_path(:example => file.slug)

@@ -1,0 +1,21 @@
+<header class="toadstool_header">
+  <h1>Patterns</h1>
+</header>
+
+<div class="dashboard-wrapper">
+  <% @presenter.categories.each do |category| %>
+  <div>
+    <h4><%= category.display_name %></h4>
+    
+    <ul>
+      <% category.files.each do |file| %>
+        <li><%= link_to "examples/#{file.slug}", file.display_name %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+</div>
+
+<div class="markdown-content">
+  <%= markdown( File.new('../views/ui_patterns/readme.md').read ) %>
+</div>
