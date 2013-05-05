@@ -1,13 +1,35 @@
-input[type=text], input[type=password], input[type="date"], select {
-	@extend %input_fields;
-	height:2.5em;
-}
+// Where does this code come from?
 
-input[type=text], input[type=password], input[type="date"] {
+// Placeholder extends with the `stipe_` prefix come from the Stipe gem.
+
+// TO DO: breakout list of config options
+
+// The variable UI parts of these placeholders are managed via your `_config.scss` file.
+
+// Import custom extends and mixins
+// -----------------------------------------------------------------------
+@import "forms/mixins";
+@import "forms/extends";
+
+
+input[type=email], input[type=password], input[type=text], input[type="date"], input[type=number], textarea {
+	@extend %stipe_input_fields;
+
+  padding: em(6);
+
 	@media #{$mobile} {
 		-webkit-appearance: none;  // this is to remove the default inner shadow
 		-moz-appearance: none; // if this ever works, Moz bug for over a year
 	}
+}
+
+textarea {
+  min-height: 7.66667em
+}
+
+// not represented in the style guide view
+input[disabled], textarea[disabled], select[disabled], .disabled {
+  @extend %stipe_disabled_inputs;
 }
 
 select {
@@ -15,16 +37,21 @@ select {
 }
 
 label {
-	display: block;
-  font-weight: bold;
-  line-height: 1;
-	margin-bottom: 0.5em;
-	font-size: em(12, $font-size);
-	@media #{$mobile} {
-  	display: none;
-	}
+  @extend %stipe_form_labels;
 }
 
 input, select, textarea {
   font-family: $code_font_family;
+}
+
+.instructional {
+  @extend %stipe_instructional;
+}
+
+.fail {
+  @extend %stipe_fail;
+}
+
+.inline_alert {
+  @extend %stipe_inline_alert;
 }
