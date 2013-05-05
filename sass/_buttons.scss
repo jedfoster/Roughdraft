@@ -10,7 +10,6 @@ $button-font-size:      18;
 $button-weight:         normal;
 $button-text-shadow:    true;
 //$button-box-shadow:     false;
-$button-hover-color:    $echo_color_charlie;
 $button-font-family:    $heading_font_family;
 // --------------------------------------------------------------------
 
@@ -22,5 +21,9 @@ $button-font-family:    $heading_font_family;
 // buttons
 // --------------------------------------------------------------------
 button, a.button {
-  @include roughdraft-button
+  @include roughdraft-button;
+
+  &.preview {
+    @include roughdraft-button($color: $delta_color_charlie);
+  }
 }

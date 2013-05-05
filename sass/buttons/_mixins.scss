@@ -1,4 +1,4 @@
-@mixin roughdraft-button($color: $button-color, $font-family: $button-font-family, $hover-color: $button-hover-color) {
+@mixin roughdraft-button($color: $button-color, $font-family: $button-font-family) {
   @include button-default($text-color: $color, $border-radius: 4.5);
 
   border: 1px solid transparentize($color, 0.6); // adjust_hue(desaturate(lighten(#718c00, 50), 61), 3)
@@ -9,9 +9,9 @@
   font-family: $font-family;
 
   &:hover {
-    border: 1px solid transparentize($hover-color, 0.6);
-    background: transparentize($hover-color, 0.9);
-    color: $hover-color;
+    border: 1px solid transparentize(darken($color, 10), 0.5);
+    background: transparentize($color, 0.45);
+    color: darken($color, 10);
     text-decoration: none;
   }
 }
