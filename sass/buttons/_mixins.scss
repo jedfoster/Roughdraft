@@ -1,2 +1,17 @@
-// Use this to build custom extends for your project
-// -----------------------------------------------------------------------
+@mixin roughdraft-button($color: $button-color, $font-family: $button-font-family, $hover-color: $button-hover-color) {
+  @include button-default($text-color: $color, $border-radius: 4.5);
+
+  border: 1px solid transparentize($color, 0.6); // adjust_hue(desaturate(lighten(#718c00, 50), 61), 3)
+  background: transparentize($color, 0.9); // desaturate(lighten(#718c00, 63), 63)
+  display: inline-block;
+  width: auto;
+  text-align: center;
+  font-family: $font-family;
+
+  &:hover {
+    border: 1px solid transparentize($hover-color, 0.6);
+    background: transparentize($hover-color, 0.9);
+    color: $hover-color;
+    text-decoration: none;
+  }
+}

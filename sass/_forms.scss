@@ -25,6 +25,6 @@ label {
 	}
 }
 
-input, select, textarea, button {
-  font-family: 'SourceCodePro', monospace;
+input, select, textarea {
+  font-family: $code_font_family;
 }
