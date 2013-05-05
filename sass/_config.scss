@@ -146,9 +146,9 @@ $bookmarklet_color: $bravo_primary;
 // $form_field_focus_color:        $white;
 // $form_field_fail_bkg:           $white;
 //
-// $form_field_border:             $charlie_gray;
+$form_field_border:             transparentize($bravo_gray, 0.7);
 // $form_field_border_fail:        $alpha_color;
-// $form_field_focus_border_color: $charlie_gray;
+$form_field_focus_border_color: transparentize($bravo_gray, 0.5);
 //
 // $form_field_text:               $primary_text;
 // $error_text:                    $alpha_color;

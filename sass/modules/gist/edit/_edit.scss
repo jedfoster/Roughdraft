@@ -1,0 +1,9 @@
+@import 'mixins';
+@import 'extends';
+
+.gist-edit {
+  
+  button[type="submit"] {
+    float: right;
+  }
+}

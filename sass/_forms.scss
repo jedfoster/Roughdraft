@@ -12,7 +12,7 @@
 @import "forms/extends";
 
 
-input[type=email], input[type=password], input[type=text], input[type="date"], input[type=number], textarea {
+input[type="email"], input[type="password"], input[type="text"], input[type="date"], input[type="number"], textarea {
 	@extend %stipe_input_fields;
 
   padding: em(6);
