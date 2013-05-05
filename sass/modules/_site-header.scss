@@ -1,7 +1,8 @@
 .site-header {
   margin-bottom: 1.5em;
+  font-family: $heading_font_family;
 
-  hgroup {
+  .logo {
     border-bottom: 1px solid $border_color;
     margin-bottom: 1.5em;
     padding: 0.5em 0;
@@ -10,33 +11,28 @@
   h1 {
     font-size: em($heading_3);
     color: $charlie_gray;
+    margin-right: 0.5em;
   }
 
-  h2 {
+  span {
+    @extend %headings_2;
+
     font-size: em($heading_6);
+    display: inline-block;
   }
 
   a {
     display: block;
     width: 100%;
-    font-family: $heading_font_family;
-  }
-
-  @media #{$desktop} {
-    @extend %right-responsive-sidebar;
-
-    hgroup {
-      padding-top: 0;
-    }
   }
 
   @media #{$tablet} {
-    h1, h2, a {
+    h1, span, a {
       display: inline;
     }
 
-    h2 {
-      display: block
+    span {
+      display: block;
     }
 
     a:last-child {
@@ -49,6 +45,26 @@
       margin-left: 0;
       padding-left: 0;
       border-left: 0;
+    }
+  }
+
+  @media #{$mobile} {
+    a {
+      display: block;
+
+      &:last-child {
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  @media #{$desktop} {
+    @extend %right-responsive-sidebar;
+
+    .logo {
+      padding-top: 0;
     }
   }
 }
