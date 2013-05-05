@@ -16,7 +16,7 @@
 @import "ui_patterns/prettify.tomorrow";
 
 .markdown-content {
-  @extend %grid_12;
+  @extend %grid_12of12;
   ol {
     list-style-type: decimal;
     margin-left: em(20);
@@ -35,10 +35,10 @@
 }
 
 .dashboard-wrapper {
-  @extend %grid_5;
+  @extend %grid_5of12;
   margin-bottom: 1em;
   + .markdown-content {
-    @extend %grid_7;
+    @extend %grid_7of12;
   }
   h4 {
     margin-bottom: 0.5em;
