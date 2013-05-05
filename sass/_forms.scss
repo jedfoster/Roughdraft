@@ -16,6 +16,7 @@ input[type=email], input[type=password], input[type=text], input[type="date"], i
 	@extend %stipe_input_fields;
 
   padding: em(6);
+  margin-bottom: 1em;
 
 	@media #{$mobile} {
 		-webkit-appearance: none;  // this is to remove the default inner shadow
