@@ -49,6 +49,8 @@
   <header class="site-header">
     <div class="logo">
       <h1>Roughdraft</h1>
+      <span>Gist-powered writing</span>
+    </div>
 
     <% if @gist %>
     <nav>
@@ -57,6 +59,35 @@
       <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
     </nav>
     <% end %>
+
+
+    <div class="github">
+      <a href="" class="logouts">Logout</a>
+      <span href="">Logged in as jedfoster</span>
+    </div>
+
+    <!-- <li class="github">
+      <span><img src="http://www.gravatar.com/avatar/8d611a0cf257d97a84d9e9aa734412a5?s=80" alt="" height="40"></span>
+      <ul id="account_actions">
+        <li class="checkmark-icon">Logged in as jedfoster</li>
+        <li class="off-icon"><a href="/logout">Logout</a></li>
+      </ul>
+    </li> -->
+
+
+
+    <!-- <%# if @github.authenticated? && session[:github_id] %>
+      <li class="github"><span><img src="http://www.gravatar.com/avatar/<%=session[:gravatar_id]%>?s=80" alt="" height="40"></span>
+        <ul id="account_actions">
+          <li class="checkmark-icon">Logged in as <%=session[:github_id]%></li>
+          <li class="off-icon"><a href="/logout">Logout</a></li>
+        </ul>
+      </li>
+
+    <% #else %>
+      <li><a href="/authorize" class="github-login" title="Login with Github" id="github-auth"><span class="alt">Login with Github</a></li>
+
+    <%# end %> -->
   </header>
 
   <%= yield %>

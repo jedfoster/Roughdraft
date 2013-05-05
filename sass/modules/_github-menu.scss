@@ -1,0 +1,43 @@
+.site-header {
+  .github {
+    text-align: right;
+
+    a {         
+      border: 0;
+      margin: 0;
+      padding: 0;
+      
+      @include roughdraft-button($color: $fox_gray);
+    }
+    
+    a.logout {         
+      @include roughdraft-button($color: $alpha_color_echo);
+    }
+    
+    a, a.logout, span {
+      font-size: 0.66667em;
+      margin-bottom: 0;
+    }
+
+    @media #{$tablet} {
+      position: absolute;
+      top: initial;
+      top: 0.5em;
+      right: 18px;
+    }
+
+    @media #{$desktop} {
+      @extend %left-responsive-sidebar;
+
+      top: initial;
+      bottom: 0.5em;
+      font-size: 1em;
+      
+      a, a.logout, span {
+        font-size: em($heading_6);
+        margin-bottom: 0;
+      }
+    }
+  }
+
+}
