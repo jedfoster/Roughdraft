@@ -5,8 +5,8 @@ require 'sinatra/partial'
 require 'json'
 require 'github_api'
 require 'rack/request'
-require 'sass'
-require 'compass'
+# require 'sass'
+# require 'compass'
 require 'yaml'
 require 'html/pipeline'
 
@@ -66,8 +66,8 @@ configure :production do
       end
     end
 
-    use Rack::Session::Cookie, #:key => 'example.com',
-                               #:domain => 'example.com',
+    use Rack::Session::Cookie, :key => 'roughdraft.io',
+                               :domain => 'roughdraft.io',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => ENV['COOKIE_SECRET']
@@ -85,7 +85,7 @@ configure :development do
       end
     end
 
-    use Rack::Session::Cookie, #:key => 'example.dev',
+    use Rack::Session::Cookie, :key => 'roughdraft.dev',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => 'local'
@@ -93,8 +93,20 @@ configure :development do
 end
 
 
+helpers do
+  def github(auth_token = '')
+    github = Github.new do |config|
+      config.client_id = Roughdraft.gh_config['client_id']
+      config.client_secret = Roughdraft.gh_config['client_secret']
+      config.oauth_token = auth_token
+    end
+  end
+end
+
+
 before do
   @user = @gist = false
+  @github = github(session[:github_token])
 end
 
 before :subdomain => 1 do
@@ -177,12 +189,14 @@ end
 
 
 get '/authorize' do
+  # return @github.inspect
+  
   redirect to @github.authorize_url :scope => ['gist', 'user']
 end
 
 
 get '/authorize/return' do
-  token = Github.get_token(params[:code])
+  token = @github.get_token(params[:code])
 
   user = github(token.token).users.get
 
