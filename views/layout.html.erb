@@ -81,6 +81,9 @@
 
   <% if settings.environment == :production %>
     <script src="/javascripts/app.js"></script>
+    <% if @edit %>
+      <script src="/javascripts/editor.js"></script>
+    <% end %>
   <% else %>
   	<script src="/javascripts/vendor/jquery-1.8.2.js"></script>
   	<script src="/javascripts/vendor/Prettify/prettify.js"></script>
@@ -106,6 +109,11 @@
     <script src="/javascripts/vendor/Prettify/lang-xq.js"></script>
     <script src="/javascripts/vendor/Prettify/prettify-loader.js"></script>
     <script src="/javascripts/main.js"></script>
+    <% if @edit %>
+      <script src="/javascripts/vendor/ACE-noconflict/ace.js"></script>
+      <script src="/javascripts/vendor/ACE-noconflict/theme-tomorrow.js"></script>
+      <script src="/javascripts/edit.js"></script>
+    <% end %>
   <% end %>
 </body>
 </html>

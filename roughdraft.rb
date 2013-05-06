@@ -106,7 +106,7 @@ end
 
 
 before do
-  @user = @gist = false
+  @user = @gist = @edit = false
   @github = github(session[:github_token])
 end
 
@@ -163,6 +163,30 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
     headers 'X-Cache-Hit' => @gist.from_redis
 
     erb :gist
+  else
+    redirect to(@gist.roughdraft_url)
+  end
+end
+
+
+get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
+  id = params[:captures].last
+  @edit = true
+
+  @gist = Gist.new(id)
+
+  if ! @gist.content
+    @gist = false
+
+    return erb :invalid_gist, :locals => { :gist_id => id }
+  end
+
+  @user = User.new(params[:captures].first) unless @user
+
+  if request.url == "#{@gist.roughdraft_url}/edit"
+    headers 'X-Cache-Hit' => @gist.from_redis
+
+    erb :'edit-gist'
   else
     redirect to(@gist.roughdraft_url)
   end

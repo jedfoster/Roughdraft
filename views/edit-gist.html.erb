@@ -1,0 +1,15 @@
+<form action="/<%= @gist.id %>/update" class="content gist-edit">
+  <input type="text" name="general_text" id="general_text" placeholder="Title" value="<%= @gist.description %>">
+
+  <% @gist.files.each do |x, file| 
+    if ! file['rendered'].nil? %>
+      <% #<textarea name="content[<%= file['filename'].gsub(/\./, '-') % >]" id="<%= file['filename'].gsub(/\./, '-') % >" placeholder="Content"><%= file['content'] % ></textarea>%>
+      
+      
+      
+      <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>"><%= file['content'] %></div></div>
+    <% end
+  end %>
+
+  <button type="submit">Save</button> <a href="#" class="button preview">Preview</a>
+</form>
