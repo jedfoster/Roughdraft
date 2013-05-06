@@ -67,7 +67,7 @@ configure :production do
     end
 
     use Rack::Session::Cookie, :key => 'roughdraft.io',
-                               :domain => 'roughdraft.io',
+                               :domain => '.roughdraft.io',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => ENV['COOKIE_SECRET']
@@ -86,6 +86,7 @@ configure :development do
     end
 
     use Rack::Session::Cookie, :key => 'roughdraft.dev',
+                               :domain => '.roughdraft.dev',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => 'local'
