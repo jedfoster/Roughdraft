@@ -78,16 +78,15 @@ http://github.com/bgrins/bindWithDelay
 
   $('form .pre_container').each(function() {
     // console.log($(this).attr('id'));
-    editors[$(this).attr('id')] = ace.edit($(this).attr('id'));
-    editors[$(this).attr('id')].setTheme("ace/theme/tomorrow");
-    editors[$(this).attr('id')].getSession().setMode("ace/mode/markdown");
-    
-    editors[$(this).attr('id')].getSession().setUseWrapMode(true);
-    editors[$(this).attr('id')].getSession().setWrapLimitRange();
+    editors[$(this).data('filename')] = ace.edit($(this).attr('id'));
+    editors[$(this).data('filename')].setTheme("ace/theme/tomorrow");
+    editors[$(this).data('filename')].getSession().setMode("ace/mode/markdown");
+    editors[$(this).data('filename')].getSession().setUseWrapMode(true);
+    editors[$(this).data('filename')].getSession().setWrapLimitRange();
 
 
     var timer;
-    editors[$(this).attr('id')].getSession().on('change', function(e) {
+    editors[$(this).data('filename')].getSession().on('change', function(e) {
       clearTimeout(timer);
       timer = setTimeout(function() {$("form").submit();}, 750);
     });
@@ -102,32 +101,30 @@ http://github.com/bgrins/bindWithDelay
   //  timer = setTimeout(function() {$("form").submit();}, 750);
   //});
   //
-  //console.log(editor);
+  // console.log(editors);
 
 
   /* attach a submit handler to the form */
-  $("form").submit(function(event) {
+  $("form.gist-edit").submit(function(event) {
     event.preventDefault();
 
-    _gaq.push(['_trackEvent', 'Form', 'Submit']);
+    var contents = {};
+
+    for (var key in editors) {
+      contents[key] = {'content': editors[key].getValue()};
+    }
+
+    // _gaq.push(['_trackEvent', 'Form', 'Submit']);
 
     var inputs = {
-      //sass: sass.getValue(),
-      //syntax: $('select[name="syntax"]').val(),
-      //plugin: $('select[name="plugin"]').val(),
-      //output: $('select[name="output"]').val()
+      contents: contents,
+      title: $('#title').val(),
     }
 
     /* Post the form and handle the returned data */
     $.post($(this).attr('action'), inputs,
       function( data ) {
-        //css.setValue(data,-1);
-        //
-        //$('select[name="syntax"]').data('orignal', inputs.syntax);
-        //
-        //if(data.sass.length > 0) {
-        //  sass.setValue(data.sass,-1);
-        //}
+        console.log(data);
       }
     );
 

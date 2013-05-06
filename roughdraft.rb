@@ -95,11 +95,13 @@ end
 
 
 helpers do
-  def github(auth_token = '')
-    github = Github.new do |config|
-      config.client_id = Roughdraft.gh_config['client_id']
-      config.client_secret = Roughdraft.gh_config['client_secret']
-      config.oauth_token = auth_token
+  module Roughdraft
+    def self.github(auth_token = '')
+      github = Github.new do |config|
+        config.client_id = gh_config['client_id']
+        config.client_secret = gh_config['client_secret']
+        config.oauth_token = auth_token
+      end
     end
   end
 end
@@ -107,7 +109,7 @@ end
 
 before do
   @user = @gist = @edit = false
-  @github = github(session[:github_token])
+  @github = Roughdraft.github(session[:github_token])
 end
 
 before :subdomain => 1 do
@@ -190,6 +192,49 @@ get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
   else
     redirect to(@gist.roughdraft_url)
   end
+end
+
+
+post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
+  id = params[:captures].last
+  @edit = true
+  
+  @gist = Gist.new(id)
+  
+  # params[:title].to_json
+  # "foobar"
+  
+  foo = @gist.update(params[:title], params[:contents], session)
+  
+  
+  
+  
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { foo.to_json } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
+  
+  #id = params[:captures].last
+  #@edit = true
+  #
+  #@gist = Gist.new(id)
+  #
+  #if ! @gist.content
+  #  @gist = false
+  #
+  #  return erb :invalid_gist, :locals => { :gist_id => id }
+  #end
+  #
+  #@user = User.new(params[:captures].first) unless @user
+  #
+  #if request.url == "#{@gist.roughdraft_url}/update"
+  #  headers 'X-Cache-Hit' => @gist.from_redis
+  #
+  #  erb :'edit-gist'
+  #else
+  #  redirect to(@gist.roughdraft_url)
+  #end
 end
 
 

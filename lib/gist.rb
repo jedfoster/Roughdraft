@@ -50,6 +50,10 @@ class Gist
     @content["html_url"].to_s
   end
 
+  def update(description, files, session)    
+    Roughdraft.github(session[:github_token]).gists.edit(id, description: description, files: files)
+  end
+
 private
   def pipeline(html, gist)
     context = {

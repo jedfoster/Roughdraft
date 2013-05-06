@@ -1,5 +1,5 @@
-<form action="/<%= @gist.id %>/update" class="content gist-edit">
-  <input type="text" name="general_text" id="general_text" placeholder="Title" value="<%= @gist.description %>">
+<form action="/<%= @gist.id %>/update.json" method="post" class="content gist-edit">
+  <input type="text" name="title" id="title" placeholder="Title" value="<%= @gist.description %>">
 
   <% @gist.files.each do |x, file| 
     if ! file['rendered'].nil? %>
@@ -7,7 +7,7 @@
       
       
       
-      <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>"><%= file['content'] %></div></div>
+      <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>" data-filename="<%= file['filename'] %>"><%= file['content'] %></div></div>
     <% end
   end %>
 
