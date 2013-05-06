@@ -63,11 +63,11 @@
 
     <div class="github">
     <% if @github.authenticated? && session[:github_id] %>
-      <a href="/logout" class="logout">Logout</a>
       <span href="">Logged in as <%=session[:github_id]%></span>
-          
+      <a href="<%="http://#{session[:github_id]}.#{APP_DOMAIN}/"%>">My Drafts</a>
+      <a href="/logout" class="logout">Logout</a>
     <% else %>
-      <a href="/authorize">Login</a>
+      <a href="/authorize" class="login">Login</a>
 
     <% end %>
     </div>
