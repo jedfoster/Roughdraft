@@ -17,13 +17,13 @@
   $('#list-nav a').on('click', function() {
     event.preventDefault();
 
-    console.log($(this).attr('href'));
+    var edit = $(this).data('edit');
 
     $.getJSON($(this).attr('href') + '.json', function( data ) {
       var items = [];
 
       $.each(data.list, function(key, val) {
-        items.push('<li><a href="/' + val.id + '">' + ( val.description ? val.description : val.id ) + '</a><span class="posted">posted: <time datetime="' + val.created_at + '">' + val.created_at_rendered + '</time></span></li>');
+        items.push('<li><a href="/' + val.id + '">' + ( val.description ? val.description : val.id ) + '</a><span class="posted">posted: <time datetime="' + val.created_at + '">' + val.created_at_rendered + '</time></span>' + ( edit ? '<a href="/' + val.id + '/edit" class="edit">Edit</a>' : '' ) + '</li>');
       });
 
       $('#list').html(items.join(''));

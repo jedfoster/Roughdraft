@@ -17,6 +17,11 @@
     display: block;
     font-style: italic;
   }
+
+  .edit {
+    @include roughdraft-button; //($color: $charlie_color_charlie);
+    font-size: em($heading_6);
+  }
 }
 
 %gist-list-section {
