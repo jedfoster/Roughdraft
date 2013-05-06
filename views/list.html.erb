@@ -14,7 +14,7 @@
       end %></a>
       <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>      
       
-      <% if @github.authenticated? && session[:github_id] %>
+      <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
       <% end %>
 
@@ -36,7 +36,7 @@
       end %></a>
       <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>      
       
-      <% if @github.authenticated? && session[:github_id] %>
+      <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
       <% end %>
 
@@ -46,7 +46,7 @@
 
   <nav id="list-nav">
     <% if gists.links['prev'] %>
-      <% if @github.authenticated? && session[:github_id] %>
+      <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/page/<%= gists.links['prev'] %>" class="prev-link" data-edit="true">Newer</a>
       <% else %>
         <a href="/page/<%= gists.links['prev'] %>" class="prev-link">Newer</a>
@@ -55,7 +55,7 @@
     <% end %>
 
     <% if gists.links['next'] %>
-      <% if @github.authenticated? && session[:github_id] %>
+      <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/page/<%= gists.links['next'] %>" class="next-link" data-edit="true">Older</a>
       <% else %>
         <a href="/page/<%= gists.links['next'] %>" class="next-link">Older</a>
