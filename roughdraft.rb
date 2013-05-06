@@ -204,7 +204,7 @@ get '/authorize/return' do
   session[:github_id] = user.login
   session[:gravatar_id] = user.gravatar_id
 
-  redirect to('/')
+  redirect to("http://#{user.login}.#{APP_DOMAIN}/")
 end
 
 
