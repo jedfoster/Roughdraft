@@ -52,6 +52,7 @@ class Gist
 
   def update(description, files, session)    
     Roughdraft.github(session[:github_token]).gists.edit(id, description: description, files: files)
+    @content = fetch
   end
 
 private
