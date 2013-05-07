@@ -1,13 +1,13 @@
 .site-header {
   .github {
-    text-align: right;
+    text-align: left;
 
     a {         
       border: 0;
       margin: 0;
       padding: 0;
       
-      @include roughdraft-button($color: $charlie_color_charlie);
+      //@include roughdraft-button($color: $charlie_color_charlie);
     }
   
     a.login {
@@ -33,7 +33,7 @@
       @extend %left-responsive-sidebar;
 
       top: initial;
-      bottom: 0.5em;
+      bottom: 1.5em;
       font-size: 1em;
       
       a, span {
