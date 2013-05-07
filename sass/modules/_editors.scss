@@ -6,12 +6,6 @@
   margin-bottom: 1.66667em;
   position: relative;
 
-
-  /* useful if you don't want a bg color from leaking outside the border: */
-     -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-          background-clip: padding-box;
-
   @media #{$mobile} {
     margin-bottom: 1em;
   }
@@ -30,30 +24,15 @@
 }
 
 .ace_gutter {
-  //-webkit-border-bottom-left-radius: $border-radius + 0.25em;
-  //   -moz-border-bottom-left-radius: $border-radius + 0.25em;
-  //        border-bottom-left-radius: $border-radius + 0.25em;
-
-  /* useful if you don't want a bg color from leaking outside the border: */
-     -moz-background-clip: padding;
-  -webkit-background-clip: padding-box;
-          background-clip: padding-box;
-
   .ace_layer {
     font-size: em($heading_6);
     color: $golf_gray;
   }
 }
 
-.ace_scroller {
-  //-webkit-border-bottom-right-radius: $border-radius + 0.25em;
-  //   -moz-border-bottom-right-radius: $border-radius + 0.25em;
-  //        border-bottom-right-radius: $border-radius + 0.25em;
-  //
+.ace_scroller, .ace_gutter, .edit_container {
   /* useful if you don't want a bg color from leaking outside the border: */
      -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
           background-clip: padding-box;
-
-
 }
