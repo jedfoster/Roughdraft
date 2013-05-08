@@ -9,13 +9,13 @@
     }
   }
 
-  %right-responsive-sidebar {
+  %left-responsive-sidebar {
     @extend %responsive-sidebar;
 
     left: 1.5em;
   }
 
-  %left-responsive-sidebar {
+  %right-responsive-sidebar {
     @extend %responsive-sidebar;
 
     right: 1.5em;

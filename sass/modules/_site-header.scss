@@ -58,7 +58,7 @@
   }
 
   @media #{$desktop} {
-    @extend %right-responsive-sidebar;
+    @extend %left-responsive-sidebar;
 
     .logo {
       padding-top: 0;
