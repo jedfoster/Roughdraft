@@ -30,4 +30,8 @@ button, a.button {
   &.preview {
     @include roughdraft-button($color: $delta_color_charlie);
   }
+  
+  &.cancel {
+    @include roughdraft-button($color: $echo_color_echo);
+  }
 }
