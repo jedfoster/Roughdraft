@@ -19,7 +19,7 @@
   }
 
   .edit {
-    @include roughdraft-button; //($color: $charlie_color_charlie);
+    @extend %button; //($color: $charlie_color_charlie);
     font-size: em($heading_6);
   }
 }

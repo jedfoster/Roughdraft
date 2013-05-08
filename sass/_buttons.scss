@@ -20,8 +20,12 @@ $button-font-family:    $heading_font_family;
 
 // buttons
 // --------------------------------------------------------------------
-button, a.button {
+%button {
   @include roughdraft-button;
+}
+
+button, a.button {
+  @extend %button;
 
   &.preview {
     @include roughdraft-button($color: $delta_color_charlie);
