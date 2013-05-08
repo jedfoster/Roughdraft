@@ -7,6 +7,12 @@
   width: auto;
   text-align: center;
   font-family: $font-family;
+  margin-right: 1.25em;
+
+  @media #{$desktop} {
+    margin: 0;
+    margin-bottom: 1.5em;
+  }
 
   &:hover {
     border: 1px solid transparentize(darken($color, 10), 0.5);

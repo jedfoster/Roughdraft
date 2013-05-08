@@ -57,7 +57,7 @@ http://github.com/bgrins/bindWithDelay
                         parseInt($('.content.gist-edit').css('margin-bottom')) +
                         parseInt($('.edit_container').css('margin-bottom'))  +
                         parseInt($('footer p').css('margin-bottom')) +
-                        $('.content.gist-edit button').outerHeight()  + 26,          
+                        70,          
           body_padding = parseInt($('body').css('padding-bottom')),
           footer = $("footer p").outerHeight();
 
@@ -130,6 +130,11 @@ http://github.com/bgrins/bindWithDelay
 
    //localStorage.setItem('inputs', JSON.stringify(inputs));
   });
+  
+  
+  $('#save-edit').on('click', function() {console.log('button click');$("form").submit();});
+  
+  
 
   //if($('#gist-input').text().length > 0) {
   //  var storedInputs = JSON.parse($('#gist-input').text());
