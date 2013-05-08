@@ -105,7 +105,7 @@ http://github.com/bgrins/bindWithDelay
 
 
   /* attach a submit handler to the form */
-  $("form.gist-edit").submit(function(event) {
+  $("form").submit(function(event) {
     event.preventDefault();
 
     var contents = {};

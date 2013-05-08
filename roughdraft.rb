@@ -207,8 +207,6 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
   foo = @gist.update(params[:title], params[:contents], session)
   
   
-  
-  
   respond_to do |wants|
     # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
     wants.json { foo.to_json } # => sets content_type to application/json
@@ -268,7 +266,7 @@ end
 get '/authorize/return' do
   token = @github.get_token(params[:code])
 
-  user = github(token.token).users.get
+  user = Roughdraft.github(token.token).users.get
 
   session[:github_token] = token.token
   session[:github_id] = user.login
