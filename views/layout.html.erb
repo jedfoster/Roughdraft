@@ -55,7 +55,11 @@
       <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
 
       <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
+
+      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
     </nav>
+    <% else %>
+      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
     <% end %>
   </header>
 
