@@ -1,0 +1,31 @@
+<section class="content">
+<% if ! ( @gist.description.nil? || @gist.description.empty? ) %>
+  <header>
+    <h1><%= @gist.description %></h1>
+  </header>
+<% end
+
+unrenderable = Array.new
+
+@gist.files.each do |x, file| 
+  if file['rendered'].nil?
+    unrenderable << file
+    
+  else %>
+    <article class="file" data-filename="<%= file['filename'] %>">
+      <%= file['rendered'] %>
+    </article><%
+  end
+end 
+
+if ! unrenderable.empty? %>
+  <aside class="unrenderable-files">
+    <h3>Other files in this Gist:</h3>
+    <ul>
+    <% unrenderable.each do |file| %>
+      <li><a href="<%= @gist.html_url %>#file-<%= file['filename'].gsub(/\./, '-') %>" target="gist"><%= file['filename'] %></a></li>
+    <% end %>
+    </ul>
+  </aside>
+<% end %>
+</section>

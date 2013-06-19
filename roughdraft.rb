@@ -104,7 +104,7 @@ before :subdomain => 1 do
 end
 
 
-get '/' do
+get %r{^(/|/feed)$}, :provides => ['html', 'json', 'xml'] do
   if @user
     status, headers, body = call env.merge("PATH_INFO" => '/page/1')
     [status, headers, body]
@@ -121,9 +121,11 @@ get '/page/:page' do
     headers 'X-Cache-Hit' => gists.from_redis
 
     respond_to do |wants|
-      wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+      wants.html { erb :list, :locals => {:gists => gists} }    # => sets content_type to text/html
       wants.json { gists.listify.to_json } # => sets content_type to application/json
       # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+      wants.xml { erb :list, :locals => {:gists => gists} }    # also sets content_type to application/xml
+      #
     end
 
   else

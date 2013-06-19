@@ -1,0 +1,15 @@
+<?xml version= "1.0"?>
+<?xml-stylesheet type="text/css" href="/stylesheets/style.css"?>
+<rss version="2.0">
+  <channel>
+    <title><%= @user.name %>'s Drafts</title>
+    <link>http://<%= "#{@user.id}.#{APP_DOMAIN}/" %></link>
+    <description>
+      <%= @user.name %>'s Drafts from Roughdraft.io | Gist-powered writing. 
+    </description>
+    <pubDate><%= Time.now().strftime("%a, %d %b %Y %H:%M:%S +0000") %></pubDate>
+
+    <%= yield %>
+    
+  </channel>
+</rss>

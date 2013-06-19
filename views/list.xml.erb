@@ -1,0 +1,22 @@
+<% gists.list.each do |gist| %>
+<item>
+  <author><%= "#{@user.name} (#{@user.id})" %></author>
+  <title><%=
+  if gist['description'].nil? || gist['description'].empty?
+    gist['id']
+  else
+    gist['description']
+  end %></title>
+  <description>
+    
+  <%= 
+    @gist = Gist.new(gist['id'])
+    erb :gist, :locals => { :gist => gist }
+  %>
+
+  </description>
+  <link>http://<%= "#{@user.id}.#{APP_DOMAIN}/#{gist['id']}" %></link>
+  <pubDate><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></pubDate>
+</item>
+
+<% end %>
