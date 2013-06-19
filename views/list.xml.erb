@@ -1,6 +1,6 @@
 <% gists.list.each do |gist| %>
 <item>
-  <author><%= "#{@user.name} (#{@user.id})" %></author>
+  <author><%= @user.id %></author>
   <title><%=
   if gist['description'].nil? || gist['description'].empty?
     gist['id']
