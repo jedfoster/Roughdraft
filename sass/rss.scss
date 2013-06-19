@@ -1,0 +1,48 @@
+// App Config - this is where most of your magic will happen
+// ------------------------------------------------------------------------------
+@import "config";  // Editing defaults here will override any set in the Stipe gem
+
+@import "stipe/resets/toadstool";           // Default toadstool reset
+
+// Want web fonts? We got those too.
+// ------------------------------------------------------------------------------
+@import "web_fonts";
+
+@import "compass/css3";    // Including the Compass CSS3 mixins
+@import "stipe/manifest";  // Include Stipe
+// @import "color/extends";
+
+// This where you start building your own styles. 
+// ------------------------------------------------------------------------------
+@import "typography";
+@import "forms";
+@import "buttons";
+// @import "design";
+@import "ui_patterns/readable-body";
+// @import "modules";
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, ol, ul, li, item, section, author, title, description, link, pubDate {
+  display: block;
+}
+
+item {
+  border-bottom: 1px solid $border_color;
+  padding-bottom: 3em;
+  margin-bottom: 3em;
+}
+
+item section {
+  @extend %readable-body;
+  
+  pre {
+    white-space: nowrap;
+  }
+  
+  pre code {
+    border: 0;
+    padding: 0;
+    display: inline-block;
+    white-space: pre-wrap;
+  }
+}
+
