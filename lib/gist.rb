@@ -67,7 +67,7 @@ private
       HTML::Pipeline::EmojiFilter
     ], context
 
-    pipe.call(html)[:output].to_s
+    pipe.call(html)[:output].to_xhtml # return XHTML to be compatible with RSS
   end
 
   def fetch
