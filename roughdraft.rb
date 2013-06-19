@@ -104,7 +104,7 @@ before :subdomain => 1 do
 end
 
 
-get '/' do
+get %r{^(/|/feed)$}, :provides => ['html', 'json', 'xml'] do
   if @user
     status, headers, body = call env.merge("PATH_INFO" => '/page/1')
     [status, headers, body]
