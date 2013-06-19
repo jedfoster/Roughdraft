@@ -16,6 +16,7 @@
 
   </description>
   <link>http://<%= "#{@user.id}.#{APP_DOMAIN}/#{gist['id']}" %></link>
+  <guid>http://<%= "#{@user.id}.#{APP_DOMAIN}/#{gist['id']}" %></guid>
   <pubDate><%= Time.parse(gist['created_at']).strftime("%a, %d %b %Y %H:%M:%S GMT) %></pubDate>
 </item>
 
