@@ -13,4 +13,8 @@
       }
     }
   }
+  
+  aside.metadata {
+    @extend %gist-metadata;
+  }  
 }
