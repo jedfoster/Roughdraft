@@ -17,6 +17,32 @@
 @import "typography";
 @import "forms";
 @import "buttons";
-@import "design";
-@import "ui_patterns";
-@import "modules";
+// @import "design";
+@import "ui_patterns/readable-body";
+// @import "modules";
+
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, ol, ul, li, item, section, author, title, description, link, pubDate {
+  display: block;
+}
+
+item {
+  border-bottom: 1px solid $border_color;
+  padding-bottom: 3em;
+  margin-bottom: 3em;
+}
+
+item section {
+  @extend %readable-body;
+  
+  pre {
+    white-space: nowrap;
+  }
+  
+  pre code {
+    border: 0;
+    padding: 0;
+    display: inline-block;
+    white-space: pre-wrap;
+  }
+}
+

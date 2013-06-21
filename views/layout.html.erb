@@ -52,7 +52,7 @@
       <span>Gist-powered writing</span>
     </div>
 
-    <% if @gist %>
+  <% if @gist %>
     <nav>
       <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
 
@@ -62,15 +62,21 @@
 
         if @edit %>
           <button type="submit" id="save-edit">Save</button> 
-          <a href="#" class="button preview" id="preview-edit">Preview</a>
+      
           <a href="/<%= @gist.id %>" class="button cancel" id="cancel-edit">Cancel</a>
           
         <% else %>
           <a href="/<%= @gist.id %>/edit" class="button">Edit this Draft</a>
-        <% end
-      end %>
+        <% end # end if @edit
+      else %>
+        <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
+      <% end # end if @github.authenticated? %>
     </nav>
-    <% end %>
+    <% else %>
+      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
+    <% 
+    
+     end # end if @gist %>
 
 
     <div class="github">
@@ -80,7 +86,6 @@
       <a href="/logout" class="logout">Logout</a>
     <% else %>
       <a href="/authorize" class="login">Login</a>
-
     <% end %>
     </div>
   </header>
