@@ -1,11 +1,16 @@
 <section class="content">
   <header>
     <h1><a href="http://<%= 
-    if @user
+    if @user && gist_id
       "#{@user.id}.#{APP_DOMAIN}"
     else 
       APP_DOMAIN
     end %>">Roughdraft</a></h1>
-    <h2 class=" instapaper-title">That Gist don't exist, yo!</h2>
+    
+    <% if gist_id %>
+      <h2>That Gist don't exist, yo!</h2>
+    <% else %>
+      <h2>This user has not created any public, Roughdraft-compatible gists.</h2>
+    <% end %>
   </header>
 </section>
