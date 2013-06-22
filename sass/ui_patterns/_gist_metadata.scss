@@ -1,0 +1,42 @@
+%gist-metadata {
+  padding-top: 3em;
+  margin-top: 3em;
+  border-top: 1px solid $border_color;
+
+  @include clearfix;
+
+  > * {
+    float: right;
+
+    @media #{$desktop} {
+      width: 100%;
+      float: none;
+    }
+
+    &:first-child {
+      margin-bottom: 0;
+
+      @media #{$desktop} {
+        margin-bottom: 6em;
+      }
+    }
+  }
+
+  h3 {
+    @extend %headings_5;
+  }
+
+  @media #{$desktop} {
+    @extend %left-responsive-sidebar;
+
+    padding-top: 0;
+    margin-top: 0;
+    border-top: 0;
+
+    h3 {
+      padding-bottom: 1.5em;
+      margin-bottom: 1.5em;
+      border-bottom: 1px solid $border_color;
+    }
+  }
+}
