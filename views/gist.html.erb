@@ -7,10 +7,10 @@
 
 unrenderable = Array.new
 
-@gist.files.each do |x, file| 
+@gist.files.each do |x, file|
   if file['rendered'].nil?
     unrenderable << file
-    
+
   else %>
     <article class="file" data-filename="<%= file['filename'] %>">
       <%= file['rendered'] %>
@@ -29,13 +29,18 @@ end %>
         </ul>
       </section>
     <% end %>
-  
+
     <section class="author">
       <h3>The author</h3>
-      <a href="https://github.com/<%= @user.id %>" target="_blank">
-        <img src="http://www.gravatar.com/avatar/<%= @user.gravatar %>?s=100" title="">
-        <%= @user.id %>
-      </a>
+      <div class="frame">
+        <a href="https://github.com/<%= @user.id %>" target="_blank">
+          <img src="http://www.gravatar.com/avatar/<%= @user.gravatar %>?s=100" title="">
+          <b><%= @user.id %></b>
+          <%= "<br>#{@user.name}" if ! @user.name.empty? %>
+        </a>
+
+        <%= "<br><a href=\"http://#{@user.homepage}\" target=\"_blank\" rel=\"no-follow\">#{@user.homepage}</a>" if ! @user.homepage.empty? %>
+      </div>
     </section>
   </aside>
 </section>
