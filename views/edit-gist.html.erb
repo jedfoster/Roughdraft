@@ -9,7 +9,7 @@
       unrenderable << file
 
     else %>      
-      <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>" data-filename="<%= file['filename'] %>"><%= file['content'] %></div></div>
+      <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>" data-filename="<%= file['filename'] %>"><%= code file['content'] %></div></div>
     <% end
   end %>
 
