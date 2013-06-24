@@ -1,9 +1,10 @@
-<% unrenderable = Array.new %>
-
 <form action="/<%= @gist.id %>/update.json" method="post" class="content gist-edit">
   <input type="text" name="title" id="title" placeholder="Title" value="<%= @gist.description %>">
 
-  <% @gist.files.each do |x, file| 
+  <% 
+  unrenderable = Array.new
+  
+  @gist.files.each do |x, file| 
     if file['rendered'].nil?
       unrenderable << file
 
@@ -11,17 +12,6 @@
       <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>" data-filename="<%= file['filename'] %>"><%= file['content'] %></div></div>
     <% end
   end %>
+
+  <%= partial 'modules/gist/_metadata'.to_sym, :locals => {:unrenderable => unrenderable} %>
 </form>
-
-<% if ! unrenderable.empty? %>
-  <aside class="unrenderable-files">
-    <h3>Other files in this Gist:</h3>
-    <ul>
-    <% unrenderable.each do |file| %>
-      <li><a href="<%= @gist.html_url %>#file-<%= file['filename'].gsub(/\./, '-') %>" target="gist"><%= file['filename'] %></a></li>
-    <% end %>
-    </ul>
-  </aside>
-<% end %>
-
-
