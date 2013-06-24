@@ -35,10 +35,6 @@ end
 
 
 
-
-
-
-
 set :partial_template_engine, :erb
 
 set(:subdomain) { |num_subdomains| condition { request.subdomains.count == num_subdomains } }
@@ -95,6 +91,9 @@ end
 
 
 helpers do
+  include ERB::Util
+  alias_method :code, :html_escape
+  
   module Roughdraft
     def self.github(auth_token = '')
       github = Github.new do |config|
