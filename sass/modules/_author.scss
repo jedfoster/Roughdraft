@@ -1,0 +1,42 @@
+.author {
+  width: 27%;
+  text-align: center;
+  border-right: 1px solid $border_color;
+  padding-right: 3%;
+  margin-right: 3.33333%;
+
+  @media #{$desktop} {
+    border-right: 0;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  .frame {
+    @include border-radius(em($font_size * 0.25, $small_point_size));
+
+    display: block;
+    max-width: em(114, $small_point_size);
+    margin: 0 auto;
+    padding: 0.5em;
+    border: 1px solid $border_color;
+    min-height: em($heading_1 * 2.5);
+    text-align: center;
+    font-family: $heading_font_family;
+    font-size: em($small_point_size);
+    line-height: 1.33;
+
+    b {
+      font-size: em($large_point_size);
+      padding-bottom: 0.25em;
+    }
+  }
+
+  img {
+    @include border-radius(0.25em);
+
+    max-height: 100%;
+    display: block;
+    clear: both;
+    margin: 0 auto 0.5em;
+  }
+}

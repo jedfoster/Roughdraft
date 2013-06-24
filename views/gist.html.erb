@@ -7,25 +7,40 @@
 
 unrenderable = Array.new
 
-@gist.files.each do |x, file| 
+@gist.files.each do |x, file|
   if file['rendered'].nil?
     unrenderable << file
-    
+
   else %>
     <article class="file" data-filename="<%= file['filename'] %>">
       <%= file['rendered'] %>
     </article><%
   end
-end 
+end %>
 
-if ! unrenderable.empty? %>
-  <aside class="unrenderable-files">
-    <h3>Other files in this Gist:</h3>
-    <ul>
-    <% unrenderable.each do |file| %>
-      <li><a href="<%= @gist.html_url %>#file-<%= file['filename'].gsub(/\./, '-') %>" target="gist"><%= file['filename'] %></a></li>
+  <aside class="metadata">
+    <% if ! unrenderable.empty? %>
+      <section class="unrenderable-files">
+        <h3>Other files in this Gist:</h3>
+        <ul>
+        <% unrenderable.each do |file| %>
+          <li><a href="<%= @gist.html_url %>#file-<%= file['filename'].gsub(/\./, '-') %>" target="gist"><%= file['filename'] %></a></li>
+        <% end %>
+        </ul>
+      </section>
     <% end %>
-    </ul>
+
+    <section class="author">
+      <h3>The author</h3>
+      <div class="frame">
+        <a href="https://github.com/<%= @user.id %>" target="_blank">
+          <img src="http://www.gravatar.com/avatar/<%= @user.gravatar %>?s=100" title="">
+          <b><%= @user.id %></b>
+          <%= "<br>#{@user.name}" if ! @user.name.empty? %>
+        </a>
+
+        <%= "<br><a href=\"http://#{@user.homepage}\" target=\"_blank\" rel=\"no-follow\">#{@user.homepage}</a>" if ! @user.homepage.empty? %>
+      </div>
+    </section>
   </aside>
-<% end %>
 </section>

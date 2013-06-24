@@ -30,6 +30,10 @@ class User < Hash
     @user['gravatar_id'].to_s
   end
 
+  def homepage
+    @user['blog'].to_s
+  end
+
 private
   def fetch(id)
     begin

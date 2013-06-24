@@ -135,6 +135,10 @@ get '/page/:page' do
 
     headers 'X-Cache-Hit' => gists.from_redis
 
+    if gists.list.empty?
+      return erb :invalid_gist, :locals => { :gist_id => false }
+    end
+
     respond_to do |wants|
       wants.html { erb :list, :locals => {:gists => gists} }    # => sets content_type to text/html
       wants.json { gists.listify.to_json } # => sets content_type to application/json

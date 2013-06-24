@@ -27,7 +27,7 @@
   }
 
   .rss {
-    font-size: 0.666em;
+    font-size: em($small_point_size);
   }
 
   @media #{$tablet} {

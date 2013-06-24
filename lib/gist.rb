@@ -42,6 +42,13 @@ class Gist
     @content["description"].to_s
   end
 
+  def description_safe
+    context = {:whitelist => HTML::Pipeline::SanitizationFilter::FULL}
+    pipe = HTML::Pipeline.new [HTML::Pipeline::SanitizationFilter], context
+    
+    pipe.call(@content["description"].to_s)[:output].to_s
+  end
+
   def files
     @content["files"]
   end
