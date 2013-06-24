@@ -7,7 +7,7 @@
 	<title><%=
 	if @gist
 	  if ! @gist.description.empty?
-	    @gist.description << " | Roughdraft.io"
+	    @gist.description_safe << " | Roughdraft.io"
 	  else
 	    "Gist ##{@gist.id} | Roughdraft.io"
 	  end

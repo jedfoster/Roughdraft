@@ -1,5 +1,5 @@
 <% if ! @gist.description.empty?%>
-<meta name="description" content="<%= @gist.description %> - Roughdraft.io | Gist-powered writing.">
+<meta name="description" content="<%= @gist.description_safe %> - Roughdraft.io | Gist-powered writing.">
 <% end%>
 
 <% if @user %>
@@ -14,5 +14,5 @@
 <meta property="og:url" content="<%= @gist.roughdraft_url %>">
 <meta property="og:image" content="http://www.gravatar.com/avatar/<%= @user.gravatar %>?s=140">
 <meta property="og:site_name" content="Roughdraft">
-<meta property="og:description" content="<%= @gist.description %> - Roughdraft.io | Gist-powered writing.">
-<meta name="description" content="<%= @gist.description %> - Roughdraft.io | Gist-powered writing.">
+<meta property="og:description" content="<%= @gist.description_safe %> - Roughdraft.io | Gist-powered writing.">
+<meta name="description" content="<%= @gist.description_safe %> - Roughdraft.io | Gist-powered writing.">
