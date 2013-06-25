@@ -190,7 +190,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
 
   @user = User.new(params[:captures].first) unless @user
 
-  if request.url == "#{@gist.roughdraft_url}/edit"
+  if request.url == "#{@gist.roughdraft_url}/edit" && @gist.belongs_to?(session[:github_id])
     headers 'X-Cache-Hit' => @gist.from_redis
 
     erb :'edit-gist'

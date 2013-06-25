@@ -58,7 +58,7 @@
 
       <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
       
-      <% if @github.authenticated? && session[:github_id] 
+      <% if @github.authenticated? && session[:github_id] && @gist.belongs_to?(session[:github_id])
 
         if @edit %>
           <button type="submit" id="save-edit">Save</button> 
