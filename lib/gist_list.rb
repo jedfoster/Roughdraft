@@ -66,13 +66,12 @@ private
       github_response.each do |gist|
         gist.files.each do |key, file|
           if Gist.is_allowed file.language.to_s
+            gist.description = safe_html(gist["description"])
             gists << gist.to_hash
             break
           end
         end
       end
-
-      
 
       hash = {
         "list" => gists,
@@ -91,5 +90,10 @@ private
     end
   end
 
-
+  def safe_html(string)
+    context = {:whitelist => HTML::Pipeline::SanitizationFilter::FULL}
+    pipe = HTML::Pipeline.new [HTML::Pipeline::SanitizationFilter], context
+    
+    pipe.call(string.to_s)[:output].to_s
+  end
 end
