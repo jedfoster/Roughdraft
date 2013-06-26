@@ -241,6 +241,33 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
 end
 
 
+post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
+  id = params[:captures].last
+  @edit = true
+
+  @gist = Gist.new(id)
+
+  params[:contents].each do |key, value|
+    @gist.file_content(key, value["content"])
+  end
+
+  hash = Hash.new
+  hash['description'] = params[:title]
+  hash['files'] = Array.new
+
+
+  @gist.files.each do |x, file|
+    if file['rendered']
+      name = file['filename'].to_sym
+
+      hash['files'] << file['rendered']
+    end
+  end
+
+  hash.to_json.to_s
+end
+
+
 get %r{/([\d]+)/content} do
   id = params[:captures].first
 

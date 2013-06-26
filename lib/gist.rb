@@ -53,6 +53,11 @@ class Gist
     @content["files"]
   end
 
+  def file_content(file, content)
+    @content["files"][file]["content"] = content
+    @content["files"][file]["rendered"] = pipeline(content.to_s, @content)
+  end
+
   def html_url
     @content["html_url"].to_s
   end
