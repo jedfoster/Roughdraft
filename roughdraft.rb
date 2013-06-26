@@ -93,7 +93,7 @@ end
 helpers do
   include ERB::Util
   alias_method :code, :html_escape
-  
+
   module Roughdraft
     def self.github(auth_token = '')
       github = Github.new do |config|
@@ -203,21 +203,21 @@ end
 post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
   id = params[:captures].last
   @edit = true
-  
+
   @gist = Gist.new(id)
-  
+
   # params[:title].to_json
   # "foobar"
-  
+
   foo = @gist.update(params[:title], params[:contents], session)
-  
-  
+
+
   respond_to do |wants|
     # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
     wants.json { foo.to_json } # => sets content_type to application/json
     # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
   end
-  
+
   #id = params[:captures].last
   #@edit = true
   #
@@ -238,6 +238,33 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
   #else
   #  redirect to(@gist.roughdraft_url)
   #end
+end
+
+
+post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
+  id = params[:captures].last
+  @edit = true
+
+  @gist = Gist.new(id)
+
+  params[:contents].each do |key, value|
+    @gist.file_content(key, value["content"])
+  end
+
+  hash = Hash.new
+  hash['description'] = params[:title]
+  hash['files'] = Array.new
+
+
+  @gist.files.each do |x, file|
+    if file['rendered']
+      name = file['filename'].to_sym
+
+      hash['files'] << file['rendered']
+    end
+  end
+
+  hash.to_json.to_s
 end
 
 
@@ -263,7 +290,7 @@ end
 
 get '/authorize' do
   # return @github.inspect
-  
+
   redirect to @github.authorize_url :scope => ['gist', 'user']
 end
 

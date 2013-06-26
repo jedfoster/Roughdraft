@@ -37,7 +37,7 @@ class Gist
   def id
     @gist_id
   end
-  
+
   def description
     @content["description"].to_s
   end
@@ -45,7 +45,7 @@ class Gist
   def description_safe
     context = {:whitelist => HTML::Pipeline::SanitizationFilter::FULL}
     pipe = HTML::Pipeline.new [HTML::Pipeline::SanitizationFilter], context
-    
+
     pipe.call(@content["description"].to_s)[:output].to_s
   end
 
@@ -53,11 +53,16 @@ class Gist
     @content["files"]
   end
 
+  def file_content(file, content)
+    @content["files"][file]["content"] = content
+    @content["files"][file]["rendered"] = pipeline(content.to_s, @content)
+  end
+
   def html_url
     @content["html_url"].to_s
   end
 
-  def update(description, files, session)    
+  def update(description, files, session)
     Roughdraft.github(session[:github_token]).gists.edit(id, description: description, files: files)
     @content = fetch
   end
@@ -65,7 +70,7 @@ class Gist
 private
   def pipeline(html, gist)
     context = {
-      :gfm => true, 
+      :gfm => true,
       :gist => gist,
       :asset_root => "http://#{APP_DOMAIN}/images",
       # :base_url   => "#{APP_DOMAIN}"

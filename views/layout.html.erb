@@ -63,6 +63,8 @@
         if @edit %>
           <button type="submit" id="save-edit">Save</button> 
       
+          <a href="/<%= @gist.id %>/preview.json" class="button preview" id="preview-edit">Preview</a>
+      
           <a href="/<%= @gist.id %>" class="button cancel" id="cancel-edit">Cancel</a>
           
         <% else %>
@@ -129,6 +131,7 @@
     <% if @edit %>
       <script src="/javascripts/vendor/ACE-noconflict/ace.js"></script>
       <script src="/javascripts/vendor/ACE-noconflict/theme-tomorrow.js"></script>
+      <script src="/javascripts/vendor/jquery.foundation.reveal.js"></script>
       <script src="/javascripts/edit.js"></script>
     <% end %>
   <% end %>

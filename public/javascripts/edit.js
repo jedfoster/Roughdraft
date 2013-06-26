@@ -44,12 +44,10 @@ http://github.com/bgrins/bindWithDelay
 
 (function($) {
   var editors = {};
-  
-  
+
   function setHeight() {
     if ($("html").width() > 50 * 18) {
       var html = $("html").height(),
-          // header = $(".site_header").height(),
           title = $('#general_text').outerHeight(),
           form_margin = parseInt($('.content.gist-edit').css('padding-top')) +
                         parseInt($('.content.gist-edit').css('padding-bottom')) +
@@ -57,52 +55,53 @@ http://github.com/bgrins/bindWithDelay
                         parseInt($('.content.gist-edit').css('margin-bottom')) +
                         parseInt($('.edit_container').css('margin-bottom'))  +
                         parseInt($('footer p').css('margin-bottom')) +
-                        70,          
+                        70,
           body_padding = parseInt($('body').css('padding-bottom')),
           footer = $("footer p").outerHeight();
 
-      // $('.pre_container, .ace_scroller').css('height', html - form_margin - title - footer - body_padding);
       $('.edit_container').css('height', html - form_margin - title - footer + 2 - body_padding);
     }
 
     else {
-      // $('.pre_container, .ace_scroller').css('height', 480);
       $('.edit_container').css('height', 482);
     }
   }
 
   $(window).resize(setHeight);
   setHeight();
-  
-  
 
   $('form .pre_container').each(function() {
-    // console.log($(this).attr('id'));
     editors[$(this).data('filename')] = ace.edit($(this).attr('id'));
     editors[$(this).data('filename')].setTheme("ace/theme/tomorrow");
     editors[$(this).data('filename')].getSession().setMode("ace/mode/markdown");
     editors[$(this).data('filename')].getSession().setUseWrapMode(true);
     editors[$(this).data('filename')].getSession().setWrapLimitRange();
 
-
     var timer;
     editors[$(this).data('filename')].getSession().on('change', function(e) {
       clearTimeout(timer);
-      timer = setTimeout(function() {$("form").submit();}, 750);
+      // timer = setTimeout(function() {$("form").submit();}, 750);
     });
   });
 
+  var buildModal = function(content) {
+    if ($('#modal').length == 0) {
+      $('body').append('<div class="reveal-modal large" id="modal"><span class="reveal-close"><a href="#" class="close-icon">Close Preview</a></span><span class="reveal-content">' + content + '</span></div>');
+    }
+    else {
+      $('#modal .reveal-content').empty();
+      $('#modal .reveal-content').append(content);
+    }
 
+    $('#modal').reveal({
+      animation: 'fadeAndPop', //fade, fadeAndPop, none
+      animationSpeed: 200, //how fast animations are
+      closeOnBackgroundClick: true, //if you click background will modal close?
+      dismissModalClass: 'close-icon' //the class of a button or element that will close an open modal
+    });
 
-
-  //var timer;
-  //editor.getSession().on('change', function(e) {
-  //  clearTimeout(timer);
-  //  timer = setTimeout(function() {$("form").submit();}, 750);
-  //});
-  //
-  // console.log(editors);
-
+    $('#modal, .reveal-modal-bg').css('height', $("body").outerHeight());
+  }
 
   /* attach a submit handler to the form */
   $("form").submit(function(event) {
@@ -130,11 +129,43 @@ http://github.com/bgrins/bindWithDelay
 
    //localStorage.setItem('inputs', JSON.stringify(inputs));
   });
-  
-  
-  $('#save-edit').on('click', function() {console.log('button click');$("form").submit();});
-  
-  
+
+  $('#preview-edit').on('click', function() {
+    event.preventDefault();
+
+    var contents = {};
+
+    for (var key in editors) {
+      contents[key] = {'content': editors[key].getValue()};
+    }
+
+    // _gaq.push(['_trackEvent', 'Form', 'Submit']);
+
+    var inputs = {
+      contents: contents,
+      title: $('#title').val(),
+    }
+
+    /* Post the form and handle the returned data */
+    $.post($(this).attr('href'), inputs,
+      function( data ) {
+        var description = '<header><h1>' + data.description + '</h1></header>';
+
+        var files = '';
+
+        $(data.files).each(function(key, value) {
+          files = files + '<article class="file">' +  value + '</article>'
+        });
+
+        buildModal('<section class="content">' + description + files + '</section>')
+      }
+    );
+  });
+
+  $('#save-edit').on('click', function() {
+    console.log('button click');
+    $("form").submit();
+  });
 
   //if($('#gist-input').text().length > 0) {
   //  var storedInputs = JSON.parse($('#gist-input').text());
@@ -151,10 +182,6 @@ http://github.com/bgrins/bindWithDelay
   //  $('select[name="output"]').val(storedInputs.output);
   //  $("#sass-form").submit();
   //}
-
-
-
-
 
   //$('#reset').on('click', function() {
   //  event.preventDefault();
