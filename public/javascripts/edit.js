@@ -106,6 +106,7 @@ http://github.com/bgrins/bindWithDelay
   /* attach a submit handler to the form */
   $("form").submit(function(event) {
     event.preventDefault();
+    $('#save-edit').addClass('pulse');
 
     var contents = {};
 
@@ -124,6 +125,8 @@ http://github.com/bgrins/bindWithDelay
     $.post($(this).attr('action'), inputs,
       function( data ) {
         console.log(data);
+        
+        $('#save-edit').removeClass('pulse');
       }
     );
 
