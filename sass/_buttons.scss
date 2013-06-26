@@ -35,3 +35,36 @@ button, a.button {
     @include roughdraft-button($color: $echo_color_echo);
   }
 }
+
+
+@-webkit-keyframes backgroundPulse {
+  from {
+    border: 1px solid transparentize($charlie_primary, 0.6);
+    background: transparentize($charlie_primary, 0.9);
+    color: $charlie_primary;
+  }
+  to {
+    border: 1px solid transparentize(#E4B22E, 0.6);
+    background: transparentize(#E4B22E, 0.9);
+    color: #E4B22E;
+  }
+}
+
+@keyframes backgroundPulse {
+  from {
+    border: 1px solid transparentize($charlie_primary, 0.6);
+    background: transparentize($charlie_primary, 0.9);
+    color: $charlie_primary;
+  }
+  to {
+    border: 1px solid transparentize(#E4B22E, 0.6);
+    background: transparentize(#E4B22E, 0.9);
+    color: #E4B22E;
+  }
+}
+
+.pulse {
+  -webkit-animation: backgroundPulse 0.5s infinite alternate;
+     -moz-animation: backgroundPulse 0.5s infinite alternate;
+          animation: backgroundPulse 0.5s infinite alternate;
+}
