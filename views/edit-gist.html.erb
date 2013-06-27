@@ -1,5 +1,5 @@
 <form action="/<%= @gist.id %>/update.json" method="post" class="content gist-edit">
-  <input type="text" name="title" id="title" placeholder="Title" value="<%= @gist.description %>">
+  <input type="text" name="title" id="title" placeholder="Draft Title" value="<%= @gist.description %>">
 
   <% 
   unrenderable = Array.new
