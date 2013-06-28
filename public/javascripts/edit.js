@@ -100,7 +100,8 @@ http://github.com/bgrins/bindWithDelay
       dismissModalClass: 'close-icon' //the class of a button or element that will close an open modal
     });
 
-    $('#modal, .reveal-modal-bg').css('height', $("body").outerHeight());
+    $('.reveal-modal-bg').css('height', $("html").outerHeight());
+    $('#modal').css('height', 'auto');
   }
 
   /* attach a submit handler to the form */
