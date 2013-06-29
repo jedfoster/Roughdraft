@@ -2,24 +2,20 @@
   .github {
     text-align: left;
 
-    a {         
-      border: 0;
-      margin: 0;
-      padding: 0;
-      
-      //@include roughdraft-button($color: $charlie_color_charlie);
-    }
-  
+   
+
     a.login {
       @include roughdraft-button($color: $fox_gray);
     }
-    a.logout {         
+    a.logout {
       @include roughdraft-button($color: $alpha_color_echo);
     }
-    
+
     a, span {
       font-size: 0.66667em !important;
-      margin-bottom: 0;
+      // margin-bottom: 0;
+      float: left;
+      clear: both;
     }
 
     @media #{$tablet} {
@@ -35,12 +31,11 @@
       top: initial;
       bottom: 0.5em;
       font-size: 1em;
-      
+
       a, span {
         font-size: em($heading_6) !important;
-        margin-bottom: 0;
+
       }
     }
   }
-
 }
