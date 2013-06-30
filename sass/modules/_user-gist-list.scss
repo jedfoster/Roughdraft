@@ -19,8 +19,7 @@
   }
 
   .edit {
-    @extend %button; //($color: $charlie_color_charlie);
-    font-size: em($heading_6);
+    @extend %button;
   }
 }
 

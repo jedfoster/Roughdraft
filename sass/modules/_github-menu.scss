@@ -2,8 +2,6 @@
   .github {
     text-align: left;
 
-   
-
     a.login {
       @include roughdraft-button($color: $fox_gray);
     }
@@ -12,8 +10,7 @@
     }
 
     a, span {
-      font-size: 0.66667em !important;
-      // margin-bottom: 0;
+      font-size: em($small_point_size) !important;
       float: left;
       clear: both;
     }

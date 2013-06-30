@@ -20,11 +20,15 @@
     font-size: em($heading_6);
     display: inline-block;
   }
-  
-  
+
   nav a {
     display: block;
     width: 100%;
+    
+    &.button {
+      display: inline-block;
+      width: auto;
+    }
   }
 
   .rss {
@@ -39,7 +43,7 @@
     span {
       display: block;
     }
-    
+
     nav a {
       margin-right: 1em;
       padding-left: 1em;
@@ -54,7 +58,7 @@
   }
 
   @media #{$mobile} {
-    nav a {
+    nav 0x61 {
       display: block;
       border: 0;
       margin: 0;
