@@ -10,7 +10,7 @@
     }
 
     a, span {
-      font-size: em($small_point_size) !important;
+      font-size: em($small_point_size);
       float: left;
       clear: both;
     }
@@ -30,7 +30,7 @@
       font-size: 1em;
 
       a, span {
-        font-size: em($heading_6) !important;
+        font-size: em($heading_6);
 
       }
     }

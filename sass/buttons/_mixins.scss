@@ -8,7 +8,7 @@
   text-align: center;
   font-family: $font-family;
   margin-right: 1.25em;
-  font-size: em($button-font-size) !important;
+  font-size: #{$button-font-size}px !important;
 
   @media #{$desktop} {
     margin: 0 0 1.5em 0;

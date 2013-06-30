@@ -21,13 +21,14 @@
     display: inline-block;
   }
 
-  nav a {
-    display: block;
-    width: 100%;
+  nav {
+    a {
+      display: block;
+      width: 100%;
+    }
     
-    &.button {
-      display: inline-block;
-      width: auto;
+    button, a.button {
+      margin-right: 15%;
     }
   }
 
