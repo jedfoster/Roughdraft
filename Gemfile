@@ -15,4 +15,4 @@ gem 'gemoji'
 gem 'newrelic_rpm'
 gem 'sinatra-respond_to'
 
-gem 'toadstool'
+# gem 'toadstool'
