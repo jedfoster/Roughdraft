@@ -52,44 +52,9 @@
       <span>Gist-powered writing</span>
     </div>
 
-  <% if @gist %>
-    <nav>
-      <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
+    <%= partial :_left_sidebar %>
 
-      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
-      
-      <% if @github.authenticated? && session[:github_id] && @gist.belongs_to?(session[:github_id])
-
-        if @edit %>
-          <button type="submit" id="save-edit">Save</button> 
-      
-          <a href="/<%= @gist.id %>/preview.json" class="button preview" id="preview-edit">Preview</a>
-      
-          <a href="/<%= @gist.id %>" class="button cancel" id="cancel-edit">Cancel</a>
-          
-        <% else %>
-          <a href="/<%= @gist.id %>/edit" class="button">Edit this Draft</a>
-        <% end # end if @edit
-      else %>
-        <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
-      <% end # end if @github.authenticated? %>
-    </nav>
-    <% else %>
-      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
-    <% 
-    
-     end # end if @gist %>
-
-
-    <div class="github">
-    <% if @github.authenticated? && session[:github_id] %>
-      <span href="">Logged in as <%=session[:github_id]%></span>
-      <a href="<%="http://#{session[:github_id]}.#{APP_DOMAIN}/"%>">My Drafts</a>
-      <a href="/logout" class="logout">Logout</a>
-    <% else %>
-      <a href="/authorize" class="login">Login</a>
-    <% end %>
-    </div>
+    <%= partial :_github %>
   </header>
 
   <%= yield %>
@@ -100,7 +65,7 @@
 
   <% if settings.environment == :production %>
     <script src="/javascripts/app.js"></script>
-    <% if @edit %>
+    <% if @action.match(/edit|new/) %>
       <script src="/javascripts/editor.js"></script>
     <% end %>
   <% else %>
@@ -128,7 +93,7 @@
     <script src="/javascripts/vendor/Prettify/lang-xq.js"></script>
     <script src="/javascripts/vendor/Prettify/prettify-loader.js"></script>
     <script src="/javascripts/main.js"></script>
-    <% if @edit %>
+    <% if @action.match(/edit|new/) %>
       <script src="/javascripts/vendor/ACE-noconflict/ace.js"></script>
       <script src="/javascripts/vendor/ACE-noconflict/theme-tomorrow.js"></script>
       <script src="/javascripts/vendor/jquery.foundation.reveal.js"></script>

@@ -14,6 +14,7 @@ require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
 require './lib/html/pipeline/gist.rb'
+require './lib/roughdraft.rb'
 
 require 'sinatra/respond_to'
 
@@ -94,20 +95,16 @@ helpers do
   include ERB::Util
   alias_method :code, :html_escape
 
-  module Roughdraft
-    def self.github(auth_token = '')
-      github = Github.new do |config|
-        config.client_id = gh_config['client_id']
-        config.client_secret = gh_config['client_secret']
-        config.oauth_token = auth_token
-      end
-    end
+  include Roughdraft
+
+  def _params
+    params
   end
 end
 
 
 before do
-  @user = @gist = @edit = false
+  @user = @gist = @action = false
   @github = Roughdraft.github(session[:github_token])
 end
 
@@ -119,6 +116,8 @@ end
 
 
 get %r{^(/|/feed)$}, :provides => ['html', 'json', 'xml'] do
+  @action = 'home'
+
   if @user
     status, headers, body = call env.merge("PATH_INFO" => '/page/1')
     [status, headers, body]
@@ -129,6 +128,8 @@ end
 
 
 get '/page/:page' do
+  @action = 'list'
+
   if @user
     gists = GistList.new(@user.id, params[:page])
 
@@ -153,6 +154,7 @@ end
 
 
 get %r{(?:/)?([\w-]+)?/([\d]+)$} do
+  @action = 'view'
   id = params[:captures].last
   valid = true
 
@@ -177,8 +179,8 @@ end
 
 
 get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
+  @action = 'edit'
   id = params[:captures].last
-  @edit = true
 
   @gist = Gist.new(id)
 
@@ -201,16 +203,12 @@ end
 
 
 post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
+  @action = 'update'
   id = params[:captures].last
-  @edit = true
 
   @gist = Gist.new(id)
 
-  # params[:title].to_json
-  # "foobar"
-
   foo = @gist.update(params[:title], params[:contents], session)
-
 
   respond_to do |wants|
     # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
@@ -218,9 +216,6 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
     # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
   end
 
-  #id = params[:captures].last
-  #@edit = true
-  #
   #@gist = Gist.new(id)
   #
   #if ! @gist.content
@@ -242,8 +237,8 @@ end
 
 
 post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
+  @action = 'preview'
   id = params[:captures].last
-  @edit = true
 
   @gist = Gist.new(id)
 
@@ -254,7 +249,6 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
   hash = Hash.new
   hash['description'] = params[:title]
   hash['files'] = Array.new
-
 
   @gist.files.each do |x, file|
     if file['rendered']
@@ -268,29 +262,42 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
 end
 
 
-get %r{/([\d]+)/content} do
-  id = params[:captures].first
+get '/new' do
+  @action = 'new'
 
-  content = REDIS.get(id)
-  from_redis = 'True'
+  erb :'new-gist'
+end
 
-  if ! content
-    from_redis = 'False'
-    content = fetch_and_render_gist(id)
+post '/new/preview' do
+  @action = 'preview'
+
+  hash = Hash.new
+  hash['description'] = params[:title]
+  hash['files'] = Array.new
+
+  params[:contents].each do |key, value|
+    hash['files'] << Roughdraft.gist_pipeline(value["content"], params[:contents])
   end
 
-  headers 'Content-Type' => "application/json;charset=utf-8",
-    'Cache-Control' => "private, max-age=0, must-revalidate",
-    'X-Cache-Hit' => from_redis,
-    'X-Expire-TTL-Seconds' => REDIS.ttl(id).to_s
+  hash.to_json.to_s
+end
 
-  content
+
+post '/create' do
+  params[:title]
+  params[:contents]
+
+  data = Roughdraft.github(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
+
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { "/#{data.id.to_s}/edit".to_json } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
 end
 
 
 get '/authorize' do
-  # return @github.inspect
-
   redirect to @github.authorize_url :scope => ['gist', 'user']
 end
 

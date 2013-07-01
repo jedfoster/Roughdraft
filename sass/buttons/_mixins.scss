@@ -3,11 +3,12 @@
 
   border: 1px solid transparentize($color, 0.6); // adjust_hue(desaturate(lighten(#718c00, 50), 61), 3)
   background: transparentize($color, 0.9); // desaturate(lighten(#718c00, 63), 63)
-  display: inline-block;
-  width: auto;
+  display: inline-block !important;
+  width: auto !important;
   text-align: center;
   font-family: $font-family;
   margin-right: 1.25em;
+  font-size: #{$button-font-size}px !important;
 
   @media #{$desktop} {
     margin: 0 0 1.5em 0;

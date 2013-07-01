@@ -49,10 +49,10 @@ http://github.com/bgrins/bindWithDelay
     if ($("html").width() > 50 * 18) {
       var html = $("html").height(),
           title = $('#general_text').outerHeight(),
-          form_margin = parseInt($('.content.gist-edit').css('padding-top')) +
-                        parseInt($('.content.gist-edit').css('padding-bottom')) +
-                        parseInt($('.content.gist-edit').css('margin-top')) +
-                        parseInt($('.content.gist-edit').css('margin-bottom')) +
+          form_margin = parseInt($('form.content').css('padding-top')) +
+                        parseInt($('form.content').css('padding-bottom')) +
+                        parseInt($('form.content').css('margin-top')) +
+                        parseInt($('form.content').css('margin-bottom')) +
                         parseInt($('.edit_container').css('margin-bottom'))  +
                         parseInt($('footer p').css('margin-bottom')) +
                         70,
@@ -105,7 +105,7 @@ http://github.com/bgrins/bindWithDelay
   }
 
   /* attach a submit handler to the form */
-  $("form").submit(function(event) {
+  $("form.gist-edit").submit(function(event) {
     event.preventDefault();
     $('#save-edit').addClass('pulse');
 
@@ -128,6 +128,34 @@ http://github.com/bgrins/bindWithDelay
         console.log(data);
         
         $('#save-edit').removeClass('pulse');
+      }
+    );
+
+   //localStorage.setItem('inputs', JSON.stringify(inputs));
+  });
+  
+  /* attach a submit handler to the form */
+  $("form.gist-create").submit(function(event) {
+    event.preventDefault();
+    $('#save-edit').addClass('pulse');
+
+    var contents = {};
+
+    for (var key in editors) {
+      contents[key] = {'content': editors[key].getValue()};
+    }
+
+    // _gaq.push(['_trackEvent', 'Form', 'Submit']);
+
+    var inputs = {
+      contents: contents,
+      title: $('#title').val(),
+    }
+
+    /* Post the form and handle the returned data */
+    $.post($(this).attr('action'), inputs,
+      function( data ) {
+        window.location = data;
       }
     );
 
@@ -167,7 +195,7 @@ http://github.com/bgrins/bindWithDelay
   });
 
   $('#save-edit').on('click', function() {
-    console.log('button click');
+    // console.log('button click');
     $("form").submit();
   });
 

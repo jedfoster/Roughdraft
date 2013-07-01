@@ -55,7 +55,7 @@ class Gist
 
   def file_content(file, content)
     @content["files"][file]["content"] = content
-    @content["files"][file]["rendered"] = pipeline(content.to_s, @content)
+    @content["files"][file]["rendered"] = Roughdraft.gist_pipeline(content.to_s, @content)
   end
 
   def html_url
@@ -68,24 +68,6 @@ class Gist
   end
 
 private
-  def pipeline(html, gist)
-    context = {
-      :gfm => true,
-      :gist => gist,
-      :asset_root => "http://#{APP_DOMAIN}/images",
-      # :base_url   => "#{APP_DOMAIN}"
-    }
-
-    pipe = HTML::Pipeline.new [
-      HTML::Pipeline::MarkdownFilter,
-      HTML::Pipeline::GistFilter,
-      HTML::Pipeline::SanitizationFilter,
-      HTML::Pipeline::ImageMaxWidthFilter,
-      HTML::Pipeline::EmojiFilter
-    ], context
-
-    pipe.call(html)[:output].to_xhtml # return XHTML to be compatible with RSS
-  end
 
   def fetch
     begin
@@ -93,7 +75,7 @@ private
 
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s
-          value[:rendered] = pipeline(value.content.to_s, gist).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
+          value[:rendered] = Roughdraft.gist_pipeline(value.content.to_s, gist).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
         end
       end
 

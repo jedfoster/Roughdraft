@@ -46,7 +46,7 @@
   .close-icon {
     @include roughdraft-button($color: $delta_color_charlie);
 
-    display: block;
+    display: block !important;
 
     @media #{$desktop} {
        margin: 0;
