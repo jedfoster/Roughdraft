@@ -17,6 +17,10 @@
     display: block;
     font-style: italic;
   }
+
+  .edit {
+    @extend %button;
+  }
 }
 
 %gist-list-section {

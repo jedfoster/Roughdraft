@@ -49,18 +49,12 @@
   <header class="site-header">
     <div class="logo">
       <h1>Roughdraft</h1>
+      <span>Gist-powered writing</span>
+    </div>
 
-    <% if @gist %>
-    <nav>
-      <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
+    <%= partial :_left_sidebar %>
 
-      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
-
-      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
-    </nav>
-    <% else %>
-      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
-    <% end %>
+    <%= partial :_github %>
   </header>
 
   <%= yield %>
@@ -71,6 +65,9 @@
 
   <% if settings.environment == :production %>
     <script src="/javascripts/app.js"></script>
+    <% if @action.match(/edit|new/) %>
+      <script src="/javascripts/editor.js"></script>
+    <% end %>
   <% else %>
   	<script src="/javascripts/vendor/jquery-1.8.2.js"></script>
   	<script src="/javascripts/vendor/Prettify/prettify.js"></script>
@@ -96,6 +93,12 @@
     <script src="/javascripts/vendor/Prettify/lang-xq.js"></script>
     <script src="/javascripts/vendor/Prettify/prettify-loader.js"></script>
     <script src="/javascripts/main.js"></script>
+    <% if @action.match(/edit|new/) %>
+      <script src="/javascripts/vendor/ACE-noconflict/ace.js"></script>
+      <script src="/javascripts/vendor/ACE-noconflict/theme-tomorrow.js"></script>
+      <script src="/javascripts/vendor/jquery.foundation.reveal.js"></script>
+      <script src="/javascripts/edit.js"></script>
+    <% end %>
   <% end %>
 </body>
 </html>

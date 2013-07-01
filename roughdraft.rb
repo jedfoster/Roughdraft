@@ -5,8 +5,8 @@ require 'sinatra/partial'
 require 'json'
 require 'github_api'
 require 'rack/request'
-require 'sass'
-require 'compass'
+# require 'sass'
+# require 'compass'
 require 'yaml'
 require 'html/pipeline'
 
@@ -14,6 +14,7 @@ require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
 require './lib/html/pipeline/gist.rb'
+require './lib/roughdraft.rb'
 
 require 'sinatra/respond_to'
 
@@ -32,10 +33,6 @@ module Rack
     end
   end
 end
-
-
-
-
 
 
 
@@ -66,8 +63,8 @@ configure :production do
       end
     end
 
-    use Rack::Session::Cookie, #:key => 'example.com',
-                               #:domain => 'example.com',
+    use Rack::Session::Cookie, :key => 'roughdraft.io',
+                               :domain => '.roughdraft.io',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => ENV['COOKIE_SECRET']
@@ -85,7 +82,8 @@ configure :development do
       end
     end
 
-    use Rack::Session::Cookie, #:key => 'example.dev',
+    use Rack::Session::Cookie, :key => 'roughdraft.dev',
+                               :domain => '.roughdraft.dev',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => 'local'
@@ -93,8 +91,21 @@ configure :development do
 end
 
 
+helpers do
+  include ERB::Util
+  alias_method :code, :html_escape
+
+  include Roughdraft
+
+  def _params
+    params
+  end
+end
+
+
 before do
-  @user = @gist = false
+  @user = @gist = @action = false
+  @github = Roughdraft.github(session[:github_token])
 end
 
 before :subdomain => 1 do
@@ -105,6 +116,8 @@ end
 
 
 get %r{^(/|/feed)$}, :provides => ['html', 'json', 'xml'] do
+  @action = 'home'
+
   if @user
     status, headers, body = call env.merge("PATH_INFO" => '/page/1')
     [status, headers, body]
@@ -115,6 +128,8 @@ end
 
 
 get '/page/:page' do
+  @action = 'list'
+
   if @user
     gists = GistList.new(@user.id, params[:page])
 
@@ -139,6 +154,7 @@ end
 
 
 get %r{(?:/)?([\w-]+)?/([\d]+)$} do
+  @action = 'view'
   id = params[:captures].last
   valid = true
 
@@ -162,23 +178,122 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
 end
 
 
-get %r{/([\d]+)/content} do
-  id = params[:captures].first
+get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
+  @action = 'edit'
+  id = params[:captures].last
 
-  content = REDIS.get(id)
-  from_redis = 'True'
+  @gist = Gist.new(id)
 
-  if ! content
-    from_redis = 'False'
-    content = fetch_and_render_gist(id)
+  if ! @gist.content
+    @gist = false
+
+    return erb :invalid_gist, :locals => { :gist_id => id }
   end
 
-  headers 'Content-Type' => "application/json;charset=utf-8",
-    'Cache-Control' => "private, max-age=0, must-revalidate",
-    'X-Cache-Hit' => from_redis,
-    'X-Expire-TTL-Seconds' => REDIS.ttl(id).to_s
+  @user = User.new(params[:captures].first) unless @user
 
-  content
+  if request.url == "#{@gist.roughdraft_url}/edit" && @gist.belongs_to?(session[:github_id])
+    headers 'X-Cache-Hit' => @gist.from_redis
+
+    erb :'edit-gist'
+  else
+    redirect to(@gist.roughdraft_url)
+  end
+end
+
+
+post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
+  @action = 'update'
+  id = params[:captures].last
+
+  @gist = Gist.new(id)
+
+  foo = @gist.update(params[:title], params[:contents], session)
+
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { foo.to_json } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
+
+  #@gist = Gist.new(id)
+  #
+  #if ! @gist.content
+  #  @gist = false
+  #
+  #  return erb :invalid_gist, :locals => { :gist_id => id }
+  #end
+  #
+  #@user = User.new(params[:captures].first) unless @user
+  #
+  #if request.url == "#{@gist.roughdraft_url}/update"
+  #  headers 'X-Cache-Hit' => @gist.from_redis
+  #
+  #  erb :'edit-gist'
+  #else
+  #  redirect to(@gist.roughdraft_url)
+  #end
+end
+
+
+post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
+  @action = 'preview'
+  id = params[:captures].last
+
+  @gist = Gist.new(id)
+
+  params[:contents].each do |key, value|
+    @gist.file_content(key, value["content"])
+  end
+
+  hash = Hash.new
+  hash['description'] = params[:title]
+  hash['files'] = Array.new
+
+  @gist.files.each do |x, file|
+    if file['rendered']
+      name = file['filename'].to_sym
+
+      hash['files'] << file['rendered']
+    end
+  end
+
+  hash.to_json.to_s
+end
+
+
+get '/new' do
+  @action = 'new'
+
+  erb :'new-gist'
+end
+
+post '/new/preview' do
+  @action = 'preview'
+
+  hash = Hash.new
+  hash['description'] = params[:title]
+  hash['files'] = Array.new
+
+  params[:contents].each do |key, value|
+    hash['files'] << Roughdraft.gist_pipeline(value["content"], params[:contents])
+  end
+
+  hash.to_json.to_s
+end
+
+
+post '/create' do
+  params[:title]
+  params[:contents]
+
+  data = Roughdraft.github(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
+
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { "/#{data.id.to_s}/edit".to_json } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
 end
 
 
@@ -188,15 +303,15 @@ end
 
 
 get '/authorize/return' do
-  token = Github.get_token(params[:code])
+  token = @github.get_token(params[:code])
 
-  user = github(token.token).users.get
+  user = Roughdraft.github(token.token).users.get
 
   session[:github_token] = token.token
   session[:github_id] = user.login
   session[:gravatar_id] = user.gravatar_id
 
-  redirect to('/')
+  redirect to("http://#{user.login}.#{APP_DOMAIN}/")
 end
 
 

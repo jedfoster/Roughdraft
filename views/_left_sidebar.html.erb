@@ -1,0 +1,38 @@
+<% if @action == 'list' %>
+  <nav>
+    <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
+  </nav>
+
+
+<% elsif @action == 'view' %>
+  <nav>
+    <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
+    <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
+
+    <% if @github.authenticated? && @gist.belongs_to?(session[:github_id]) %>
+      <a href="/<%= @gist.id %>/edit" class="button">Edit this Draft</a>
+
+    <% else %>
+      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
+
+    <% end %>
+  </nav>
+
+
+<% elsif @action == 'edit' %>
+  <nav>
+    <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
+    <button type="submit" id="save-edit">Save</button>
+    <a href="/<%= @gist.id %>/preview.json" class="button preview" id="preview-edit">Preview</a>
+    <a href="/<%= @gist.id %>" class="button cancel" id="cancel-edit">Cancel</a>
+  </nav>
+
+
+<% elsif @action == 'new' %>
+  <nav>
+    <button type="submit" id="save-edit">Save</button>
+    <a href="/new/preview.json" class="button preview" id="preview-edit">Preview</a>
+    <a href="/" class="button cancel" id="cancel-edit">Cancel</a>
+  </nav>
+
+<% end %>

@@ -29,6 +29,11 @@ javascripts:
     - public/javascripts/vendor/Prettify/prettify-loader.js
     # - public/javascripts/vendor/gist.io.js
     - public/javascripts/main.js
+  editor:
+    - public/javascripts/vendor/ACE-noconflict/ace.js
+    - public/javascripts/vendor/ACE-noconflict/theme-tomorrow.js
+    - public/javascripts/vendor/jquery.foundation.reveal.js
+    - public/javascripts/edit.js
 
 # stylesheets:
 #   common:

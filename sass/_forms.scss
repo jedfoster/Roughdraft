@@ -24,8 +24,13 @@ input[type="email"], input[type="password"], input[type="text"], input[type="dat
 	}
 }
 
+%textarea {
+  // min-height: #{7.66667 * 3}em;
+  font-size: em($heading_6);
+}
+
 textarea {
-  min-height: 7.66667em
+  @extend %textarea;
 }
 
 // not represented in the style guide view

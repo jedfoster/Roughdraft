@@ -6,7 +6,7 @@ $button-text-color:     $white;
 $button-line-height:    32;
 $button-border-radius:  3;
 $button-padding:        20;
-$button-font-size:      18;
+$button-font-size:      $small_point_size;
 $button-weight:         normal;
 $button-text-shadow:    true;
 //$button-box-shadow:     false;
@@ -20,10 +20,51 @@ $button-font-family:    $heading_font_family;
 
 // buttons
 // --------------------------------------------------------------------
-button, a.button {
+%button {
   @include roughdraft-button;
+}
+
+button, a.button {
+  @extend %button;
 
   &.preview {
     @include roughdraft-button($color: $delta_color_charlie);
   }
+  
+  &.cancel {
+    @include roughdraft-button($color: $echo_color_echo);
+  }
+}
+
+
+@-webkit-keyframes backgroundPulse {
+  from {
+    border: 1px solid transparentize($charlie_primary, 0.6);
+    background: transparentize($charlie_primary, 0.9);
+    color: $charlie_primary;
+  }
+  to {
+    border: 1px solid transparentize(#E4B22E, 0.6);
+    background: transparentize(#E4B22E, 0.9);
+    color: #E4B22E;
+  }
+}
+
+@keyframes backgroundPulse {
+  from {
+    border: 1px solid transparentize($charlie_primary, 0.6);
+    background: transparentize($charlie_primary, 0.9);
+    color: $charlie_primary;
+  }
+  to {
+    border: 1px solid transparentize(#E4B22E, 0.6);
+    background: transparentize(#E4B22E, 0.9);
+    color: #E4B22E;
+  }
+}
+
+.pulse {
+  -webkit-animation: backgroundPulse 0.5s infinite alternate;
+     -moz-animation: backgroundPulse 0.5s infinite alternate;
+          animation: backgroundPulse 0.5s infinite alternate;
 }

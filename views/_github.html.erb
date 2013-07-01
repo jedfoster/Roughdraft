@@ -1,0 +1,13 @@
+<div class="github">
+<% if @github.authenticated? && session[:github_id] %>
+  <span>Logged in as <%=session[:github_id]%></span>
+  <a href="<%="http://#{session[:github_id]}.#{APP_DOMAIN}/"%>">My Drafts</a>
+  <% if ! @action.match(/edit|save/) %>
+    <a href="<%="http://#{session[:github_id]}.#{APP_DOMAIN}/new"%>" class="button">New Draft</a>
+  <% end %>
+  
+  <a href="/logout" class="logout">Logout</a>
+<% else %>
+  <a href="/authorize" class="login">Login</a>
+<% end %>
+</div>

@@ -1,0 +1,38 @@
+.edit_container {
+  @extend %stipe_input_fields;
+  @extend %textarea;
+  
+  padding: 0;
+  margin-bottom: 1.66667em;
+  position: relative;
+
+  @media #{$mobile} {
+    margin-bottom: 1em;
+  }
+
+  .pre_container {
+    postition: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
+  .ace_editor {
+    font-family: $code-font-family;
+  }
+}
+
+.ace_gutter {
+  .ace_layer {
+    font-size: em($heading_6);
+    color: $golf_gray;
+  }
+}
+
+.ace_scroller, .ace_gutter, .edit_container {
+  /* useful if you don't want a bg color from leaking outside the border: */
+     -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+          background-clip: padding-box;
+}

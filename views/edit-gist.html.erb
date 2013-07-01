@@ -1,0 +1,17 @@
+<form action="/<%= @gist.id %>/update.json" method="post" class="content gist-edit">
+  <input type="text" name="title" id="title" placeholder="Draft Title" value="<%= @gist.description %>">
+
+  <% 
+  unrenderable = Array.new
+  
+  @gist.files.each do |x, file| 
+    if file['rendered'].nil?
+      unrenderable << file
+
+    else %>      
+      <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>" data-filename="<%= file['filename'] %>"><%= code file['content'] %></div></div>
+    <% end
+  end %>
+
+  <%= partial 'modules/gist/_metadata'.to_sym, :locals => {:unrenderable => unrenderable} %>
+</form>

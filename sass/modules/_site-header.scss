@@ -21,9 +21,15 @@
     display: inline-block;
   }
 
-  a {
-    display: block;
-    width: 100%;
+  nav {
+    a {
+      display: block;
+      width: 100%;
+    }
+    
+    button, a.button {
+      margin-right: 15%;
+    }
   }
 
   .rss {
@@ -31,7 +37,7 @@
   }
 
   @media #{$tablet} {
-    h1, span, a {
+    h1, span, nav a {
       display: inline;
     }
 
@@ -39,13 +45,13 @@
       display: block;
     }
 
-    a {
-      margin-left: 1em;
+    nav a {
+      margin-right: 1em;
       padding-left: 1em;
       border-left: 1px solid $border_color;
     }
 
-    a:only-child, a:first-child {
+    nav a:only-child, nav a:first-child {
       margin-left: 0;
       padding-left: 0;
       border-left: 0;
@@ -53,7 +59,7 @@
   }
 
   @media #{$mobile} {
-    a {
+    nav 0x61 {
       display: block;
       border: 0;
       margin: 0;
@@ -62,7 +68,7 @@
   }
 
   @media #{$desktop} {
-    @extend %right-responsive-sidebar;
+    @extend %left-responsive-sidebar;
 
     .logo {
       padding-top: 0;
