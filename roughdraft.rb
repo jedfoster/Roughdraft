@@ -271,40 +271,29 @@ end
 post '/new/preview' do
   @action = 'preview'
 
-  render = Array.new
-
-  params[:contents].each do |key, value|
-    render << Roughdraft.gist_pipeline(value["content"], params[:contents])
-    
-  end
-
-  # return render.inspect
-
   hash = Hash.new
   hash['description'] = params[:title]
-  hash['files'] = render
+  hash['files'] = Array.new
 
-  # @gist.files.each do |x, file|
-  #   if file['rendered']
-  #     name = file['filename'].to_sym
-  # 
-  #     hash['files'] << file['rendered']
-  #   end
-  # end
+  params[:contents].each do |key, value|
+    hash['files'] << Roughdraft.gist_pipeline(value["content"], params[:contents])
+  end
 
   hash.to_json.to_s
 end
 
 
 post '/create' do
-  
   params[:title]
   params[:contents]
-  
+
   data = Roughdraft.github(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
-  
-  return data.inspect
-  @action = 'create'
+
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { "/#{data.id.to_s}/edit".to_json } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
 end
 
 
