@@ -276,6 +276,13 @@ get '/new' do
 end
 
 post '/create' do
+  
+  params[:title]
+  params[:contents]
+  
+  data = Roughdraft.github(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
+  
+  return data.inspect
   @action = 'create'
 end
 
