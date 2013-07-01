@@ -14,6 +14,7 @@ require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
 require './lib/html/pipeline/gist.rb'
+require './lib/roughdraft.rb'
 
 require 'sinatra/respond_to'
 
@@ -94,15 +95,7 @@ helpers do
   include ERB::Util
   alias_method :code, :html_escape
 
-  module Roughdraft
-    def self.github(auth_token = '')
-      github = Github.new do |config|
-        config.client_id = gh_config['client_id']
-        config.client_secret = gh_config['client_secret']
-        config.oauth_token = auth_token
-      end
-    end
-  end
+  include Roughdraft
 
   def _params
     params
@@ -274,6 +267,34 @@ get '/new' do
 
   erb :'new-gist'
 end
+
+post '/new/preview' do
+  @action = 'preview'
+
+  render = Array.new
+
+  params[:contents].each do |key, value|
+    render << Roughdraft.gist_pipeline(value["content"], params[:contents])
+    
+  end
+
+  # return render.inspect
+
+  hash = Hash.new
+  hash['description'] = params[:title]
+  hash['files'] = render
+
+  # @gist.files.each do |x, file|
+  #   if file['rendered']
+  #     name = file['filename'].to_sym
+  # 
+  #     hash['files'] << file['rendered']
+  #   end
+  # end
+
+  hash.to_json.to_s
+end
+
 
 post '/create' do
   
