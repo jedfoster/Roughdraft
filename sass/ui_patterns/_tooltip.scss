@@ -1,0 +1,29 @@
+.tooltip {
+  cursor: pointer;
+  display: inline-block;  
+  margin-left: 0.25em;
+  
+  &:after {
+    @extend %delta-color-button;
+    
+    padding: 0 0.66667em;
+    font-family: $heading_font_family;
+    content: "?";
+    font-size: 0.66667em !important;
+    font-weight: bold;
+  }
+}
+ 
+.tooltip .tooltip_contents {
+  @extend %delta-color-button;
+
+  visibility: hidden;
+  position: absolute;
+  margin: 1px 0 0 em(32);
+  max-width: em(260);
+  z-index: 9999;
+}
+ 
+.tooltip:hover .tooltip_contents{
+  visibility: visible;
+}
