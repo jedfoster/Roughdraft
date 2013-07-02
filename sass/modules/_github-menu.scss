@@ -3,10 +3,10 @@
     text-align: left;
 
     a.login {
-      @include roughdraft-button($color: $fox_gray);
+      @extend %gray-button;
     }
     a.logout {
-      @include roughdraft-button($color: $alpha_color_echo);
+      @extend %alpha-color-button;
     }
 
     a, span {

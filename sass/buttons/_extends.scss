@@ -1,3 +1,26 @@
 // Use this to build custom extends for your project
 // -----------------------------------------------------------------------
 
+%alpha-color-button {
+  @include roughdraft-button($color: $alpha_color_echo);
+}
+
+%bravo-color-button {
+  @include roughdraft-button($color: $bravo_color_charlie);
+}
+
+%charlie-color-button {
+  @include roughdraft-button($color: $charlie_color_charlie);
+}
+
+%delta-color-button {
+  @include roughdraft-button($color: $delta_color_charlie);
+}
+
+%echo-color-button {
+  @include roughdraft-button($color: $echo_color_echo);
+}
+
+%gray-button {
+  @include roughdraft-button($color: $fox_gray);
+}
