@@ -112,7 +112,17 @@ http://github.com/bgrins/bindWithDelay
     var contents = {};
 
     for (var key in editors) {
-      contents[key] = {'content': editors[key].getValue()};
+      var new_filename = $('*[data-filename="' + key + '"]').data('new-filename');
+
+      if (new_filename !== key) {
+        contents[key] = {
+          'filename': new_filename,
+          'content': editors[key].getValue(),
+        };
+      }
+      else {
+        contents[key] = {'content': editors[key].getValue()};
+      }
     }
 
     // _gaq.push(['_trackEvent', 'Form', 'Submit']);
@@ -125,15 +135,13 @@ http://github.com/bgrins/bindWithDelay
     /* Post the form and handle the returned data */
     $.post($(this).attr('action'), inputs,
       function( data ) {
-        console.log(data);
-        
         $('#save-edit').removeClass('pulse');
       }
     );
 
    //localStorage.setItem('inputs', JSON.stringify(inputs));
   });
-  
+
   /* attach a submit handler to the form */
   $("form.gist-create").submit(function(event) {
     event.preventDefault();
@@ -160,6 +168,10 @@ http://github.com/bgrins/bindWithDelay
     );
 
    //localStorage.setItem('inputs', JSON.stringify(inputs));
+  });
+
+  $('input.filename').on('blur', function() {
+    $('#' + $(this).data('filename')).attr('data-new-filename', $(this).val());
   });
 
   $('#preview-edit').on('click', function() {

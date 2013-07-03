@@ -12,7 +12,7 @@
       <div class="edit_container">
 
         <div class="edit-header">
-          <input name="filename" value="<%= file['filename'] %>">
+          <input name="filename" value="<%= file['filename'] %>" class="filename" data-filename="<%= file['filename'].gsub(/[\s\.]/, '-') %>">
 
           <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered by Roughdraft.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>
         </div>
