@@ -9,7 +9,7 @@
     padding: 0 0.66667em;
     font-family: $heading_font_family;
     content: "?";
-    font-size: 0.66667em !important;
+    font-size: 0.75em !important;
     font-weight: bold;
   }
 }
@@ -19,7 +19,7 @@
 
   visibility: hidden;
   position: absolute;
-  margin: 1px 0 0 em(32);
+  margin: 0 0 0 em(42);
   max-width: em(260);
   z-index: 9999;
 }
