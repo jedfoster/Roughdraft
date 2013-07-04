@@ -174,6 +174,35 @@ http://github.com/bgrins/bindWithDelay
     $('#' + $(this).data('filename')).attr('data-new-filename', $(this).val());
   });
 
+  $('#add-a-file').on('click', function() {
+    event.preventDefault();
+
+    var new_file_count = Math.ceil(Math.random() * 100);
+
+    var id = 'roughdraft-' + new_file_count + '-md';
+    var filename = 'roughdraft-' + new_file_count + '.md';
+
+    var edit_container = '<div class="edit_container">\
+    <div class="edit-header">\
+      <input name="filename" value="' + filename + '" class="filename" data-filename="' + id + '">\
+\
+      <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered by Roughdraft.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>\
+    </div>\
+\
+      <div class="pre_container" id="' + id + '" data-filename="' + filename + '"></div>\
+  </div>';
+
+    $(this).before(edit_container);
+
+    setHeight();
+
+    editors[filename] = ace.edit(id);
+    editors[filename].setTheme("ace/theme/tomorrow");
+    editors[filename].getSession().setMode("ace/mode/markdown");
+    editors[filename].getSession().setUseWrapMode(true);
+    editors[filename].getSession().setWrapLimitRange();
+  });
+
   $('#preview-edit').on('click', function() {
     event.preventDefault();
 
