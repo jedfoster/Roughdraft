@@ -215,51 +215,33 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
     wants.json { foo.to_json } # => sets content_type to application/json
     # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
   end
-
-  #@gist = Gist.new(id)
-  #
-  #if ! @gist.content
-  #  @gist = false
-  #
-  #  return erb :invalid_gist, :locals => { :gist_id => id }
-  #end
-  #
-  #@user = User.new(params[:captures].first) unless @user
-  #
-  #if request.url == "#{@gist.roughdraft_url}/update"
-  #  headers 'X-Cache-Hit' => @gist.from_redis
-  #
-  #  erb :'edit-gist'
-  #else
-  #  redirect to(@gist.roughdraft_url)
-  #end
 end
 
 
-post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
-  @action = 'preview'
-  id = params[:captures].last
-
-  @gist = Gist.new(id)
-
-  params[:contents].each do |key, value|
-    @gist.file_content(key, value["content"])
-  end
-
-  hash = Hash.new
-  hash['description'] = params[:title]
-  hash['files'] = Array.new
-
-  @gist.files.each do |x, file|
-    if file['rendered']
-      name = file['filename'].to_sym
-
-      hash['files'] << file['rendered']
-    end
-  end
-
-  hash.to_json.to_s
-end
+# post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
+#   @action = 'preview'
+#   id = params[:captures].last
+# 
+#   @gist = Gist.new(id)
+# 
+#   params[:contents].each do |key, value|
+#     @gist.file_content(key, value["content"])
+#   end
+# 
+#   hash = Hash.new
+#   hash['description'] = params[:title]
+#   hash['files'] = Array.new
+# 
+#   @gist.files.each do |x, file|
+#     if file['rendered']
+#       name = file['filename'].to_sym
+# 
+#       hash['files'] << file['rendered']
+#     end
+#   end
+# 
+#   hash.to_json.to_s
+# end
 
 
 get '/new' do
@@ -268,7 +250,7 @@ get '/new' do
   erb :'new-gist'
 end
 
-post '/new/preview' do
+post '/preview' do
   @action = 'preview'
 
   hash = Hash.new

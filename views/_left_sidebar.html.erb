@@ -23,7 +23,7 @@
   <nav>
     <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
     <button type="submit" id="save-edit">Save</button>
-    <a href="/<%= @gist.id %>/preview.json" class="button preview" id="preview-edit">Preview</a>
+    <a href="/preview.json" class="button preview" id="preview-edit">Preview</a>
     <a href="/<%= @gist.id %>" class="button cancel" id="cancel-edit">Cancel</a>
   </nav>
 
@@ -31,7 +31,7 @@
 <% elsif @action == 'new' %>
   <nav>
     <button type="submit" id="save-edit">Save</button>
-    <a href="/new/preview.json" class="button preview" id="preview-edit">Preview</a>
+    <a href="/preview.json" class="button preview" id="preview-edit">Preview</a>
     <a href="/" class="button cancel" id="cancel-edit">Cancel</a>
   </nav>
 
