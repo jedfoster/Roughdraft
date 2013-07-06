@@ -33,6 +33,7 @@ javascripts:
     - public/javascripts/vendor/ACE-noconflict/ace.js
     - public/javascripts/vendor/ACE-noconflict/theme-tomorrow.js
     - public/javascripts/vendor/jquery.foundation.reveal.js
+    - public/javascripts/vendor/rails.js
     - public/javascripts/edit.js
 
 # stylesheets:

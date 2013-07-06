@@ -28,11 +28,11 @@ button, a.button {
   @extend %button;
 
   &.preview {
-    @include roughdraft-button($color: $delta_color_charlie);
+    @extend %delta-color-button;
   }
   
   &.cancel {
-    @include roughdraft-button($color: $echo_color_echo);
+    @extend %echo-color-button;
   }
 }
 

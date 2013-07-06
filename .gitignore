@@ -3,6 +3,8 @@
 .sass-cache/*
 public/javascripts/app.js
 public/javascripts/app.js.gz
+public/javascripts/editor.js
+public/javascripts/editor.js.gz
 public/stylesheets/*
 sass/.sass-cache/
 #Gemfile.local

@@ -1,18 +1,21 @@
 .site-header {
   .github {
-    text-align: left;
+    text-align: right;
+    max-width: 50%;
 
     a.login {
-      @include roughdraft-button($color: $fox_gray);
+      @extend %gray-button;
     }
     a.logout {
-      @include roughdraft-button($color: $alpha_color_echo);
+      @extend %alpha-color-button;
+
+      margin-right: 0;
     }
 
-    a, span {
+    a {
       font-size: em($small_point_size);
-      float: left;
-      clear: both;
+      margin-right: 0;
+      margin-left: 1.25em;
     }
 
     @media #{$tablet} {
@@ -29,9 +32,11 @@
       bottom: 0.5em;
       font-size: 1em;
 
-      a, span {
+      a {
+        margin-left: 0;
         font-size: em($heading_6);
-
+        float: left;
+        clear: both;
       }
     }
   }
