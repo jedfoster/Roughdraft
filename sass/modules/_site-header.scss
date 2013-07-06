@@ -27,8 +27,9 @@
       width: 100%;
     }
     
-    button, a.button {
-      margin-right: 15%;
+    a.cancel {
+      float: right;
+      margin-right: 0;
     }
   }
 
@@ -45,10 +46,12 @@
       display: block;
     }
 
-    nav a {
-      margin-right: 1em;
-      padding-left: 1em;
-      border-left: 1px solid $border_color;
+    nav {
+      a {
+        margin-right: 1em;
+        padding-left: 1em;
+        border-left: 1px solid $border_color;
+      }
     }
 
     nav a:only-child, nav a:first-child {
@@ -58,20 +61,21 @@
     }
   }
 
-  @media #{$mobile} {
-    nav 0x61 {
-      display: block;
-      border: 0;
-      margin: 0;
-      padding: 0;
-    }
-  }
-
   @media #{$desktop} {
     @extend %left-responsive-sidebar;
 
     .logo {
       padding-top: 0;
+    }
+    
+    nav {
+      button, a.button {
+        margin-right: 15%;
+      }
+      a.cancel {
+        float: left;
+
+      }
     }
   }
 }

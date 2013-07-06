@@ -1,17 +1,30 @@
 <form action="/<%= @gist.id %>/update.json" method="post" class="content gist-edit">
   <input type="text" name="title" id="title" placeholder="Draft Title" value="<%= @gist.description %>">
 
-  <% 
+  <%
   unrenderable = Array.new
-  
-  @gist.files.each do |x, file| 
+
+  @gist.files.each do |x, file|
     if file['rendered'].nil?
       unrenderable << file
 
-    else %>      
-      <div class="edit_container"><div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>" data-filename="<%= file['filename'] %>"><%= code file['content'] %></div></div>
+    else %>
+      <div class="edit_container">
+
+        <div class="edit-header">
+          <input name="filename" value="<%= file['filename'] %>" class="filename" data-filename="<%= file['filename'].gsub(/[\s\.]/, '-') %>">
+
+          <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered by Roughdraft.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>
+
+          <a href="#" class="button delete-a-file" data-filename="<%= file['filename'].gsub(/[\s\.]/, '-') %>"  data-confirm="Are you sure you want to delete '<%= file['filename'] %>'?">Delete</a>
+        </div>
+
+        <div class="pre_container" id="<%= file['filename'].gsub(/[\s\.]/, '-') %>" data-filename="<%= file['filename'] %>"><%= code file['content'] %></div>
+      </div>
     <% end
   end %>
+  
+  <a href="#" class="button" id="add-a-file">Add a File</a>
 
   <%= partial 'modules/gist/_metadata'.to_sym, :locals => {:unrenderable => unrenderable} %>
 </form>
