@@ -206,7 +206,7 @@ http://github.com/bgrins/bindWithDelay
   $('#add-a-file').on('click', function() {
     event.preventDefault();
 
-    var new_file_count = Math.ceil(Math.random() * 100);
+    var new_file_count = Object.keys(editors).length + 1;
 
     var id = 'roughdraft-' + new_file_count + '-md';
     var filename = 'roughdraft-' + new_file_count + '.md';
