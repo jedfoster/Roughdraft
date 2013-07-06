@@ -114,12 +114,11 @@ http://github.com/bgrins/bindWithDelay
     for (var key in editors) {
       var new_filename = $('*[data-filename="' + key + '"]').data('new-filename');
 
-      console.log($('*[data-filename="' + key + '"]').data('deleted'));
-
-      if ($('*[data-filename="' + key + '"]').data('deleted') === true) {
+      if (typeof $('*[data-filename="' + key + '"]').data('deleted') !== 'undefined') {
         contents[key] = null;
       }
-      else if (new_filename !== key) {
+      else if (typeof new_filename !== 'undefined') {
+        console.log('new file');
         contents[key] = {
           'filename': new_filename,
           'content': editors[key].getValue(),
@@ -179,6 +178,26 @@ http://github.com/bgrins/bindWithDelay
     $('#' + $(this).data('filename')).attr('data-new-filename', $(this).val());
   });
 
+  var deleted_count = 0
+
+  if(deleted_count == Object.keys(editors).length - 1) {
+    $('.delete-a-file').hide();
+  }
+
+  function delete_file() {
+    event.preventDefault();
+
+    $('#' + $(this).data('filename')).attr('data-deleted', 'true');
+
+    $(this).parents('.edit_container').hide();
+
+    ++deleted_count;
+    console.log(deleted_count);
+    if(deleted_count == Object.keys(editors).length - 1) {
+      $('.delete-a-file').hide();
+    }
+  }
+
   $('#add-a-file').on('click', function() {
     event.preventDefault();
 
@@ -192,9 +211,11 @@ http://github.com/bgrins/bindWithDelay
       <input name="filename" value="' + filename + '" class="filename" data-filename="' + id + '">\
 \
       <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered by Roughdraft.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>\
+\
+      <a href="#" class="button delete-a-file" data-filename="' + id + '">Delete</a>\
     </div>\
 \
-      <div class="pre_container" id="' + id + '" data-filename="' + filename + '"></div>\
+      <div class="pre_container" id="' + id + '" data-filename="' + filename + '" data-new-filename="' + filename + '"></div>\
   </div>';
 
     $(this).before(edit_container);
@@ -206,11 +227,15 @@ http://github.com/bgrins/bindWithDelay
     editors[filename].getSession().setMode("ace/mode/markdown");
     editors[filename].getSession().setUseWrapMode(true);
     editors[filename].getSession().setWrapLimitRange();
+
+    $('.delete-a-file[data-filename=' + id + ']').on('click', delete_file);
+
+    $('.delete-a-file').show();
   });
 
-  $('.delete-a-file').on('click', function() {
-    $('#' + $(this).data('filename')).attr('data-deleted', 'true');
-  });
+
+
+  $('.delete-a-file').on('click', delete_file);
 
   $('#preview-edit').on('click', function() {
     event.preventDefault();
