@@ -28,6 +28,15 @@
     	display: inline-block;
     	margin:0;
     }
+    
+    .delete-a-file {
+      @extend %alpha-color-button;
+
+      font-size: 0.75em !important;
+      font-weight: bold;
+      float: right;
+      margin-right: 0;
+    }
   }
 
   .pre_container {

@@ -114,7 +114,12 @@ http://github.com/bgrins/bindWithDelay
     for (var key in editors) {
       var new_filename = $('*[data-filename="' + key + '"]').data('new-filename');
 
-      if (new_filename !== key) {
+      console.log($('*[data-filename="' + key + '"]').data('deleted'));
+
+      if ($('*[data-filename="' + key + '"]').data('deleted') === true) {
+        contents[key] = null;
+      }
+      else if (new_filename !== key) {
         contents[key] = {
           'filename': new_filename,
           'content': editors[key].getValue(),
@@ -201,6 +206,10 @@ http://github.com/bgrins/bindWithDelay
     editors[filename].getSession().setMode("ace/mode/markdown");
     editors[filename].getSession().setUseWrapMode(true);
     editors[filename].getSession().setWrapLimitRange();
+  });
+
+  $('.delete-a-file').on('click', function() {
+    $('#' + $(this).data('filename')).attr('data-deleted', 'true');
   });
 
   $('#preview-edit').on('click', function() {
