@@ -184,17 +184,22 @@ http://github.com/bgrins/bindWithDelay
     $('.delete-a-file').hide();
   }
 
-  function delete_file() {
-    event.preventDefault();
-
-    $('#' + $(this).data('filename')).attr('data-deleted', 'true');
-
-    $(this).parents('.edit_container').hide();
-
-    ++deleted_count;
-    console.log(deleted_count);
-    if(deleted_count == Object.keys(editors).length - 1) {
-      $('.delete-a-file').hide();
+  function delete_file(event, response) {
+    if(response) {
+      event.preventDefault();
+      
+      $('#' + $(this).data('filename')).attr('data-deleted', 'true');
+      
+      $(this).parents('.edit_container').hide();
+      
+      ++deleted_count;
+      console.log(deleted_count);
+      if(deleted_count == Object.keys(editors).length - 1) {
+        $('.delete-a-file').hide();
+      }
+    }
+    else {
+      return false;
     }
   }
 
@@ -212,7 +217,7 @@ http://github.com/bgrins/bindWithDelay
 \
       <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered by Roughdraft.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>\
 \
-      <a href="#" class="button delete-a-file" data-filename="' + id + '">Delete</a>\
+      <a href="#" class="button delete-a-file" data-filename="' + id + '" data-confirm="Are you sure you want to delete \'' + filename + '\'?">Delete</a>\
     </div>\
 \
       <div class="pre_container" id="' + id + '" data-filename="' + filename + '" data-new-filename="' + filename + '"></div>\
@@ -228,14 +233,14 @@ http://github.com/bgrins/bindWithDelay
     editors[filename].getSession().setUseWrapMode(true);
     editors[filename].getSession().setWrapLimitRange();
 
-    $('.delete-a-file[data-filename=' + id + ']').on('click', delete_file);
+    $('.delete-a-file[data-filename=' + id + ']').on('confirm:complete', delete_file);
 
     $('.delete-a-file').show();
   });
 
 
 
-  $('.delete-a-file').on('click', delete_file);
+  $('.delete-a-file').on('confirm:complete', delete_file);
 
   $('#preview-edit').on('click', function() {
     event.preventDefault();
