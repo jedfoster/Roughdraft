@@ -16,7 +16,7 @@
 
       <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
-        <a href="/<%= gist['id'] %>/delete.json" class="delete" data-confirm="Are you sure you want to delete '<%=
+        <a href="/<%= gist['id'] %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
         if gist['description'].nil? || gist['description'].empty?
           gist['id']
         else
@@ -44,7 +44,7 @@
 
       <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
-        <a href="/<%= gist['id'] %>/delete.json" class="delete" data-confirm="Are you sure you want to delete '<%=
+        <a href="/<%= gist['id'] %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
         if gist['description'].nil? || gist['description'].empty?
           gist['id']
         else

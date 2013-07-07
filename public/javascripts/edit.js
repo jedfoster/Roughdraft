@@ -242,9 +242,18 @@ http://github.com/bgrins/bindWithDelay
 
   $('.delete-a-file').on('confirm:complete', delete_file);
 
-  $('.delete').on('ajax:success', function(event, response) {
+  $('.user-gist-list .delete').on('ajax:success', function(event, response) {
     if(response) {
       $('#' + response).fadeOut();
+    }
+    else {
+      return false;
+    }
+  });
+  
+  $('nav .delete').on('ajax:success', function(event, response) {
+    if(response) {
+      window.location = '/';
     }
     else {
       return false;

@@ -23,7 +23,7 @@
       var items = [];
 
       $.each(data.list, function(key, val) {
-        items.push('<li><a href="/' + val.id + '">' + ( val.description ? val.description : val.id ) + '</a><span class="posted">posted: <time datetime="' + val.created_at + '">' + val.created_at_rendered + '</time></span>' + ( edit ? '<a href="/' + val.id + '/edit" class="edit">Edit</a>' : '' ) + '</li>');
+        items.push('<li><a href="/' + val.id + '">' + ( val.description ? val.description : val.id ) + '</a><span class="posted">posted: <time datetime="' + val.created_at + '">' + val.created_at_rendered + '</time></span>' + ( edit ? '<a href="/' + val.id + '/edit" class="edit">Edit</a> <a href="/' + val.id + '/delete.json" class="button delete" data-confirm="Are you sure you want to delete \'' + ( val.description ? val.description : val.id ) + '\'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>' : '' ) + '</li>');
       });
 
       $('#list').html(items.join(''));

@@ -34,8 +34,11 @@ button, a.button {
   &.cancel {
     @extend %echo-color-button;
   }
-}
 
+  &.delete {
+    @extend %alpha-color-button;
+  }
+}
 
 @-webkit-keyframes backgroundPulse {
   from {
