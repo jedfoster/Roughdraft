@@ -187,15 +187,15 @@ http://github.com/bgrins/bindWithDelay
   function delete_file(event, response) {
     if(response) {
       event.preventDefault();
-      
+
       $('#' + $(this).data('filename')).attr('data-deleted', 'true');
-      
+
       $(this).parents('.edit_container').hide();
-      
+
       ++deleted_count;
       console.log(deleted_count);
       if(deleted_count == Object.keys(editors).length - 1) {
-        $('.delete-a-file').hide();
+        $('.delete-a-file').fadeOut();
       }
     }
     else {
@@ -241,6 +241,15 @@ http://github.com/bgrins/bindWithDelay
 
 
   $('.delete-a-file').on('confirm:complete', delete_file);
+
+  $('.delete').on('ajax:success', function(event, response) {
+    if(response) {
+      $('#' + response).fadeOut();
+    }
+    else {
+      return false;
+    }
+  });
 
   $('#preview-edit').on('click', function() {
     event.preventDefault();

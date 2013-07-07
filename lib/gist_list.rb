@@ -2,7 +2,7 @@ class GistList
   include Enumerable
 
   attr_reader :from_redis, :page
-  
+
   def each
     @list.each { |i| yield i }
   end
@@ -34,7 +34,7 @@ class GistList
         :created_at_rendered => Time.parse(gist['created_at']).strftime("%b %-d, %Y")
       }
     end
-    
+
     hash = {
       "list" => gists,
       "page_count" => @list["page_count"],
@@ -43,7 +43,7 @@ class GistList
         "prev" => links["prev"],
       }
     }
-    
+
     hash
   end
 
@@ -53,6 +53,12 @@ class GistList
 
   def links
     @list["links"]
+  end
+
+  def purge
+    REDIS.keys("gist-list: #{@user_id}, pg: *").each do |key|
+      REDIS.del(key)
+    end
   end
 
 
@@ -93,7 +99,7 @@ private
   def safe_html(string)
     context = {:whitelist => HTML::Pipeline::SanitizationFilter::FULL}
     pipe = HTML::Pipeline.new [HTML::Pipeline::SanitizationFilter], context
-    
+
     pipe.call(string.to_s)[:output].to_s
   end
 end
