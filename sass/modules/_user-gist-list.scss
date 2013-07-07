@@ -21,6 +21,10 @@
   .edit {
     @extend %button;
   }
+  
+  .delete {
+    @extend %alpha-color-button;
+  }
 }
 
 %gist-list-section {
