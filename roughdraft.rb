@@ -218,28 +218,44 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
 end
 
 
+delete %r{(?:/)?([\w-]+)?/([\d]+)/delete$} do
+  @action = 'delete'
+  id = params[:captures].last
+
+  delete = Gist.new(id).delete(session)
+  GistList.new(session[:github_id]).purge
+
+
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { id } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
+end
+
+
 # post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
 #   @action = 'preview'
 #   id = params[:captures].last
-# 
+#
 #   @gist = Gist.new(id)
-# 
+#
 #   params[:contents].each do |key, value|
 #     @gist.file_content(key, value["content"])
 #   end
-# 
+#
 #   hash = Hash.new
 #   hash['description'] = params[:title]
 #   hash['files'] = Array.new
-# 
+#
 #   @gist.files.each do |x, file|
 #     if file['rendered']
 #       name = file['filename'].to_sym
-# 
+#
 #       hash['files'] << file['rendered']
 #     end
 #   end
-# 
+#
 #   hash.to_json.to_s
 # end
 

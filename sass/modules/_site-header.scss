@@ -25,6 +25,11 @@
     a {
       display: block;
       width: 100%;
+      
+      &.button {
+        display: inline-block;
+        width: auto;
+      }
     }
     
     a.cancel {

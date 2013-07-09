@@ -67,6 +67,10 @@ class Gist
     @content = fetch
   end
 
+  def delete(session)
+    return Roughdraft.github(session[:github_token]).gists.delete(id)
+  end
+
 private
 
   def fetch

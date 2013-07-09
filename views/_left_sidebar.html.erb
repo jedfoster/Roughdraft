@@ -11,6 +11,12 @@
 
     <% if @github.authenticated? && @gist.belongs_to?(session[:github_id]) %>
       <a href="/<%= @gist.id %>/edit" class="button">Edit this Draft</a>
+      <a href="/<%= @gist.id %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
+      if @gist.description.nil? || @gist.description.empty?
+        @gist.id
+      else
+        @gist.description_safe.gsub(/"/, '\'')
+      end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete this Draft</a>
 
     <% else %>
       <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
@@ -25,6 +31,12 @@
     <button type="submit" id="save-edit">Save</button>
     <a href="/preview.json" class="button preview" id="preview-edit">Preview</a>
     <a href="/<%= @gist.id %>" class="button cancel" id="cancel-edit">Cancel</a>
+    <a href="/<%= @gist.id %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
+    if @gist.description.nil? || @gist.description.empty?
+      @gist.id
+    else
+      @gist.description_safe.gsub(/"/, '\'')
+    end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete this Draft</a>
   </nav>
 
 

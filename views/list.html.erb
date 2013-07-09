@@ -5,17 +5,23 @@
 
   <ul class="latest-gist">
   <% gist = @user.latest_gist %>
-    <li>
+    <li id="<%= gist['id'] %>">
       <a href="/<%= gist['id'] %>"><%=gist['id']
       if gist['description'].nil? || gist['description'].empty?
         gist['id']
       else
         gist['description']
       end %></a>
-      <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>      
-      
+      <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>
+
       <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
+        <a href="/<%= gist['id'] %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
+        if gist['description'].nil? || gist['description'].empty?
+          gist['id']
+        else
+          gist['description'].gsub(/"/, '\'')
+        end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
       <% end %>
 
     </li>
@@ -27,17 +33,23 @@
   gists.list.shift if gists.page.to_i == 1
 
   gists.list.each do |gist| %>
-    <li>
+    <li id="<%= gist['id'] %>">
       <a href="/<%= gist['id'] %>"><%=
       if gist['description'].nil? || gist['description'].empty?
         gist['id']
       else
         gist['description']
       end %></a>
-      <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>      
-      
+      <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>
+
       <% if @github.authenticated? && session[:github_id] == @user.id %>
         <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
+        <a href="/<%= gist['id'] %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
+        if gist['description'].nil? || gist['description'].empty?
+          gist['id']
+        else
+          gist['description'].gsub(/"/, '\'')
+        end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
       <% end %>
 
     </li>
@@ -51,7 +63,7 @@
       <% else %>
         <a href="/page/<%= gists.links['prev'] %>" class="prev-link">Newer</a>
       <% end %>
-    
+
     <% end %>
 
     <% if gists.links['next'] %>
@@ -59,7 +71,7 @@
         <a href="/page/<%= gists.links['next'] %>" class="next-link" data-edit="true">Older</a>
       <% else %>
         <a href="/page/<%= gists.links['next'] %>" class="next-link">Older</a>
-      <% end %>    
+      <% end %>
     <% end %>
   </nav>
 </section>
