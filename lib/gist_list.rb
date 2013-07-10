@@ -62,44 +62,45 @@ class GistList
   end
 
 
-private
-  def fetch
-    begin
-      gists = Array.new
+  private
 
-      github_response = Github::Gists.new.list(user: @user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'], page: @page)
+    def fetch
+      begin
+        gists = Array.new
 
-      github_response.each do |gist|
-        gist.files.each do |key, file|
-          if Gist.is_allowed file.language.to_s
-            gist.description = safe_html(gist["description"])
-            gists << gist.to_hash
-            break
+        github_response = Github::Gists.new.list(user: @user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'], page: @page)
+
+        github_response.each do |gist|
+          gist.files.each do |key, file|
+            if Gist.is_allowed file.language.to_s
+              gist.description = safe_html(gist["description"])
+              gists << gist.to_hash
+              break
+            end
           end
         end
-      end
 
-      hash = {
-        "list" => gists,
-        "page_count" => github_response.count_pages,
-        "links" => {
-          "next" => github_response.links.next ? github_response.links.next.scan(/&page=(\d)/).first.first : nil,
-          "prev" => github_response.links.prev ? github_response.links.prev.scan(/&page=(\d)/).first.first : nil,
+        hash = {
+          "list" => gists,
+          "page_count" => github_response.count_pages,
+          "links" => {
+            "next" => github_response.links.next ? github_response.links.next.scan(/&page=(\d)/).first.first : nil,
+            "prev" => github_response.links.prev ? github_response.links.prev.scan(/&page=(\d)/).first.first : nil,
+          }
         }
-      }
 
-      REDIS.setex("gist-list: #{@user_id}, pg: #{@page}", 60, hash.to_json)
-      hash
+        REDIS.setex("gist-list: #{@user_id}, pg: #{@page}", 60, hash.to_json)
+        hash
 
-    rescue Github::Error::NotFound
-      false
+      rescue Github::Error::NotFound
+        false
+      end
     end
-  end
 
-  def safe_html(string)
-    context = {:whitelist => HTML::Pipeline::SanitizationFilter::FULL}
-    pipe = HTML::Pipeline.new [HTML::Pipeline::SanitizationFilter], context
+    def safe_html(string)
+      context = {:whitelist => HTML::Pipeline::SanitizationFilter::FULL}
+      pipe = HTML::Pipeline.new [HTML::Pipeline::SanitizationFilter], context
 
-    pipe.call(string.to_s)[:output].to_s
-  end
+      pipe.call(string.to_s)[:output].to_s
+    end
 end

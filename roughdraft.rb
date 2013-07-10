@@ -13,6 +13,7 @@ require 'html/pipeline'
 require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
+require './lib/gist_comments.rb'
 require './lib/html/pipeline/gist.rb'
 require './lib/roughdraft.rb'
 
@@ -290,6 +291,20 @@ post '/create' do
   respond_to do |wants|
     # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
     wants.json { "/#{data.id.to_s}/edit".to_json } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
+end
+
+
+get %r{(?:/)?([\w-]+)?/([\d]+)/comments$} do
+  @action = 'comments'
+  id = params[:captures].last
+
+  comments = GistComments.new(id).list
+
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { comments.to_json } # => sets content_type to application/json
     # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
   end
 end
