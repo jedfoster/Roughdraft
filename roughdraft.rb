@@ -78,7 +78,7 @@ configure :development do
 
     module Roughdraft
       def self.gh_config
-        YAML.load_file("github.yml")
+        YAML.load_file("config/github.yml")
       end
     end
 
