@@ -1,0 +1,34 @@
+@import 'mixins';
+@import 'extends';
+
+#comments {
+  list-style: none;
+  padding-left: 0;
+}
+
+.comment {
+  border-top: 1px solid $border_color;
+  padding-top: 1.5em;
+  margin-bottom: 1.5em;
+
+  &:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  h3 {
+    font-family: $primary_font_family;
+    font-size: em($heading_5);
+
+    a {
+      margin-right: 1.5em;
+    }
+  }
+
+  .login {
+    font-weight: bold;
+  }
+  .body {
+
+  }
+}
