@@ -5,7 +5,7 @@
   border-top: 1px solid $border_color;
   padding-top: 1.5em;
   margin-top: 3em;
-  
+
   #comment-button, #toggle-comments {
     @extend %anchor;
 
@@ -32,7 +32,7 @@
   &.author-comment {
     border: 1px solid transparentize($echo_color_echo, 0.6); // adjust_hue(desaturate(lighten(#718c00, 50), 61), 3)
     background: transparentize($echo_color_echo, 0.9); // desaturate(lighten(#718c00, 63), 63)
-    
+
   }
 
   h3 {
@@ -40,7 +40,7 @@
     margin-bottom: 0.25em;
 
     a {
-      margin-right: 1.5em;
+      margin-right: 0.5em;
     }
     time {
       font-size: em($heading_6);
