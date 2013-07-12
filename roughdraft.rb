@@ -137,6 +137,7 @@ get '/page/:page' do
     headers 'X-Cache-Hit' => gists.from_redis
 
     if gists.list.empty?
+      status 404
       return erb :invalid_gist, :locals => { :gist_id => false }
     end
 
@@ -164,6 +165,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
   if ! @gist.content
     @gist = false
 
+    status 404
     return erb :invalid_gist, :locals => { :gist_id => id }
   end
 
@@ -188,6 +190,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
   if ! @gist.content
     @gist = false
 
+    status 404
     return erb :invalid_gist, :locals => { :gist_id => id }
   end
 
