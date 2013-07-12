@@ -277,11 +277,17 @@ get %r{(?:/)?([\w-]+)?/([\d]+)/comments$} do
   @action = 'comments'
   id = params[:captures].last
 
-  comments = GistComments.new(id).list
+  comments = GistComments.new(id)
+
+  if ! comments
+    status 404
+    return ''
+  end
+
 
   respond_to do |wants|
     # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
-    wants.json { comments.to_json } # => sets content_type to application/json
+    wants.json { comments.list.to_json } # => sets content_type to application/json
     # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
   end
 end
