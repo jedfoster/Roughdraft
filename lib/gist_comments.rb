@@ -61,12 +61,12 @@ class GistComments
         false
       end
     end
-    
+
     def pipeline(html)
       context = {
         :gfm => true,
         :asset_root => "http://#{APP_DOMAIN}/images",
-        # :base_url   => "#{APP_DOMAIN}"
+        :base_url   => "https://github.com"
       }
 
       pipe = HTML::Pipeline.new [
@@ -79,7 +79,4 @@ class GistComments
 
       pipe.call(html)[:output].to_xhtml # return XHTML to be compatible with RSS
     end
-      
-      
-
 end
