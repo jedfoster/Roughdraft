@@ -36,7 +36,7 @@ class GistComments
       begin
         comments = Array.new
 
-        github_response =Github::Gists.new(id: @gist_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret']).comments.all(@gist_id)
+        github_response =Github::Gists.new(id: @gist_id).comments.all(@gist_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
 
         github_response.each do |comment|
           comment.body_rendered = pipeline(comment.body).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
