@@ -73,6 +73,7 @@ class GistComments
         HTML::Pipeline::MarkdownFilter,
         HTML::Pipeline::SanitizationFilter,
         HTML::Pipeline::ImageMaxWidthFilter,
+        HTML::Pipeline::MentionFilter,
         HTML::Pipeline::EmojiFilter
       ], context
 
