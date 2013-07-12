@@ -203,9 +203,7 @@ http://github.com/bgrins/bindWithDelay
     }
   }
 
-  $('#add-a-file').on('click', function() {
-    event.preventDefault();
-
+  var new_file = function(parent) {
     var new_file_count = Object.keys(editors).length + 1;
 
     var id = 'roughdraft-' + new_file_count + '-md';
@@ -217,13 +215,13 @@ http://github.com/bgrins/bindWithDelay
 \
       <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered by Roughdraft.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>\
 \
-      <a href="#" class="button delete-a-file" data-filename="' + id + '" data-confirm="Are you sure you want to delete \'' + filename + '\'?">Delete</a>\
+      ' + ( (new_file_count > 1) ? '<a href="#" class="button delete-a-file" data-filename="' + id + '" data-confirm="Are you sure you want to delete \'' + filename + '\'?">Delete</a>' : '' ) + '\
     </div>\
 \
       <div class="pre_container" id="' + id + '" data-filename="' + filename + '" data-new-filename="' + filename + '"></div>\
   </div>';
 
-    $(this).before(edit_container);
+    $(parent).before(edit_container);
 
     setHeight();
 
@@ -234,8 +232,15 @@ http://github.com/bgrins/bindWithDelay
     editors[filename].getSession().setWrapLimitRange();
 
     $('.delete-a-file[data-filename=' + id + ']').on('confirm:complete', delete_file);
-
     $('.delete-a-file').show();
+  };
+
+  new_file('#add-a-file');
+
+  $('#add-a-file').on('click', function() {
+    event.preventDefault();
+
+    new_file(this);
   });
 
 
@@ -250,7 +255,7 @@ http://github.com/bgrins/bindWithDelay
       return false;
     }
   });
-  
+
   $('nav .delete').on('ajax:success', function(event, response) {
     if(response) {
       window.location = '/';
