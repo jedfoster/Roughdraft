@@ -19,7 +19,7 @@
         <%= "<br>#{@user.name}" if ! @user.name.empty? %>
       </a>
 
-      <%= "<br><a href=\"http://#{@user.homepage}\" target=\"_blank\" rel=\"no-follow\">#{@user.homepage}</a>" if ! @user.homepage.empty? %>
+      <%= "<br><a href=\"#{@user.homepage.start_with?('http') ? @user.homepage : 'http://' + @user.homepage}\" target=\"_blank\" rel=\"no-follow\">#{@user.homepage.gsub(/http(s)?\:\/\//, '')}</a>" if ! @user.homepage.empty? %>
     </div>
   </section>
 </aside>

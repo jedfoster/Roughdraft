@@ -46,7 +46,7 @@ touch tmp/restart.txt
 
 Change the `APP_DOMAIN` constant in roughdraft.rb, line 68, to whatever local domain you want to use. I recommend using [Pow](http://pow.cx) for local development, especially on this project as the username subdomain feature doesn't work with IP addresses.
 
-The GitHub API limits the number of unauthenticated requests to 60 per hour, which is too little for production and often even for development. To get around this you will need to [register your app with GitHub](https://github.com/settings/applications/new). Once you have your client ID and secret, rename github.example.yml to github.yml and paste in your app's credentials. Mine looks something like this:
+The GitHub API limits the number of unauthenticated requests to 60 per hour, which is too little for production and often even for development. To get around this you will need to [register your app with GitHub](https://github.com/settings/applications/new). Once you have your client ID and secret, rename config/github.example.yml to config/github.yml and paste in your app's credentials. Mine looks something like this:
 
 ```yaml
 client_id: 9ef1xxxx

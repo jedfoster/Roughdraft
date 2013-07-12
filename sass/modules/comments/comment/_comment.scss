@@ -1,0 +1,57 @@
+@import 'mixins';
+@import 'extends';
+
+#comments {
+  border-top: 1px solid $border_color;
+  padding-top: 1.5em;
+  margin-top: 3em;
+
+  #comment-button, #toggle-comments {
+    @extend %anchor;
+
+    margin-bottom: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 1.5em 5% 0;
+
+    @media #{$desktop} {
+      padding: 1.5em 3em 0;
+    }
+  }
+}
+
+.comment {
+  @include border-radius(em($font_size * 0.25, $small_point_size));
+
+  border: 1px solid $border_color;
+  padding: 1.5em 1.5em 0;
+  margin-bottom: 1.5em;
+
+  &.author-comment {
+    border: 1px solid transparentize($echo_color_echo, 0.6); // adjust_hue(desaturate(lighten(#718c00, 50), 61), 3)
+    background: transparentize($echo_color_echo, 0.9); // desaturate(lighten(#718c00, 63), 63)
+
+  }
+
+  h3 {
+    font-size: em($heading_5);
+    margin-bottom: 0.25em;
+
+    a {
+      margin-right: 0.5em;
+    }
+    time {
+      font-size: em($heading_6);
+      color: $golf_gray;
+    }
+  }
+
+  .login {
+    font-weight: bold;
+  }
+  .body {
+
+  }
+}

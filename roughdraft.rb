@@ -13,6 +13,7 @@ require 'html/pipeline'
 require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
+require './lib/gist_comments.rb'
 require './lib/html/pipeline/gist.rb'
 require './lib/roughdraft.rb'
 
@@ -78,7 +79,7 @@ configure :development do
 
     module Roughdraft
       def self.gh_config
-        YAML.load_file("github.yml")
+        YAML.load_file("config/github.yml")
       end
     end
 
@@ -136,6 +137,7 @@ get '/page/:page' do
     headers 'X-Cache-Hit' => gists.from_redis
 
     if gists.list.empty?
+      status 404
       return erb :invalid_gist, :locals => { :gist_id => false }
     end
 
@@ -163,6 +165,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
   if ! @gist.content
     @gist = false
 
+    status 404
     return erb :invalid_gist, :locals => { :gist_id => id }
   end
 
@@ -187,6 +190,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
   if ! @gist.content
     @gist = false
 
+    status 404
     return erb :invalid_gist, :locals => { :gist_id => id }
   end
 
@@ -234,32 +238,6 @@ delete %r{(?:/)?([\w-]+)?/([\d]+)/delete$} do
 end
 
 
-# post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
-#   @action = 'preview'
-#   id = params[:captures].last
-#
-#   @gist = Gist.new(id)
-#
-#   params[:contents].each do |key, value|
-#     @gist.file_content(key, value["content"])
-#   end
-#
-#   hash = Hash.new
-#   hash['description'] = params[:title]
-#   hash['files'] = Array.new
-#
-#   @gist.files.each do |x, file|
-#     if file['rendered']
-#       name = file['filename'].to_sym
-#
-#       hash['files'] << file['rendered']
-#     end
-#   end
-#
-#   hash.to_json.to_s
-# end
-
-
 get '/new' do
   @action = 'new'
 
@@ -290,6 +268,26 @@ post '/create' do
   respond_to do |wants|
     # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
     wants.json { "/#{data.id.to_s}/edit".to_json } # => sets content_type to application/json
+    # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
+  end
+end
+
+
+get %r{(?:/)?([\w-]+)?/([\d]+)/comments$} do
+  @action = 'comments'
+  id = params[:captures].last
+
+  comments = GistComments.new(id)
+
+  if ! comments
+    status 404
+    return ''
+  end
+
+
+  respond_to do |wants|
+    # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
+    wants.json { comments.list.to_json } # => sets content_type to application/json
     # wants.js { erb :comment }       # => views/comment.js.erb, also sets content_type to application/javascript
   end
 end
