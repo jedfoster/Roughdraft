@@ -42,7 +42,7 @@ b, strong {
   color: $charlie_gray;
 }
 
-a {
+%anchor {
 	color: $href_color;
 	text-decoration: none;
 
@@ -54,6 +54,10 @@ a {
 	b, strong {
 	  color: inherit;
 	}
+}
+
+a {
+  @extend %anchor;
 }
 
 pre, code {

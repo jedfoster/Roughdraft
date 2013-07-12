@@ -5,6 +5,13 @@
   padding-right: 3%;
   margin-right: 3.33333%;
 
+  &:only-child {
+    width: 100%;
+    border-right: 0;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
   @media #{$desktop} {
     border-right: 0;
     padding-right: 0;

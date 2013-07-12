@@ -4,13 +4,14 @@ html {
 
 body {
   padding: 0 1em 1.5em;
-}
 
-footer {
-  font-family: $heading_font_family;
-  font-size: em($heading-6);
-  color: $fox_gray;
-  text-align: center;
+
+  > footer {
+    font-family: $heading_font_family;
+    font-size: em($heading-6);
+    color: $fox_gray;
+    text-align: center;
+  }
 }
 
 .legal {
