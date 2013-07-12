@@ -6,10 +6,15 @@
   padding-top: 1.5em;
   margin-top: 3em;
 
-  #comment-button, #toggle-comments {
+  #toggle-comments {
     @extend %anchor;
 
+    font-size: em($heading_5);
     margin-bottom: 0;
+    
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   ul {
