@@ -238,32 +238,6 @@ delete %r{(?:/)?([\w-]+)?/([\d]+)/delete$} do
 end
 
 
-# post %r{(?:/)?([\w-]+)?/([\d]+)/preview$} do
-#   @action = 'preview'
-#   id = params[:captures].last
-#
-#   @gist = Gist.new(id)
-#
-#   params[:contents].each do |key, value|
-#     @gist.file_content(key, value["content"])
-#   end
-#
-#   hash = Hash.new
-#   hash['description'] = params[:title]
-#   hash['files'] = Array.new
-#
-#   @gist.files.each do |x, file|
-#     if file['rendered']
-#       name = file['filename'].to_sym
-#
-#       hash['files'] << file['rendered']
-#     end
-#   end
-#
-#   hash.to_json.to_s
-# end
-
-
 get '/new' do
   @action = 'new'
 
