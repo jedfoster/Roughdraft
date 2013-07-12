@@ -1,5 +1,5 @@
 (function($) {
-  if( ! window.location.pathname.match(/\/(new|edit)/) ) {
+  if(window.location.pathname.match(/^\/([\d]+)$/) ) {
     $.ajax({
       dataType: "json",
       url: window.location.pathname + '/comments.json',
