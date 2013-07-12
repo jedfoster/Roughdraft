@@ -32,7 +32,6 @@
   &.author-comment {
     border: 1px solid transparentize($echo_color_echo, 0.6); // adjust_hue(desaturate(lighten(#718c00, 50), 61), 3)
     background: transparentize($echo_color_echo, 0.9); // desaturate(lighten(#718c00, 63), 63)
-
   }
 
   h3 {
@@ -50,8 +49,5 @@
 
   .login {
     font-weight: bold;
-  }
-  .body {
-
   }
 }
