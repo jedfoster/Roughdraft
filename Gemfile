@@ -15,5 +15,6 @@ gem 'html-pipeline'
 gem 'gemoji'
 gem 'newrelic_rpm'
 gem 'sinatra-respond_to'
+gem 'RedCloth'
 
 # gem 'toadstool'

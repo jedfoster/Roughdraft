@@ -9,6 +9,7 @@ require 'rack/request'
 # require 'compass'
 require 'yaml'
 require 'html/pipeline'
+require 'RedCloth'
 
 require './lib/gist.rb'
 require './lib/user.rb'
