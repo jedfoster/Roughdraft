@@ -257,7 +257,21 @@ post '/preview' do
   hash['files'] = Array.new
 
   params[:contents].each do |key, value|
-    hash['files'] << Roughdraft.gist_pipeline(value, params[:contents])
+    html = Hashie::Mash.new
+
+    ext = File.extname(key)
+
+    if ext.match(/\.(textile)/)
+      html.language = 'Textile'
+    elsif ext.match(/\.(haml)/)
+      html.language = 'Haml'
+    else
+      html.language = 'Markdown'
+    end
+
+    html.content = value["content"]
+
+    hash['files'] << Roughdraft.gist_pipeline(html, params[:contents])
   end
 
   hash.to_json.to_s
