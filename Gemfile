@@ -16,5 +16,6 @@ gem 'gemoji'
 gem 'newrelic_rpm'
 gem 'sinatra-respond_to'
 gem 'RedCloth'
+gem 'haml'
 
 # gem 'toadstool'

@@ -10,11 +10,13 @@ require 'rack/request'
 require 'yaml'
 require 'html/pipeline'
 require 'RedCloth'
+require 'haml'
 
 require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
 require './lib/gist_comments.rb'
+require './lib/html/pipeline/haml.rb'
 require './lib/html/pipeline/gist.rb'
 require './lib/roughdraft.rb'
 

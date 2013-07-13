@@ -17,7 +17,15 @@ module Roughdraft
       :current_filetype => html.language.to_s
     }
 
-    filter = html.language.to_s == 'Textile' ? HTML::Pipeline::TextileFilter : HTML::Pipeline::MarkdownFilter
+    if html.language.to_s == 'Textile'
+      filter = HTML::Pipeline::TextileFilter
+
+    elsif html.language.to_s == 'Haml'
+      filter = HTML::Pipeline::HamlFilter
+
+    else
+      filter = HTML::Pipeline::MarkdownFilter
+    end
 
     pipe = HTML::Pipeline.new [
       filter,

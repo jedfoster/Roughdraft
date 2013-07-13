@@ -17,7 +17,7 @@ class Gist
   def self.is_allowed(language, filename)
     return false if language.nil? 
 
-    return (language.match(/(Markdown|Literate CoffeeScript|Textile)/) || File.extname(filename) == '.txt')
+    return (language.match(/(Markdown|Literate CoffeeScript|Textile|Haml)/) || File.extname(filename) == '.txt')
   end
 
   def owner
