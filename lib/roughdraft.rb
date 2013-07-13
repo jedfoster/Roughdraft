@@ -14,6 +14,7 @@ module Roughdraft
       :gist => gist,
       :asset_root => "http://#{APP_DOMAIN}/images",
       # :base_url   => "#{APP_DOMAIN}"
+      :current_filetype => html.language.to_s
     }
 
     pipe = HTML::Pipeline.new [
@@ -24,7 +25,7 @@ module Roughdraft
       HTML::Pipeline::EmojiFilter
     ], context
 
-    pipe.call(html)[:output].to_xhtml # return XHTML to be compatible with RSS
+    pipe.call(html.content.to_s)[:output].to_xhtml # return XHTML to be compatible with RSS
   end
 
 end

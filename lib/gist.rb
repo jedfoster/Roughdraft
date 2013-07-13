@@ -17,7 +17,7 @@ class Gist
   def self.is_allowed(language)
     return false if language.nil?
 
-    language.match(/(Markdown|Text)/)
+    language.match(/(Markdown|Text|Literate CoffeeScript)/)
   end
 
   def owner
@@ -79,7 +79,7 @@ private
 
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s
-          value[:rendered] = Roughdraft.gist_pipeline(value.content.to_s, gist).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
+          value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
         end
       end
 
