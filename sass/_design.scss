@@ -17,3 +17,18 @@ body {
 .legal {
   color: $delta_gray;
 }
+
+.error {
+  border: 1px solid transparentize($alpha_color_echo, 0.6); // adjust_hue(desaturate(lighten(#718c00, 50), 61), 3)
+  background: transparentize($alpha_color_echo, 0.9); // desaturate(lighten(#718c00, 63), 63)
+  color: $alpha_color_delta;
+  padding: em($button-padding);
+  width: 100%;
+  border-radius: em($button-border-radius);
+  font-family: $heading_font_family;
+  margin-right: 1.25em;
+
+  strong {
+    color: $alpha_color_delta;
+  }
+}

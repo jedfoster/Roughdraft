@@ -24,6 +24,8 @@ require 'sinatra/respond_to'
 
 Sinatra::Application.register Sinatra::RespondTo
 
+HTML::Pipeline::SanitizationFilter::WHITELIST[:attributes][:all].push 'class'
+
 module Rack
   class Request
     def subdomains(tld_len=1) # we set tld_len to 1, use 2 for co.uk or similar
@@ -255,7 +257,7 @@ post '/preview' do
   hash['files'] = Array.new
 
   params[:contents].each do |key, value|
-    hash['files'] << Roughdraft.gist_pipeline(value["content"], params[:contents])
+    hash['files'] << Roughdraft.gist_pipeline(value, params[:contents])
   end
 
   hash.to_json.to_s
