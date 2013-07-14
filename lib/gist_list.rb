@@ -72,7 +72,7 @@ class GistList
 
         github_response.each do |gist|
           gist.files.each do |key, file|
-            if Gist.is_allowed file.language.to_s
+            if Gist.is_allowed file.language.to_s, file.filename.to_s
               gist.description = safe_html(gist["description"])
               gists << gist.to_hash
               break

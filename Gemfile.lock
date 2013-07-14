@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    RedCloth (4.2.9)
     activesupport (4.0.0)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -29,6 +30,8 @@ GEM
       multi_json (~> 1.4)
       nokogiri (~> 1.6.0)
       oauth2
+    haml (4.0.3)
+      tilt
     hashie (2.0.5)
     html-pipeline (0.0.14)
       activesupport (>= 2)
@@ -95,10 +98,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  RedCloth
   closure-compiler
   compass
   gemoji
   github_api
+  haml
   html-pipeline
   jammit
   newrelic_rpm

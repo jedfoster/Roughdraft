@@ -9,17 +9,22 @@ require 'rack/request'
 # require 'compass'
 require 'yaml'
 require 'html/pipeline'
+require 'RedCloth'
+require 'haml'
 
 require './lib/gist.rb'
 require './lib/user.rb'
 require './lib/gist_list.rb'
 require './lib/gist_comments.rb'
+require './lib/html/pipeline/haml.rb'
 require './lib/html/pipeline/gist.rb'
 require './lib/roughdraft.rb'
 
 require 'sinatra/respond_to'
 
 Sinatra::Application.register Sinatra::RespondTo
+
+HTML::Pipeline::SanitizationFilter::WHITELIST[:attributes][:all].push 'class'
 
 module Rack
   class Request
@@ -252,7 +257,21 @@ post '/preview' do
   hash['files'] = Array.new
 
   params[:contents].each do |key, value|
-    hash['files'] << Roughdraft.gist_pipeline(value["content"], params[:contents])
+    html = Hashie::Mash.new
+
+    ext = File.extname(key)
+
+    if ext.match(/\.(textile)/)
+      html.language = 'Textile'
+    elsif ext.match(/\.(haml)/)
+      html.language = 'Haml'
+    else
+      html.language = 'Markdown'
+    end
+
+    html.content = value["content"]
+
+    hash['files'] << Roughdraft.gist_pipeline(html, params[:contents])
   end
 
   hash.to_json.to_s

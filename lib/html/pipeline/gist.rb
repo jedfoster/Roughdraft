@@ -2,6 +2,12 @@ module HTML
   class Pipeline
     class GistFilter < Filter
       def call
+        doc.search("pre").each do |pre|
+          if pre.attributes.empty? && context[:current_filetype] == 'Literate CoffeeScript'
+            pre.set_attribute('lang', 'coffee')
+          end
+        end
+
         doc.search("gist").each do |gist|
           file = GistFile.new(gist.text.to_s, context[:gist])
 
@@ -22,19 +28,19 @@ module HTML
 
       private
 
-      class GistFile
-        def initialize(filename, gist)
-          @file = gist["files"][filename]
-        end
+        class GistFile
+          def initialize(filename, gist)
+            @file = gist["files"][filename]
+          end
 
-        def language
-          @file["language"].to_s.downcase
-        end
+          def language
+            @file["language"].to_s.downcase
+          end
 
-        def content
-          @file["content"].to_s
+          def content
+            @file["content"].to_s
+          end
         end
-      end
     end
   end
 end

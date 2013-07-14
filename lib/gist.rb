@@ -14,10 +14,10 @@ class Gist
     end
   end
 
-  def self.is_allowed(language)
-    return false if language.nil?
+  def self.is_allowed(language, filename)
+    return false if language.nil? 
 
-    language.match(/(Markdown|Text)/)
+    return (language.match(/(Markdown|Literate CoffeeScript|Textile|Haml)/) || File.extname(filename) == '.txt')
   end
 
   def owner
@@ -78,8 +78,8 @@ private
       gist = Github::Gists.new.get(@gist_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
 
       gist.files.each do |file, value|
-        if Gist.is_allowed value.language.to_s
-          value[:rendered] = Roughdraft.gist_pipeline(value.content.to_s, gist).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
+        if Gist.is_allowed value.language.to_s, value.filename.to_s
+          value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
         end
       end
 

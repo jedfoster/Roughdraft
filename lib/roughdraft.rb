@@ -14,17 +14,28 @@ module Roughdraft
       :gist => gist,
       :asset_root => "http://#{APP_DOMAIN}/images",
       # :base_url   => "#{APP_DOMAIN}"
+      :current_filetype => html.language.to_s
     }
 
+    if html.language.to_s == 'Textile'
+      filter = HTML::Pipeline::TextileFilter
+
+    elsif html.language.to_s == 'Haml'
+      filter = HTML::Pipeline::HamlFilter
+
+    else
+      filter = HTML::Pipeline::MarkdownFilter
+    end
+
     pipe = HTML::Pipeline.new [
-      HTML::Pipeline::MarkdownFilter,
+      filter,
       HTML::Pipeline::GistFilter,
       HTML::Pipeline::SanitizationFilter,
       HTML::Pipeline::ImageMaxWidthFilter,
       HTML::Pipeline::EmojiFilter
     ], context
 
-    pipe.call(html)[:output].to_xhtml # return XHTML to be compatible with RSS
+    pipe.call(html.content.to_s)[:output].to_xhtml # return XHTML to be compatible with RSS
   end
 
 end

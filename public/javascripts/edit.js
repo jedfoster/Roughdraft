@@ -204,6 +204,10 @@ http://github.com/bgrins/bindWithDelay
   }
 
   var new_file = function(parent) {
+    if($(parent).length < 1) {
+      return;
+    }
+    
     var new_file_count = Object.keys(editors).length + 1;
 
     var id = 'roughdraft-' + new_file_count + '-md';
@@ -235,7 +239,7 @@ http://github.com/bgrins/bindWithDelay
     $('.delete-a-file').show();
   };
 
-  new_file('#add-a-file');
+  new_file('.gist-create #add-a-file');
 
   $('#add-a-file').on('click', function() {
     event.preventDefault();
