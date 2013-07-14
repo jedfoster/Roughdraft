@@ -12,8 +12,9 @@ View a list of a GitHub user's Gists at *username*.roughdraft.dev. Example [jedf
 
 If you happen to be on a user subdomain, e.g. jedfoster.roughdraft.dev, and you paste in a Gist ID that does not belong to that user, you will be redirected to the appropriate subdomain. Example: [jedfoster.roughdraft.dev/4731881](jedfoster.roughdraft.dev/4731881) will redirect to [blackfalcon.roughdraft.dev](blackfalcon.roughdraft.dev), because `jedfoster` does not own that Gist.
 
-Roughdraft supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown), including fenced code blocks with syntax highlighting. Example:
+Roughdraft supports [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown), [Textile](http://redcloth.org/hobix.com/textile/), [Haml](http://haml.info/), and plain text.
 
+GitHub Flavored Markdown includes a number of improvements over Markdown, like fenced code blocks with syntax highlighting. Example:
 
 <pre><code>```ruby
 require 'redcarpet'
@@ -21,6 +22,9 @@ markdown = Redcarpet.new("Hello World!")
 puts markdown.to_html
 ```</code></pre>
 
+Roughdraft's implementation of Haml does not support Ruby evaluation, and many Haml filters will result errors.
+
+Plain text is rendered as Markdown.
 
 ## Installation: Local ##
 
