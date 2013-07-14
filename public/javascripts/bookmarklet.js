@@ -12,12 +12,12 @@
 		a.documentElement.childNodes[0].appendChild(c)
 	}
 })(window, document, '1.4.2', function($, L) {
-	var gist_re = /^https:\/\/gist\.github\.com\/([\w-]+)*?\/*?(\d+)$/i,
+	var gist_re = /^https:\/\/gist\.github\.com\/([\w-]+)*?\/*?(\w+)$/i,
 		rel_re = /^\/?(\d+)$/,
 		on_gist = gist_re.test(location.href);
 	if (on_gist) {
-		i = location.pathname.split(/\/([\w-]+)\/(\d+)/);
-		location.href = 'http://' + i[1] + '.roughdraft.dev/' + i[2];
+		i = location.pathname.split(/\/([\w-]+)\/(\w+)/);
+		location.href = 'http://' + i[1] + '.roughdraft.io/' + i[2];
 	} else {
 		$('a').each(function() {
 			var b = $(this).attr('href') || '',
@@ -31,7 +31,7 @@
 			    a[1] = 'www';
 			  }
 
-				$(this).after(' <a href=&quot;http://' + a[1] + '.roughdraft.dev/' + a[2] + '&quot;>[roughdraft.io]</a>')
+				$(this).after(' <a href=&quot;http://' + a[1] + '.roughdraft.io/' + a[2] + '&quot;>[roughdraft.io]</a>')
 			}
 		});
 	}

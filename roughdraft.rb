@@ -160,7 +160,7 @@ get '/page/:page' do
 end
 
 
-get %r{(?:/)?([\w-]+)?/([\d]+)$} do
+get %r{(?:/)?([\w-]+)?/([\w]+)$} do
   @action = 'view'
   id = params[:captures].last
   valid = true
@@ -186,7 +186,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)$} do
 end
 
 
-get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
+get %r{(?:/)?([\w-]+)?/([\w]+)/edit$} do
   @action = 'edit'
   id = params[:captures].last
 
@@ -211,7 +211,7 @@ get %r{(?:/)?([\w-]+)?/([\d]+)/edit$} do
 end
 
 
-post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
+post %r{(?:/)?([\w-]+)?/([\w]+)/update$} do
   @action = 'update'
   id = params[:captures].last
 
@@ -227,7 +227,7 @@ post %r{(?:/)?([\w-]+)?/([\d]+)/update$} do
 end
 
 
-delete %r{(?:/)?([\w-]+)?/([\d]+)/delete$} do
+delete %r{(?:/)?([\w-]+)?/([\w]+)/delete$} do
   @action = 'delete'
   id = params[:captures].last
 
@@ -292,7 +292,7 @@ post '/create' do
 end
 
 
-get %r{(?:/)?([\w-]+)?/([\d]+)/comments$} do
+get %r{(?:/)?([\w-]+)?/([\w]+)/comments$} do
   @action = 'comments'
   id = params[:captures].last
 
