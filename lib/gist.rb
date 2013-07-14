@@ -79,7 +79,7 @@ private
 
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s, value.filename.to_s
-          value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
+          value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre(.*?)>\s+<code>/, '<pre\1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
         end
       end
 
