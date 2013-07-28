@@ -11,6 +11,7 @@ require 'yaml'
 require 'html/pipeline'
 require 'RedCloth'
 require 'haml'
+require 'redis'
 
 require './lib/rack/request.rb'
 require './lib/gist.rb'
