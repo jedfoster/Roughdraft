@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'sinatra'
+require 'sinatra/base'
 require 'sinatra/partial'
 require 'json'
 require 'github_api'
@@ -22,13 +22,16 @@ require './lib/html/pipeline/haml.rb'
 require './lib/html/pipeline/gist.rb'
 require './lib/roughdraft.rb'
 
+require 'chairman'
+
 require 'sinatra/respond_to'
 
-Sinatra::Application.register Sinatra::RespondTo
 
-HTML::Pipeline::SanitizationFilter::WHITELIST[:attributes][:all].push 'class'
+class RoughdraftApp < Sinatra::Base
+  register Sinatra::RespondTo
+  register Sinatra::Partial
 
-
+  HTML::Pipeline::SanitizationFilter::WHITELIST[:attributes][:all].push 'class'
 
 
 set :partial_template_engine, :erb
@@ -48,41 +51,30 @@ configure :production do
   APP_DOMAIN = 'roughdraft.io'
 
   helpers do
-
-    module Roughdraft
-      def self.gh_config
-        {
-          "client_id" => ENV['GITHUB_ID'],
-          "client_secret" => ENV['GITHUB_SECRET']
-        }
-      end
-    end
-
     use Rack::Session::Cookie, :key => 'roughdraft.io',
                                :domain => '.roughdraft.io',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => ENV['COOKIE_SECRET']
-  end
+   end
+
+  Chairman.new(ENV['GITHUB_ID'], ENV['GITHUB_SECRET'], ['gist', 'user'])
 end
 
 configure :development do
   APP_DOMAIN = 'roughdraft.dev'
 
   helpers do
-
-    module Roughdraft
-      def self.gh_config
-        YAML.load_file("config/github.yml")
-      end
-    end
-
     use Rack::Session::Cookie, :key => 'roughdraft.dev',
+                               # :domain => :all,
                                :domain => '.roughdraft.dev',
                                :path => '/',
                                :expire_after => 7776000, # 90 days, in seconds
                                :secret => 'local'
   end
+
+  yml = YAML.load_file("config/github.yml")
+  Chairman.config(yml["client_id"], yml["client_secret"], ['gist', 'user'])
 end
 
 
@@ -91,16 +83,12 @@ helpers do
   alias_method :code, :html_escape
 
   include Roughdraft
-
-  def _params
-    params
-  end
 end
 
 
 before do
   @user = @gist = @action = false
-  @github = Roughdraft.github(session[:github_token])
+  @github = Chairman.session(session[:github_token])
 end
 
 before :subdomain => 1 do
@@ -271,7 +259,7 @@ post '/create' do
   params[:title]
   params[:contents]
 
-  data = Roughdraft.github(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
+  data = Chairman.session(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
 
   respond_to do |wants|
     # wants.html { erb :list, :locals => {:gists => gists} }    # => views/comment.html.haml, also sets content_type to text/html
@@ -301,28 +289,39 @@ get %r{(?:/)?([\w-]+)?/([\w]+)/comments$} do
 end
 
 
-get '/authorize' do
-  redirect to @github.authorize_url :scope => ['gist', 'user']
-end
 
+  use Chairman::Routes
+  
+  # implement redirects
+  class Chairman::Routes 
+    configure :production do
+      helpers do
+        use Rack::Session::Cookie, :key => 'roughdraft.io',
+                                   :domain => '.roughdraft.io',
+                                   :path => '/',
+                                   :expire_after => 7776000, # 90 days, in seconds
+                                   :secret => ENV['COOKIE_SECRET']
+       end
+    end
 
-get '/authorize/return' do
-  token = @github.get_token(params[:code])
+    configure :development do
+      helpers do
+        use Rack::Session::Cookie, :key => 'roughdraft.dev',
+                                   :domain => '.roughdraft.dev',
+                                   :path => '/',
+                                   :expire_after => 7776000, # 90 days, in seconds
+                                   :secret => 'local'
+      end
+    end    
+    
+    after '/authorize/return' do
+      redirect to("http://#{@user.login}.#{APP_DOMAIN}/")
+    end
 
-  user = Roughdraft.github(token.token).users.get
+    after '/logout' do
+      redirect to('/')
+    end
+  end
 
-  session[:github_token] = token.token
-  session[:github_id] = user.login
-  session[:gravatar_id] = user.gravatar_id
-
-  redirect to("http://#{user.login}.#{APP_DOMAIN}/")
-end
-
-
-get '/logout' do
-  session[:github_token] = nil
-  session[:github_id] = nil
-  session[:gravatar_id] = nil
-
-  redirect to('/')
+  run! if app_file == $0
 end

@@ -3,7 +3,7 @@ class Gist
 
   def initialize(gist_id)
     @from_redis = 'True'
-    @content = REDIS.get(gist_id)
+    @content = RoughdraftApp::REDIS.get(gist_id)
     @gist_id = gist_id
 
     if ! @content
@@ -63,19 +63,19 @@ class Gist
   end
 
   def update(description, files, session)
-    Roughdraft.github(session[:github_token]).gists.edit(id, description: description, files: files)
+    Chairman.session(session[:github_token]).gists.edit(id, description: description, files: files)
     @content = fetch
   end
 
   def delete(session)
-    return Roughdraft.github(session[:github_token]).gists.delete(id)
+    return Chairman.session(session[:github_token]).gists.delete(id)
   end
 
 private
 
   def fetch
     begin
-      gist = Github::Gists.new.get(@gist_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
+      gist = Github::Gists.new.get(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
 
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s, value.filename.to_s
@@ -83,7 +83,7 @@ private
         end
       end
 
-      REDIS.setex(@gist_id, 60, gist.to_hash.to_json.to_s)
+      RoughdraftApp::REDIS.setex(@gist_id, 60, gist.to_hash.to_json.to_s)
       gist.to_hash
 
     rescue Github::Error::NotFound

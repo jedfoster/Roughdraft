@@ -11,7 +11,7 @@ class GistComments
     @gist_id = gist_id
     @from_redis = 'True'
     @page = page
-    @list = REDIS.get("gist-comments: #{gist_id}, pg: #{page}")
+    @list = RoughdraftApp::REDIS.get("gist-comments: #{gist_id}, pg: #{page}")
 
     if ! @list
       @from_redis = 'False'
@@ -36,7 +36,7 @@ class GistComments
       begin
         comments = Array.new
 
-        github_response =Github::Gists.new(id: @gist_id).comments.all(@gist_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'])
+        github_response =Github::Gists.new(id: @gist_id).comments.all(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
 
         return false if github_response.count < 1
 
@@ -56,7 +56,7 @@ class GistComments
           }
         }
 
-        REDIS.setex("gist-comments: #{@gist_id}, pg: #{@page}", 60, hash.to_json)
+        RoughdraftApp::REDIS.setex("gist-comments: #{@gist_id}, pg: #{@page}", 60, hash.to_json)
         hash
 
       rescue Github::Error::NotFound
