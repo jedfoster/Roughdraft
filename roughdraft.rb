@@ -42,6 +42,8 @@ class RoughdraftApp < Sinatra::Base
   end
 
   configure :production do
+    require 'newrelic_rpm'
+
     APP_DOMAIN = 'roughdraft.io'
 
     helpers do
