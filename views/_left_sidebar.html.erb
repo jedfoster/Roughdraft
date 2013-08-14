@@ -10,13 +10,13 @@
     <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
 
     <% if @github.authenticated? && @gist.belongs_to?(session[:github_id]) %>
-      <a href="/<%= @gist.id %>/edit" class="button">Edit this Draft</a>
+      <a href="/<%= @gist.id %>/edit" class="button">Edit</a>
       <a href="/<%= @gist.id %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
       if @gist.description.nil? || @gist.description.empty?
         @gist.id
       else
         @gist.description_safe.gsub(/"/, '\'')
-      end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete this Draft</a>
+      end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
 
     <% else %>
       <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
@@ -36,7 +36,7 @@
       @gist.id
     else
       @gist.description_safe.gsub(/"/, '\'')
-    end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete this Draft</a>
+    end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
   </nav>
 
 
