@@ -62,7 +62,6 @@ class RoughdraftApp < Sinatra::Base
 
     helpers do
       use Rack::Session::Cookie, :key => 'roughdraft.dev',
-                                 # :domain => :all,
                                  :domain => '.roughdraft.dev',
                                  :path => '/',
                                  :expire_after => 7776000, # 90 days, in seconds
