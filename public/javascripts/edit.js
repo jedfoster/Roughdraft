@@ -217,7 +217,7 @@ http://github.com/bgrins/bindWithDelay
     <div class="edit-header">\
       <input name="filename" value="' + filename + '" class="filename" data-filename="' + id + '">\
 \
-      <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered by Roughdraft.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>\
+      <span class="tooltip"><span class="tooltip_contents">Files in a Draft are display in alphabetical order by filename.<br> Only files ending in <code>.md</code> or <code>.markdown</code> will be rendered.<br> <b>Tip:</b> break up a long draft into chapters.</span></span>\
 \
       ' + ( (new_file_count > 1) ? '<a href="#" class="button delete-a-file" data-filename="' + id + '" data-confirm="Are you sure you want to delete \'' + filename + '\'?">Delete</a>' : '' ) + '\
     </div>\

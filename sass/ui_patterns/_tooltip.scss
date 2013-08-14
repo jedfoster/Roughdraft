@@ -12,18 +12,20 @@
     font-size: 0.75em !important;
     font-weight: bold;
   }
-}
- 
-.tooltip .tooltip_contents {
-  @extend %delta-color-button;
 
-  visibility: hidden;
-  position: absolute;
-  margin: 0 0 0 em(42);
-  max-width: em(260);
-  z-index: 9999;
-}
+  .tooltip_contents {
+    @extend %delta-color-button;
+
+    background: transparentize(lighten($delta_color_charlie, 30%), 0.1);
+    visibility: hidden;
+    position: absolute;
+    margin: 0 0 0 em(42);
+    max-width: em(300);
+    z-index: 9999;
+  }
  
-.tooltip:hover .tooltip_contents{
-  visibility: visible;
+  &:hover .tooltip_contents{
+    visibility: visible;
+    // background: transparentize(lighten($delta_color_charlie, 20%), 0.2);
+  }
 }
