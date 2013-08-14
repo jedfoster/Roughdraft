@@ -131,32 +131,6 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
-  get %r{(?:/)?([\w-]+)?/([\w]+)$} do
-    @action = 'view'
-    id = params[:captures].last
-    valid = true
-
-    @gist = Gist.new(id)
-
-    if ! @gist.content
-      @gist = false
-
-      status 404
-      return erb :invalid_gist, :locals => { :gist_id => id }
-    end
-
-    @user = User.new(params[:captures].first) unless @user
-
-    if request.url == @gist.roughdraft_url
-      headers 'X-Cache-Hit' => @gist.from_redis
-
-      erb :gist
-    else
-      redirect to(@gist.roughdraft_url)
-    end
-  end
-
-
   get %r{(?:/)?([\w-]+)?/([\w]+)/edit$} do
     @action = 'edit'
     id = params[:captures].last
@@ -205,6 +179,32 @@ class RoughdraftApp < Sinatra::Base
 
     respond_to do |wants|
       wants.json { id }
+    end
+  end
+
+
+  get %r{(?:/)?([\w-]+)?/([\w]+)$} do
+    @action = 'view'
+    id = params[:captures].last
+    valid = true
+
+    @gist = Gist.new(id)
+
+    if ! @gist.content
+      @gist = false
+
+      status 404
+      return erb :invalid_gist, :locals => { :gist_id => id }
+    end
+
+    @user = User.new(params[:captures].first) unless @user
+
+    if request.url == @gist.roughdraft_url
+      headers 'X-Cache-Hit' => @gist.from_redis
+
+      erb :gist
+    else
+      redirect to(@gist.roughdraft_url)
     end
   end
 
