@@ -19,3 +19,5 @@ gem 'RedCloth'
 gem 'haml'
 
 # gem 'toadstool'
+
+gem 'chairman'
