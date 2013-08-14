@@ -67,7 +67,7 @@ class GistComments
     def pipeline(html)
       context = {
         :gfm => true,
-        :asset_root => "http://#{APP_DOMAIN}/images",
+        :asset_root => "http://#{RoughdraftApp::APP_DOMAIN}/images",
         :base_url   => "https://github.com"
       }
 

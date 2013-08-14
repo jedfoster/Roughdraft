@@ -31,7 +31,7 @@ class Gist
   end
 
   def roughdraft_url
-    "http://#{owner.downcase}.#{APP_DOMAIN}/#{@gist_id}"
+    "http://#{owner.downcase}.#{RoughdraftApp::APP_DOMAIN}/#{@gist_id}"
   end
 
   def id

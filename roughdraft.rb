@@ -298,7 +298,7 @@ class RoughdraftApp < Sinatra::Base
     end    
     
     after '/authorize/return' do
-      redirect to("http://#{@user.login}.#{APP_DOMAIN}/")
+      redirect to("http://#{@user.login}.#{RoughdraftApp::APP_DOMAIN}/")
     end
 
     after '/logout' do
