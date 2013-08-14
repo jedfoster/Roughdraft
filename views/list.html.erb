@@ -13,17 +13,6 @@
         gist['description']
       end %></a>
       <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>
-
-      <% if @github.authenticated? && session[:github_id] == @user.id %>
-        <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
-        <a href="/<%= gist['id'] %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
-        if gist['description'].nil? || gist['description'].empty?
-          gist['id']
-        else
-          gist['description'].gsub(/"/, '\'')
-        end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
-      <% end %>
-
     </li>
   </ul>
 
@@ -41,17 +30,6 @@
         gist['description']
       end %></a>
       <span class="posted">posted: <time datetime="<%= gist['created_at'] %>"><%= Time.parse(gist['created_at']).strftime("%b %-d, %Y") %></time></span>
-
-      <% if @github.authenticated? && session[:github_id] == @user.id %>
-        <a href="/<%= gist['id'] %>/edit" class="edit">Edit</a>
-        <a href="/<%= gist['id'] %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
-        if gist['description'].nil? || gist['description'].empty?
-          gist['id']
-        else
-          gist['description'].gsub(/"/, '\'')
-        end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
-      <% end %>
-
     </li>
   <% end %>
   </ul>
