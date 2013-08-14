@@ -4,4 +4,4 @@ require './roughdraft'
 use Rack::Deflater
 
 # Run the application
-run Sinatra::Application
+run RoughdraftApp

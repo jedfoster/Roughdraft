@@ -11,7 +11,7 @@ class GistList
     @user_id = user_id
     @from_redis = 'True'
     @page = page
-    @list = REDIS.get("gist-list: #{user_id}, pg: #{page}")
+    @list = RoughdraftApp::REDIS.get("gist-list: #{user_id}, pg: #{page}")
 
 
     if ! @list
@@ -56,8 +56,8 @@ class GistList
   end
 
   def purge
-    REDIS.keys("gist-list: #{@user_id}, pg: *").each do |key|
-      REDIS.del(key)
+    RoughdraftApp::REDIS.keys("gist-list: #{@user_id}, pg: *").each do |key|
+      RoughdraftApp::REDIS.del(key)
     end
   end
 
@@ -68,7 +68,7 @@ class GistList
       begin
         gists = Array.new
 
-        github_response = Github::Gists.new.list(user: @user_id, client_id: Roughdraft.gh_config['client_id'], client_secret: Roughdraft.gh_config['client_secret'], page: @page)
+        github_response = Github::Gists.new.list(user: @user_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret, page: @page)
 
         github_response.each do |gist|
           gist.files.each do |key, file|
@@ -89,7 +89,7 @@ class GistList
           }
         }
 
-        REDIS.setex("gist-list: #{@user_id}, pg: #{@page}", 60, hash.to_json)
+        RoughdraftApp::REDIS.setex("gist-list: #{@user_id}, pg: #{@page}", 60, hash.to_json)
         hash
 
       rescue Github::Error::NotFound
