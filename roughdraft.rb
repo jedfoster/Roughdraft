@@ -130,6 +130,53 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
+  get '/new' do
+    @action = 'new'
+
+    erb :'new-gist'
+  end
+
+  post '/preview' do
+    @action = 'preview'
+
+    hash = Hash.new
+    hash['description'] = params[:title]
+    hash['files'] = Array.new
+
+    params[:contents].each do |key, value|
+      html = Hashie::Mash.new
+
+      ext = File.extname(key)
+
+      if ext.match(/\.(textile)/)
+        html.language = 'Textile'
+      elsif ext.match(/\.(haml)/)
+        html.language = 'Haml'
+      else
+        html.language = 'Markdown'
+      end
+
+      html.content = value["content"]
+
+      hash['files'] << Roughdraft.gist_pipeline(html, params[:contents])
+    end
+
+    hash.to_json.to_s
+  end
+
+
+  post '/create' do
+    params[:title]
+    params[:contents]
+
+    data = Chairman.session(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
+
+    respond_to do |wants|
+      wants.json { "/#{data.id.to_s}/edit".to_json }
+    end
+  end
+
+
   get %r{(?:/)?([\w-]+)?/([\w]+)/edit$} do
     @action = 'edit'
     id = params[:captures].last
@@ -204,53 +251,6 @@ class RoughdraftApp < Sinatra::Base
       erb :gist
     else
       redirect to(@gist.roughdraft_url)
-    end
-  end
-
-
-  get '/new' do
-    @action = 'new'
-
-    erb :'new-gist'
-  end
-
-  post '/preview' do
-    @action = 'preview'
-
-    hash = Hash.new
-    hash['description'] = params[:title]
-    hash['files'] = Array.new
-
-    params[:contents].each do |key, value|
-      html = Hashie::Mash.new
-
-      ext = File.extname(key)
-
-      if ext.match(/\.(textile)/)
-        html.language = 'Textile'
-      elsif ext.match(/\.(haml)/)
-        html.language = 'Haml'
-      else
-        html.language = 'Markdown'
-      end
-
-      html.content = value["content"]
-
-      hash['files'] << Roughdraft.gist_pipeline(html, params[:contents])
-    end
-
-    hash.to_json.to_s
-  end
-
-
-  post '/create' do
-    params[:title]
-    params[:contents]
-
-    data = Chairman.session(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
-
-    respond_to do |wants|
-      wants.json { "/#{data.id.to_s}/edit".to_json }
     end
   end
 
