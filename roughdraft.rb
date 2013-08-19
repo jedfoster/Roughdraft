@@ -54,7 +54,7 @@ class RoughdraftApp < Sinatra::Base
                                  :secret => ENV['COOKIE_SECRET']
     end
 
-    Chairman.config(ENV['GITHUB_ID'], ENV['GITHUB_SECRET'], ['gist', 'user'])
+    Chairman.config(ENV['GITHUB_ID'], ENV['GITHUB_SECRET'], ['gist'])
   end
 
   configure :development do
@@ -69,7 +69,7 @@ class RoughdraftApp < Sinatra::Base
     end
 
     yml = YAML.load_file("config/github.yml")
-    Chairman.config(yml["client_id"], yml["client_secret"], ['gist', 'user'])
+    Chairman.config(yml["client_id"], yml["client_secret"], ['gist'])
   end
 
 
