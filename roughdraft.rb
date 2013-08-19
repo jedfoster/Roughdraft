@@ -297,6 +297,8 @@ class RoughdraftApp < Sinatra::Base
     end    
     
     after '/authorize/return' do
+      halt redirect to('/') if @user.nil?
+
       redirect to("http://#{@user.login}.#{RoughdraftApp::APP_DOMAIN}/")
     end
 

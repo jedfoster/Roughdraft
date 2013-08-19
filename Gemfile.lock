@@ -10,7 +10,7 @@ GEM
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
     atomic (1.1.12)
-    chairman (0.0.1)
+    chairman (0.0.2)
       github_api (~> 0.10.2)
       sinatra (~> 1.4.3)
     chunky_png (1.2.8)
