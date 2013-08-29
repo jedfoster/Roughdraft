@@ -1,7 +1,7 @@
 <section class="content">
 <% if ! ( @gist.description.nil? || @gist.description.empty? ) %>
   <header>
-    <h1><%= @gist.description %></h1>
+    <h1><%= code @gist.description %></h1>
   </header>
 <% end
 
