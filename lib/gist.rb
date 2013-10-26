@@ -15,7 +15,7 @@ class Gist
   end
 
   def self.is_allowed(language, filename)
-    return false if language.nil? 
+    return false if language.nil? || filename.match('SassMeister-input')
 
     return (language.match(/(Markdown|Literate CoffeeScript|Textile|Haml)/) || File.extname(filename) == '.txt')
   end
