@@ -28,6 +28,7 @@ class RoughdraftApp < Sinatra::Base
   register Sinatra::Partial
 
   HTML::Pipeline::SanitizationFilter::WHITELIST[:attributes][:all].push 'class'
+  HTML::Pipeline::SanitizationFilter::WHITELIST[:elements].push 'sassmeister'
 
   set :partial_template_engine, :erb
 
@@ -273,9 +274,9 @@ class RoughdraftApp < Sinatra::Base
 
 
   use Chairman::Routes
-  
+
   # implement redirects
-  class Chairman::Routes 
+  class Chairman::Routes
     configure :production do
       helpers do
         use Rack::Session::Cookie, :key => 'roughdraft.io',
@@ -294,8 +295,8 @@ class RoughdraftApp < Sinatra::Base
                                    :expire_after => 7776000, # 90 days, in seconds
                                    :secret => 'local'
       end
-    end    
-    
+    end
+
     after '/authorize/return' do
       halt redirect to('/') if @user.nil?
 
