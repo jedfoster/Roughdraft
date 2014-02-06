@@ -80,7 +80,7 @@ private
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s, value.filename.to_s
           value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre(.*?)>\s+<code>/, '<pre\1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
-            .gsub(/<sassmeister>([\d]+)\s*<\/sassmeister>/, '<div><iframe src="http://embed.sassmeister.com/gist/\1" class="sassmeister-gist" id="sm-gist-\1" scrolling="no" frameborder="0" allowTransparency="true" height="480" style="width: 100%; overflow: hidden;"></iframe></div>')
+            .gsub(/<sassmeister>([\d]+)\s*<\/sassmeister>/, '<p class="sassmeister" data-gist-id="\1" data-height="480"><a href="http://sassmeister.com/gist/\1">Play with this gist on SassMeister.</a></p><script src="http://static.sassmeister.com/js/embed.js" async></script>')
 
         end
       end
