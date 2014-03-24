@@ -23,7 +23,11 @@ class GistComments
   end
 
   def list
-    @list["list"]
+    if @list
+      @list["list"]
+    else
+      false
+    end
   end
 
   def links

@@ -236,8 +236,8 @@ class RoughdraftApp < Sinatra::Base
 
     comments = GistComments.new(id)
 
-    if ! comments
-      status 404
+    if ! comments.list
+      status 204
       return ''
     end
 
