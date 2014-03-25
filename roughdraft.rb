@@ -230,7 +230,24 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
-  get %r{(?:/)?([\w-]+)?/([\w]+)$} do
+  get %r{(?:/)?([\w-]+)?/([\w]+)/comments$} do
+    @action = 'comments'
+    id = params[:captures].last
+
+    comments = GistComments.new(id)
+
+    if ! comments
+      status 404
+      return ''
+    end
+
+    respond_to do |wants|
+      wants.json { comments.list.to_json }
+    end
+  end
+
+
+ get %r{(?:/)?([\w-]+)?/([\w]+)$} do
     @action = 'view'
     id = params[:captures].last
     valid = true
@@ -252,23 +269,6 @@ class RoughdraftApp < Sinatra::Base
       erb :gist
     else
       redirect to(@gist.roughdraft_url)
-    end
-  end
-
-
-  get %r{(?:/)?([\w-]+)?/([\w]+)/comments$} do
-    @action = 'comments'
-    id = params[:captures].last
-
-    comments = GistComments.new(id)
-
-    if ! comments
-      status 404
-      return ''
-    end
-
-    respond_to do |wants|
-      wants.json { comments.list.to_json }
     end
   end
 
