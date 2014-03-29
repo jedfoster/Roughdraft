@@ -1,3 +1,5 @@
+require 'logger'
+
 class User < Hash
   attr_reader :user, :id
 
@@ -38,6 +40,9 @@ private
   def fetch(id)
     begin
       user = Github::Users.new.get(user: id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
+
+      log = Logger.new(STDOUT)
+      log.info("API Ratelimit: #{user.headers.ratelimit_remaining}/#{user.headers.ratelimit_limit} (in User.fetch)")
 
       RoughdraftApp::REDIS.setex(user['login'], 60, user.to_hash.to_json)
       user.to_hash

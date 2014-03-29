@@ -1,3 +1,5 @@
+require 'logger'
+
 class Gist
   attr_reader :from_redis, :content
 
@@ -76,6 +78,9 @@ private
   def fetch
     begin
       gist = Github::Gists.new.get(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
+
+      log = Logger.new(STDOUT)
+      log.info("API Ratelimit: #{gist.headers.ratelimit_remaining}/#{gist.headers.ratelimit_limit} (in Gist.fetch)")
 
       gist.files.each do |file, value|
         if Gist.is_allowed value.language.to_s, value.filename.to_s

@@ -1,3 +1,5 @@
+require 'logger'
+
 class GistComments
   include Enumerable
 
@@ -41,6 +43,9 @@ class GistComments
         comments = Array.new
 
         github_response =Github::Gists.new(id: @gist_id).comments.all(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
+
+        log = Logger.new(STDOUT)
+        log.info("API Ratelimit: #{github_response.headers.ratelimit_remaining}/#{github_response.headers.ratelimit_limit} (in GistComments.fetch)")
 
         return false if github_response.count < 1
 

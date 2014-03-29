@@ -1,3 +1,5 @@
+require 'logger'
+
 class GistList
   include Enumerable
 
@@ -69,6 +71,9 @@ class GistList
         gists = Array.new
 
         github_response = Github::Gists.new.list(user: @user_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret, page: @page)
+
+        log = Logger.new(STDOUT)
+        log.info("API Ratelimit: #{github_response.headers.ratelimit_remaining}/#{github_response.headers.ratelimit_limit} (in GistList.fetch)")
 
         github_response.each do |gist|
           gist.files.each do |key, file|
