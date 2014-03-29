@@ -30,4 +30,7 @@ module Roughdraft
     pipe.call(html.content.to_s)[:output].to_xhtml # return XHTML to be compatible with RSS
   end
 
+  def self.gist_base_regex
+    '(?:/)?([\w-]+)?/([\w]+)(?:-.)*'
+  end
 end

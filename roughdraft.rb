@@ -178,7 +178,7 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
-  get %r{(?:/)?([\w-]+)?/([\w]+)/edit$} do
+  get %r{#{Roughdraft.gist_base_regex}/edit$} do
     @action = 'edit'
     id = params[:captures].last
 
@@ -203,7 +203,7 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
-  post %r{(?:/)?([\w-]+)?/([\w]+)/update$} do
+  post %r{#{Roughdraft.gist_base_regex}/update$} do
     @action = 'update'
     id = params[:captures].last
 
@@ -217,7 +217,7 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
-  delete %r{(?:/)?([\w-]+)?/([\w]+)/delete$} do
+  delete %r{#{Roughdraft.gist_base_regex}/delete$} do
     @action = 'delete'
     id = params[:captures].last
 
@@ -230,7 +230,7 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
-  get %r{(?:/)?([\w-]+)?/([\w]+)/comments$} do
+  get %r{#{Roughdraft.gist_base_regex}/comments$} do
     @action = 'comments'
     id = params[:captures].last
 
@@ -247,7 +247,7 @@ class RoughdraftApp < Sinatra::Base
   end
 
 
- get %r{(?:/)?([\w-]+)?/([\w]+)$} do
+  get %r{#{Roughdraft.gist_base_regex}} do
     @action = 'view'
     id = params[:captures].last
     valid = true
