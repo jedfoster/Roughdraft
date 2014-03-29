@@ -45,10 +45,7 @@ class Gist
   end
 
   def description_safe
-    context = {:whitelist => HTML::Pipeline::SanitizationFilter::FULL}
-    pipe = HTML::Pipeline.new [HTML::Pipeline::SanitizationFilter], context
-
-    pipe.call(@content["description"].to_s)[:output].to_s
+    @safe_description ||= Roughdraft.safe_html(description)
   end
 
   def files
