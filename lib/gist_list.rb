@@ -31,6 +31,7 @@ class GistList
     @list['list'].each do |gist|
       gists << {
         :id => gist["id"],
+        :url => gist['url'],
         :description => gist["description"] || false,
         :created_at => gist["created_at"],
         :created_at_rendered => Time.parse(gist['created_at']).strftime("%b %-d, %Y")
@@ -79,6 +80,7 @@ class GistList
           gist.files.each do |key, file|
             if Gist.is_allowed file.language.to_s, file.filename.to_s
               gist.description = Roughdraft.safe_html(gist["description"])
+              gist[:url] = Roughdraft.url(@user_id, gist.id, Roughdraft.slugify_description(gist.description))
               gists << gist.to_hash
               break
             end

@@ -6,7 +6,7 @@
   <ul class="latest-gist">
   <% gist = @user.latest_gist %>
     <li id="<%= gist['id'] %>">
-      <a href="/<%= gist['id'] %>"><%=gist['id']
+      <a href="<%= gist["url"] %>"><%=gist['id']
       if gist['description'].nil? || gist['description'].empty?
         gist['id']
       else
@@ -23,7 +23,7 @@
 
   gists.list.each do |gist| %>
     <li id="<%= gist['id'] %>">
-      <a href="/<%= gist['id'] %>"><%=
+      <a href="<%= gist["url"] %>"><%=
       if gist['description'].nil? || gist['description'].empty?
         gist['id']
       else
