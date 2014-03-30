@@ -70,28 +70,28 @@ class Gist
     return Chairman.session(session[:github_token]).gists.delete(id)
   end
 
-private
+  private
 
-  def fetch
-    begin
-      gist = Github::Gists.new.get(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
+    def fetch
+      begin
+        gist = Github::Gists.new.get(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
 
-      log = Logger.new(STDOUT)
-      log.info("API Ratelimit: #{gist.headers.ratelimit_remaining}/#{gist.headers.ratelimit_limit} (in Gist.fetch)")
+        log = Logger.new(STDOUT)
+        log.info("API Ratelimit: #{gist.headers.ratelimit_remaining}/#{gist.headers.ratelimit_limit} (in Gist.fetch)")
 
-      gist.files.each do |file, value|
-        if Gist.is_allowed value.language.to_s, value.filename.to_s
-          value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre(.*?)>\s+<code>/, '<pre\1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
-            .gsub(/<sassmeister>([\d]+)\s*<\/sassmeister>/, '<p class="sassmeister" data-gist-id="\1" data-height="480"><a href="http://sassmeister.com/gist/\1">Play with this gist on SassMeister.</a></p><script src="http://static.sassmeister.com/js/embed.js" async></script>')
+        gist.files.each do |file, value|
+          if Gist.is_allowed value.language.to_s, value.filename.to_s
+            value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre(.*?)>\s+<code>/, '<pre\1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
+              .gsub(/<sassmeister>([\d]+)\s*<\/sassmeister>/, '<p class="sassmeister" data-gist-id="\1" data-height="480"><a href="http://sassmeister.com/gist/\1">Play with this gist on SassMeister.</a></p><script src="http://static.sassmeister.com/js/embed.js" async></script>')
 
+          end
         end
+
+        RoughdraftApp::REDIS.setex(@gist_id, 60, gist.to_hash.to_json.to_s)
+        gist.to_hash
+
+      rescue Github::Error::NotFound
+        false
       end
-
-      RoughdraftApp::REDIS.setex(@gist_id, 60, gist.to_hash.to_json.to_s)
-      gist.to_hash
-
-    rescue Github::Error::NotFound
-      false
     end
-  end
 end
