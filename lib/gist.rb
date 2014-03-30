@@ -48,6 +48,10 @@ class Gist
     @safe_description ||= Roughdraft.safe_html(description)
   end
 
+  def slug
+    @slug ||= Roughdraft.slugify_description(description_safe)
+  end
+
   def files
     @content["files"]
   end
