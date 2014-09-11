@@ -5,7 +5,7 @@ require 'sinatra/partial'
 require 'sinatra/respond_to'
 require 'chairman'
 require 'json'
-require 'github_api'
+
 require 'rack/request'
 require 'yaml'
 require 'html/pipeline'

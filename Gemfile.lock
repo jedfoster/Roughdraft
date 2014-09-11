@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/rack/rack-contrib.git
+  revision: 951760b1710634623ebbccef8d65df9139bb41c2
+  specs:
+    rack-contrib (1.2.0)
+      rack (>= 0.9.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -34,16 +41,8 @@ GEM
     fssm (0.2.10)
     gemoji (1.4.0)
     github-markdown (0.5.3)
-    github_api (0.10.2)
-      addressable
-      faraday (~> 0.8.7)
-      hashie (>= 1.2)
-      multi_json (~> 1.4)
-      nokogiri (~> 1.6.0)
-      oauth2
     haml (4.0.3)
       tilt
-    hashie (2.0.5)
     html-pipeline (0.0.14)
       activesupport (>= 2)
       escape_utils (~> 0.3)
@@ -52,31 +51,20 @@ GEM
       nokogiri (~> 1.4)
       rinku (~> 1.7)
       sanitize (~> 2.0)
-    httpauth (0.2.0)
     i18n (0.6.5)
     jammit (0.6.6)
       cssmin (>= 1.0.3)
       jsmin (>= 1.0.1)
     jsmin (1.0.1)
-    jwt (0.1.8)
-      multi_json (>= 1.5)
     kgio (2.8.0)
     memcachier (0.0.2)
     mini_portile (0.5.1)
     minitest (4.7.5)
     multi_json (1.7.9)
-    multi_xml (0.5.5)
     multipart-post (1.2.0)
     newrelic_rpm (3.6.6.147)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
-    oauth2 (0.9.2)
-      faraday (~> 0.8)
-      httpauth (~> 0.2)
-      jwt (~> 0.1.4)
-      multi_json (~> 1.0)
-      multi_xml (~> 0.5)
-      rack (~> 1.2)
     octokit (2.6.1)
       sawyer (~> 0.5.1)
     rack (1.5.2)
@@ -120,11 +108,11 @@ DEPENDENCIES
   closure-compiler
   compass
   gemoji
-  github_api
   haml
   html-pipeline
   jammit
   newrelic_rpm
+  rack-contrib!
   redis
   sass
   sinatra
