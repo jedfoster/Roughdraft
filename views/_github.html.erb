@@ -1,5 +1,5 @@
 <div class="github">
-<% if @github.authenticated? && session[:github_id] %>
+<% if @github.user_authenticated? && session[:github_id] %>
   <a href="<%="http://#{session[:github_id]}.#{APP_DOMAIN}/"%>">My Drafts</a>
   <% if ! @action.match(/edit|save/) %>
     <a href="<%="http://#{session[:github_id]}.#{APP_DOMAIN}/new"%>" class="button">New Draft</a>

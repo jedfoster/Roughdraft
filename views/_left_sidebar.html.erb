@@ -9,7 +9,7 @@
     <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
     <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
 
-    <% if @github.authenticated? && @gist.belongs_to?(session[:github_id]) %>
+    <% if @github.user_authenticated? && @gist.belongs_to?(session[:github_id]) %>
       <a href="/<%= @gist.id %>/edit" class="button">Edit</a>
       <a href="/<%= @gist.id %>/delete.json" class="button delete" data-confirm="Are you sure you want to delete '<%=
       if @gist.description.nil? || @gist.description.empty?
