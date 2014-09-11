@@ -20,4 +20,5 @@ gem 'haml'
 
 # gem 'toadstool'
 
-gem 'chairman'
+gem 'chairman', "~> 0.1.0"
+# gem 'chairman', "= 0.0.2"
