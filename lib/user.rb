@@ -3,11 +3,12 @@ require 'logger'
 class User < Hash
   attr_reader :user, :id
 
-  def initialize(id)
+  def initialize(id, github)
     return false unless id
 
     @user = RoughdraftApp::REDIS.get(id)
     @id = id
+    @github = github
 
     if ! @user
       @user = fetch id
@@ -36,18 +37,20 @@ class User < Hash
     @user['blog'].to_s
   end
 
-private
-  def fetch(id)
-    begin
-      user = Github::Users.new.get(user: id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
+  private
 
-      log = Logger.new(STDOUT)
-      log.info("API Ratelimit: #{user.headers.ratelimit_remaining}/#{user.headers.ratelimit_limit} (in User.fetch)")
+    def fetch(id)
+      begin
+        user = @github.user(id)
+        ratelimit = Octokit::RateLimit.from_response @github.last_response
 
-      RoughdraftApp::REDIS.setex(user['login'], 60, user.to_hash.to_json)
-      user.to_hash
-    rescue Github::Error::NotFound
-      false
+        log = Logger.new(STDOUT)
+        log.info("API Ratelimit: #{ratelimit.remaining}/#{ratelimit.limit} (in User.fetch)")
+
+        RoughdraftApp::REDIS.setex(user['login'], 60, user.to_hash.to_json)
+        user.to_hash
+      rescue Octokit::NotFound
+        false
+      end
     end
-  end
 end

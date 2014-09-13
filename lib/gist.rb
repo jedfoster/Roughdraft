@@ -3,10 +3,11 @@ require 'logger'
 class Gist
   attr_reader :from_redis, :content
 
-  def initialize(gist_id)
+  def initialize(gist_id, github)
     @from_redis = 'True'
     @content = RoughdraftApp::REDIS.get(gist_id)
     @gist_id = gist_id
+    @github = github
 
     if ! @content
       @from_redis = 'False'
@@ -23,7 +24,7 @@ class Gist
   end
 
   def owner
-    @content["owner"]["login"].to_s
+    @content["owner"].to_s
   end
 
   def belongs_to?(user_login)
@@ -78,12 +79,15 @@ class Gist
 
     def fetch
       begin
-        gist = Github::Gists.new.get(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
+        @gist = @github.gist(@gist_id)
+        ratelimit = Octokit::RateLimit.from_response @github.last_response
+
+        @gist[:owner] = (@gist.respond_to?(:user) ? @gist.user.login : nil)
 
         log = Logger.new(STDOUT)
-        log.info("API Ratelimit: #{gist.headers.ratelimit_remaining}/#{gist.headers.ratelimit_limit} (in Gist.fetch)")
+        log.info("API Ratelimit: #{ratelimit.remaining}/#{ratelimit.limit} (in Gist.fetch)")
 
-        gist.files.each do |file, value|
+        @gist.files.each do |file, value|
           if Gist.is_allowed value.language.to_s, value.filename.to_s
             value[:rendered] = Roughdraft.gist_pipeline(value, gist).gsub(/<pre(.*?)>\s+<code>/, '<pre\1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
               .gsub(/<sassmeister>([\d]+)\s*<\/sassmeister>/, '<p class="sassmeister" data-gist-id="\1" data-height="480"><a href="http://sassmeister.com/gist/\1">Play with this gist on SassMeister.</a></p><script src="http://static.sassmeister.com/js/embed.js" async></script>')
@@ -91,10 +95,10 @@ class Gist
           end
         end
 
-        RoughdraftApp::REDIS.setex(@gist_id, 60, gist.to_hash.to_json.to_s)
-        gist.to_hash
+        RoughdraftApp::REDIS.setex(@gist_id, 60, @gist.to_hash.to_json.to_s)
+        @gist.to_hash
 
-      rescue Github::Error::NotFound
+      rescue Octokit::NotFound
         false
       end
     end

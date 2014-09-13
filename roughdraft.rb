@@ -89,7 +89,7 @@ class RoughdraftApp < Sinatra::Base
 
   before :subdomain => 1 do
     if request.subdomains[0] != 'www'
-      @user = User.new(request.subdomains[0])
+      @user = User.new(request.subdomains[0], @github)
     end
   end
 
@@ -182,7 +182,7 @@ class RoughdraftApp < Sinatra::Base
     @action = 'edit'
     id = params[:captures].last
 
-    @gist = Gist.new(id)
+    @gist = Gist.new(id, @github)
 
     if ! @gist.content
       @gist = false
@@ -207,7 +207,7 @@ class RoughdraftApp < Sinatra::Base
     @action = 'update'
     id = params[:captures].last
 
-    @gist = Gist.new(id)
+    @gist = Gist.new(id, @github)
 
     foo = @gist.update(params[:title], params[:contents], session)
 
@@ -221,7 +221,7 @@ class RoughdraftApp < Sinatra::Base
     @action = 'delete'
     id = params[:captures].last
 
-    delete = Gist.new(id).delete(session)
+    delete = Gist.new(id, @github).delete(session)
     GistList.new(session[:github_id]).purge
 
     respond_to do |wants|
@@ -252,7 +252,7 @@ class RoughdraftApp < Sinatra::Base
     id = params[:captures].last
     valid = true
 
-    @gist = Gist.new(id)
+    @gist = Gist.new(id, @github)
 
     if ! @gist.content
       @gist = false
