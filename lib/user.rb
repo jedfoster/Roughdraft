@@ -15,26 +15,28 @@ class User < Hash
     else
       @user = JSON.parse(@user)
     end
+
+    @user.symbolize_keys!
   end
 
   def latest_gist
-    GistList.new(@user['login'], 1).list.first
+    GistList.new(@user[:login], @github, 1).list.first
   end
 
   def name
-    @user['name'].to_s
+    @user[:name].to_s
   end
 
   def login
-    @user['login'].to_s
+    @user[:login].to_s
   end
 
   def gravatar
-    @user['gravatar_id'].to_s
+    @user[:gravatar_id].to_s
   end
 
   def homepage
-    @user['blog'].to_s
+    @user[:blog].to_s
   end
 
   private

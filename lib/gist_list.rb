@@ -9,11 +9,12 @@ class GistList
     @list.each { |i| yield i }
   end
 
-  def initialize(user_id, page = 1)
+  def initialize(user_id, github, page = 1)
     @user_id = user_id
     @from_redis = 'True'
     @page = page
     @list = RoughdraftApp::REDIS.get("gist-list: #{user_id}, pg: #{page}")
+    @github = github
 
 
     if ! @list
@@ -23,12 +24,14 @@ class GistList
     else
       @list = JSON.parse(@list)
     end
+
+    @list.symbolize_keys!
   end
 
   def listify
     gists = Array.new
 
-    @list['list'].each do |gist|
+    @list[:list].each do |gist|
       gists << {
         :id => gist["id"],
         :url => gist['url'],
@@ -40,7 +43,7 @@ class GistList
 
     hash = {
       "list" => gists,
-      "page_count" => @list["page_count"],
+      "page_count" => @list[:page_count],
       "links" => {
         "next" => links["next"],
         "prev" => links["prev"],
@@ -51,11 +54,11 @@ class GistList
   end
 
   def list
-    @list["list"]
+    @list[:list]
   end
 
   def links
-    @list["links"]
+    @list[:links]
   end
 
   def purge
@@ -71,10 +74,11 @@ class GistList
       begin
         gists = Array.new
 
-        github_response = Github::Gists.new.list(user: @user_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret, page: @page)
+        github_response = @github.gists()
+        ratelimit = Octokit::RateLimit.from_response @github.last_response
 
         log = Logger.new(STDOUT)
-        log.info("API Ratelimit: #{github_response.headers.ratelimit_remaining}/#{github_response.headers.ratelimit_limit} (in GistList.fetch)")
+        log.info("API Ratelimit: #{ratelimit.remaining}/#{ratelimit.limit} (in GistList.fetch)")
 
         github_response.each do |gist|
           gist.files.each do |key, file|
@@ -87,9 +91,12 @@ class GistList
           end
         end
 
+        require 'pry-remote'
+        binding.remote_pry
+
         hash = {
           "list" => gists,
-          "page_count" => github_response.count_pages,
+          "page_count" => @github.last_response.rels[:last].href.match(/page=(\d+)$/)[1],
           "links" => {
             "next" => github_response.links.next ? github_response.links.next.scan(/&page=(\d)/).first.first : nil,
             "prev" => github_response.links.prev ? github_response.links.prev.scan(/&page=(\d)/).first.first : nil,
@@ -99,7 +106,7 @@ class GistList
         RoughdraftApp::REDIS.setex("gist-list: #{@user_id}, pg: #{@page}", 60, hash.to_json)
         hash
 
-      rescue Github::Error::NotFound
+      rescue Octokit::NotFound
         false
       end
     end

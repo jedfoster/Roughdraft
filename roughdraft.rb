@@ -110,7 +110,7 @@ class RoughdraftApp < Sinatra::Base
     @action = 'list'
 
     if @user
-      gists = GistList.new(@user.id, params[:page])
+      gists = GistList.new(@user.id, @github, params[:page])
 
       headers 'X-Cache-Hit' => gists.from_redis
 
@@ -222,7 +222,7 @@ class RoughdraftApp < Sinatra::Base
     id = params[:captures].last
 
     delete = Gist.new(id, @github).delete(session)
-    GistList.new(session[:github_id]).purge
+    GistList.new(session[:github_id], @github).purge
 
     respond_to do |wants|
       wants.json { id }

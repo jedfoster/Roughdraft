@@ -15,6 +15,8 @@ class Gist
     else
       @content = JSON.parse(@content)
     end
+
+    @content.symbolize_keys!
   end
 
   def self.is_allowed(language, filename)
@@ -24,7 +26,7 @@ class Gist
   end
 
   def owner
-    @content["owner"].to_s
+    @content[:owner].to_s
   end
 
   def belongs_to?(user_login)
@@ -42,7 +44,7 @@ class Gist
   end
 
   def description
-    @content["description"].to_s
+    @content[:description].to_s
   end
 
   def description_safe
@@ -54,16 +56,16 @@ class Gist
   end
 
   def files
-    @content["files"]
+    @content[:files].to_hash
   end
 
-  def file_content(file, content)
-    @content["files"][file]["content"] = content
-    @content["files"][file]["rendered"] = Roughdraft.gist_pipeline(content.to_s, @content)
-  end
+  # def file_content(file, content)
+  #   @content[:files][file]["content"] = content
+  #   @content[:files][file]["rendered"] = Roughdraft.gist_pipeline(content.to_s, @content)
+  # end
 
   def html_url
-    @content["html_url"].to_s
+    @content[:html_url].to_s
   end
 
   def update(description, files, session)

@@ -8,12 +8,12 @@
 unrenderable = Array.new
 
 @gist.files.each do |x, file|
-  if file['rendered'].nil?
+  if file[:rendered].nil?
     unrenderable << file
 
   else %>
-    <article class="file" data-filename="<%= file['filename'] %>">
-      <%= file['rendered'] %>
+    <article class="file" data-filename="<%= file[:filename] %>">
+      <%= file[:rendered] %>
     </article><%
   end
 end %>
