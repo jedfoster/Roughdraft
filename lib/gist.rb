@@ -13,10 +13,10 @@ class Gist
       @from_redis = 'False'
       @content = fetch
     else
-      @content = JSON.parse(@content)
+      @content = JSON.parse(@content, symbolize_names: true)
     end
 
-    @content.symbolize_keys!
+    @content
   end
 
   def self.is_allowed(language, filename)

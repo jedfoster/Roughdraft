@@ -13,10 +13,8 @@ class User < Hash
     if ! @user
       @user = fetch id
     else
-      @user = JSON.parse(@user)
+      @user = JSON.parse(@user, symbolize_names: true)
     end
-
-    @user.symbolize_keys!
   end
 
   def latest_gist

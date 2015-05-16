@@ -20,7 +20,7 @@ class GistComments
 
       @list = fetch
     else
-      @list = JSON.parse(@list)
+      @list = JSON.parse(@list, symbolize_names: true)
     end
   end
 
