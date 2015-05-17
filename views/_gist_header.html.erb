@@ -12,6 +12,6 @@
 <meta name="twitter:site" content="@RoughdraftIO">
 <meta property="og:title" content="<%= "#{@user.id}/#{@gist.files.first[0]}" %>">
 <meta property="og:url" content="<%= @gist.roughdraft_url %>">
-<meta property="og:image" content="http://www.gravatar.com/avatar/<%= @user.gravatar %>?s=140">
+<meta property="og:image" content="<%= @user.avatar %>">
 <meta property="og:site_name" content="Roughdraft">
 <meta property="og:description" content="<%= @gist.description_safe %> - Roughdraft.io | Gist-powered writing.">

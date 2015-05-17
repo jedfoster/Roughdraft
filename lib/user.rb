@@ -28,6 +28,10 @@ class User < Hash
     @user[:gravatar_id].to_s
   end
 
+  def avatar
+    @user[:avatar_url].to_s
+  end
+
   def homepage
     @user[:blog].to_s
   end
