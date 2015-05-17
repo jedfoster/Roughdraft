@@ -37,6 +37,7 @@ class RoughdraftApp < Sinatra::Base
     require 'newrelic_rpm'
 
     APP_DOMAIN = 'roughdraft.io'
+    CACHE_MAX_AGE = 300 # 5 minutes
 
     helpers do
       use Rack::Session::Cookie, :key => 'roughdraft.io',
@@ -51,6 +52,7 @@ class RoughdraftApp < Sinatra::Base
 
   configure :development do
     APP_DOMAIN = 'roughdraft.dev'
+    CACHE_MAX_AGE = 15
 
     helpers do
       use Rack::Session::Cookie, :key => 'roughdraft.dev',
@@ -76,6 +78,7 @@ class RoughdraftApp < Sinatra::Base
   before do
     @user = @gist = @action = false
     @github = Chairman.session(session[:github_token])
+    cache_control :public, max_age: CACHE_MAX_AGE if request.get?
   end
 
   before :subdomain => 1 do

@@ -88,6 +88,8 @@ GEM
       pry (~> 0.9)
       slop (~> 3.0)
     rack (1.6.1)
+    rack-cache (1.2)
+      rack (>= 0.4)
     rack-protection (1.5.3)
       rack
     raindrops (0.13.0)
@@ -140,6 +142,7 @@ DEPENDENCIES
   jammit
   newrelic_rpm
   pry-remote
+  rack-cache
   rack-contrib!
   rinku
   sanitize
