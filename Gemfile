@@ -11,7 +11,6 @@ gem 'closure-compiler'
 gem 'sass'
 gem 'compass'
 gem 'stipe'
-gem 'redis'
 gem 'sinatra-respond_to'
 gem 'newrelic_rpm'
 

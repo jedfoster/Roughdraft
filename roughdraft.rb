@@ -11,7 +11,6 @@ require 'yaml'
 require 'html/pipeline'
 require 'RedCloth'
 require 'haml'
-require 'redis'
 
 require './lib/rack/request.rb'
 require './lib/gist.rb'
@@ -33,13 +32,6 @@ class RoughdraftApp < Sinatra::Base
   set :partial_template_engine, :erb
 
   set(:subdomain) { |num_subdomains| condition { request.subdomains.count == num_subdomains } }
-
-
-  configure do
-    redisUri = ENV["REDISTOGO_URL"] || 'redis://localhost:6379'
-    uri = URI.parse(redisUri)
-    REDIS = Redis.new(:host => uri.host, :port => uri.port, :password => uri.password)
-  end
 
   configure :production do
     require 'newrelic_rpm'
@@ -110,8 +102,6 @@ class RoughdraftApp < Sinatra::Base
 
     if @user
       gists = GistList.new(@user.id, @github, params[:page])
-
-      headers 'X-Cache-Hit' => gists.from_redis
 
       if gists.list.empty?
         status 404
@@ -193,8 +183,6 @@ class RoughdraftApp < Sinatra::Base
     @user = User.new(params[:captures].first) unless @user
 
     if request.url == "#{@gist.roughdraft_url}/edit" && @gist.belongs_to?(session[:github_id])
-      headers 'X-Cache-Hit' => @gist.from_redis
-
       erb :'edit-gist'
     else
       redirect to(@gist.roughdraft_url)
@@ -263,7 +251,7 @@ class RoughdraftApp < Sinatra::Base
     @user = User.new(params[:captures].first) unless @user
 
     if request.url == @gist.roughdraft_url
-      headers 'X-Cache-Hit' => @gist.from_redis
+      last_modified @gist.content[:updated_at].httpdate
 
       erb :gist
     else

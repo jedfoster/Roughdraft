@@ -28,17 +28,6 @@ Plain text is rendered as Markdown.
 
 ## Installation: Local ##
 
-Redis is a pre-requisite. Skip the following steps if you already have Redis installed and running.
-
-```
-brew install redis  
-redis-server
-# verify Redis is running
-redis-cli ping
-```
-
-If you want to start Redis on login, be sure to read the instructions `brew` gives after installation.
-
 The app:
 
 ```
@@ -71,7 +60,6 @@ touch tmp/restart.txt
 
 ````
 heroku create
-heroku addons:add redistogo
 git push heroku
 heroku open
 # Rock and Roll

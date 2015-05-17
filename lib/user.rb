@@ -6,15 +6,10 @@ class User < Hash
   def initialize(id, github)
     return false unless id
 
-    @user = RoughdraftApp::REDIS.get(id)
     @id = id
     @github = github
 
-    if ! @user
-      @user = fetch id
-    else
-      @user = JSON.parse(@user, symbolize_names: true)
-    end
+    @user = fetch id
   end
 
   def latest_gist
@@ -47,7 +42,6 @@ class User < Hash
         log = Logger.new(STDOUT)
         log.info("API Ratelimit: #{ratelimit.remaining}/#{ratelimit.limit} (in User.fetch)")
 
-        RoughdraftApp::REDIS.setex(user['login'], 60, user.to_hash.to_json)
         user.to_hash
       rescue Octokit::NotFound
         false

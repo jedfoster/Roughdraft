@@ -3,7 +3,7 @@ require 'logger'
 class GistList
   include Enumerable
 
-  attr_reader :from_redis, :page
+  attr_reader :page
 
   def each
     @_list.each { |i| yield i }
@@ -11,21 +11,10 @@ class GistList
 
   def initialize(user_id, github, page = 1)
     @user_id = user_id
-    @from_redis = 'True'
     @page = page
-    @_list = RoughdraftApp::REDIS.get("gist-list: #{user_id}, pg: #{page}")
     @github = github
 
-
-    if ! @list
-      @from_redis = 'False'
-
-      @_list = fetch
-    else
-      @_list = JSON.parse(@_list, symbolize_names: true)
-    end
-
-    @_list
+    @_list = fetch
   end
 
   def listify
@@ -61,12 +50,6 @@ class GistList
     @_list[:links]
   end
 
-  def purge
-    RoughdraftApp::REDIS.keys("gist-list: #{@user_id}, pg: *").each do |key|
-      RoughdraftApp::REDIS.del(key)
-    end
-  end
-
 
   private
 
@@ -99,8 +82,6 @@ class GistList
             prev: @github.last_response.rels[:prev] ? @github.last_response.rels[:prev].href.scan(/&page=(\d)/).first.first : nil,
           }
         }
-
-        RoughdraftApp::REDIS.setex("gist-list: #{@user_id}, pg: #{@page}", 60, hash.to_json)
 
         hash
 

@@ -1,22 +1,13 @@
 require 'logger'
 
 class Gist
-  attr_reader :from_redis, :content
+  attr_reader :content
 
   def initialize(gist_id, github)
-    @from_redis = 'True'
-    @content = RoughdraftApp::REDIS.get(gist_id)
     @gist_id = gist_id
     @github = github
 
-    if ! @content
-      @from_redis = 'False'
-      @content = fetch
-    else
-      @content = JSON.parse(@content, symbolize_names: true)
-    end
-
-    @content
+    @content = fetch
   end
 
   def self.is_allowed(language, filename)
@@ -97,7 +88,6 @@ class Gist
           end
         end
 
-        RoughdraftApp::REDIS.setex(@gist_id, 60, @gist.to_hash.to_json.to_s)
         @gist.to_hash
 
       rescue Octokit::NotFound

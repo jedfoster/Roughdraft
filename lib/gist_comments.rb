@@ -3,7 +3,7 @@ require 'logger'
 class GistComments
   include Enumerable
 
-  attr_reader :from_redis, :page
+  attr_reader :page
 
   def each
     @list.each { |i| yield i }
@@ -11,17 +11,9 @@ class GistComments
 
   def initialize(gist_id, page = 1)
     @gist_id = gist_id
-    @from_redis = 'True'
     @page = page
-    @list = RoughdraftApp::REDIS.get("gist-comments: #{gist_id}, pg: #{page}")
 
-    if ! @list
-      @from_redis = 'False'
-
-      @list = fetch
-    else
-      @list = JSON.parse(@list, symbolize_names: true)
-    end
+    @list = fetch
   end
 
   def list
@@ -65,7 +57,6 @@ class GistComments
           }
         }
 
-        RoughdraftApp::REDIS.setex("gist-comments: #{@gist_id}, pg: #{@page}", 60, hash.to_json)
         hash
 
       rescue Github::Error::NotFound
