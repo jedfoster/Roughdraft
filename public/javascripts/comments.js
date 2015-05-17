@@ -6,6 +6,12 @@
       success: function(data) {
         var author = window.location.host.split('.').shift();
         var comments = document.createElement('ul');
+
+        if(! data) {
+          // Didn't find any comments, so do nothing
+          return;
+        }
+
         comments.style.display = 'none';
 
         $(data).each(function() {
