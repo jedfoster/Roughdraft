@@ -9,7 +9,6 @@ gem 'jammit'
 gem 'rack-cache'
 
 gem 'closure-compiler'
-# gem 'github_api'
 gem 'sass'
 gem 'compass'
 gem 'stipe'
@@ -25,11 +24,5 @@ gem 'github-markdown'
 gem 'escape_utils'
 gem 'rinku'
 
-# gem 'toadstool'
-gem 'pry-remote'
+gem 'chairman', "~> 0.1.0"
 
-# gem 'chairman', "~> 0.1.0"
-
-gem 'chairman', path: '../Chairman'
-
-# gem 'chairman', "= 0.0.2"
