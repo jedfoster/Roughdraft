@@ -185,7 +185,7 @@ class RoughdraftApp < Sinatra::Base
 
     @user = User.new(params[:captures].first) unless @user
 
-    if request.url == "#{@gist.roughdraft_url}/edit" && @gist.belongs_to?(session[:github_id])
+    if request.url == @gist.roughdraft_edit_url && @gist.belongs_to?(session[:github_id])
       erb :'edit-gist'
     else
       redirect to(@gist.roughdraft_url)

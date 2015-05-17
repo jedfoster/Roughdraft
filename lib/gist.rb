@@ -30,6 +30,10 @@ class Gist
     Roughdraft.url(owner.downcase, @gist_id, slug)
   end
 
+  def roughdraft_edit_url
+    Roughdraft.url(owner.downcase, @gist_id, '/edit')
+  end
+
   def id
     @gist_id
   end
