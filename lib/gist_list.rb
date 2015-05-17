@@ -63,12 +63,12 @@ class GistList
         log = Logger.new(STDOUT)
         log.info("API Ratelimit: #{ratelimit.remaining}/#{ratelimit.limit} (in GistList.fetch)")
 
-        github_response.each do |_gist|
-          _gist.files.each do |key, file|
+        github_response.each do |gist|
+          gist.files.each do |key, file|
             if Gist.is_allowed file.language.to_s, file.filename.to_s
-              _gist.description = Roughdraft.safe_html(_gist.description)
-              _gist.url = Roughdraft.url(@user_id, _gist.id, Roughdraft.slugify_description(_gist.description))
-              gists << _gist.to_hash
+              gist.description = Roughdraft.safe_html(gist.description)
+              gist.url = Roughdraft.url(@user_id, gist.id, Roughdraft.slugify_description(gist.description))
+              gists << gist.to_hash
               break
             end
           end

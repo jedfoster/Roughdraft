@@ -224,7 +224,7 @@ class RoughdraftApp < Sinatra::Base
     @action = 'comments'
     id = params[:captures].last
 
-    comments = GistComments.new(id)
+    comments = GistComments.new(id, @github)
 
     if ! comments.list
       status 204

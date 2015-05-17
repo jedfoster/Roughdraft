@@ -9,8 +9,9 @@ class GistComments
     @list.each { |i| yield i }
   end
 
-  def initialize(gist_id, page = 1)
+  def initialize(gist_id, github, page = 1)
     @gist_id = gist_id
+    @github = github
     @page = page
 
     @list = fetch
@@ -18,14 +19,14 @@ class GistComments
 
   def list
     if @list
-      @list["list"]
+      @list[:list]
     else
       false
     end
   end
 
   def links
-    @list["links"]
+    @list[:links]
   end
 
   private
@@ -34,32 +35,37 @@ class GistComments
       begin
         comments = Array.new
 
-        github_response =Github::Gists.new(id: @gist_id).comments.all(@gist_id, client_id: Chairman.client_id, client_secret: Chairman.client_secret)
-
+        github_response = @github.gist_comments(@gist_id)
+        ratelimit = Octokit::RateLimit.from_response @github.last_response
+          
         log = Logger.new(STDOUT)
-        log.info("API Ratelimit: #{github_response.headers.ratelimit_remaining}/#{github_response.headers.ratelimit_limit} (in GistComments.fetch)")
+        log.info("API Ratelimit: #{ratelimit.remaining}/#{ratelimit.limit} (in GistComments.fetch)")
 
         return false if github_response.count < 1
 
         github_response.each do |comment|
           comment.body_rendered = pipeline(comment.body).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
-          comment.created_at_formatted = Time.parse(comment.created_at).strftime("%b %-d, %Y")
+          comment.created_at_formatted = comment.created_at.strftime("%b %-d, %Y")
           comment.user.delete_if { |key| key.to_s.match /^(.*url|id|type)$/ }
           comments << comment.to_hash
         end
 
+        last_page = @github.last_response.rels[:last]
+        next_page = @github.last_response.rels[:next]
+        prev_page = @github.last_response.rels[:prev]
+
         hash = {
-          "list" => comments,
-          "page_count" => github_response.count_pages,
-          "links" => {
-            "next" => github_response.links.next ? github_response.links.next.scan(/&page=(\d)/).first.first : nil,
-            "prev" => github_response.links.prev ? github_response.links.prev.scan(/&page=(\d)/).first.first : nil,
+          list: comments,
+          page_count: last_page.nil? ? 0 : last_page.href.match(/\Wpage=(\d+)$/)[1],
+          links: {
+            next: next_page.nil? ? nil : next_page.href.scan(/\Wpage=(\d)/).first.first,
+            prev: prev_page.nil? ? nil : prev_page.href.scan(/\Wpage=(\d)/).first.first,
           }
         }
 
         hash
 
-      rescue Github::Error::NotFound
+      rescue Octokit::NotFound
         false
       end
     end
