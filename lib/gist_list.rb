@@ -74,12 +74,16 @@ class GistList
           end
         end
 
+        last_page = @github.last_response.rels[:last]
+        next_page = @github.last_response.rels[:next]
+        prev_page = @github.last_response.rels[:prev]
+
         hash = {
           list: gists,
-          page_count: @github.last_response.rels[:last].href.match(/page=(\d+)$/)[1],
+          page_count: last_page.nil? ? 0 : last_page.href.match(/page=(\d+)$/)[1],
           links: {
-            next: @github.last_response.rels[:next] ? @github.last_response.rels[:next].href.scan(/&page=(\d)/).first.first : nil,
-            prev: @github.last_response.rels[:prev] ? @github.last_response.rels[:prev].href.scan(/&page=(\d)/).first.first : nil,
+            next: next_page.nil? ? nil : next_page.href.scan(/&page=(\d)/).first.first,
+            prev: prev_page.nil? ? nil : prev_page.href.scan(/&page=(\d)/).first.first,
           }
         }
 
