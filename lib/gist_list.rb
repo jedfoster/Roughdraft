@@ -80,10 +80,10 @@ class GistList
 
         hash = {
           list: gists,
-          page_count: last_page.nil? ? 0 : last_page.href.match(/page=(\d+)$/)[1],
+          page_count: last_page.nil? ? 0 : last_page.href.match(/\Wpage=(\d+)$/)[1],
           links: {
-            next: next_page.nil? ? nil : next_page.href.scan(/&page=(\d)/).first.first,
-            prev: prev_page.nil? ? nil : prev_page.href.scan(/&page=(\d)/).first.first,
+            next: next_page.nil? ? nil : next_page.href.scan(/\Wpage=(\d)/).first.first,
+            prev: prev_page.nil? ? nil : prev_page.href.scan(/\Wpage=(\d)/).first.first,
           }
         }
 
