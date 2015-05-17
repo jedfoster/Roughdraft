@@ -20,3 +20,13 @@ end %>
 
   <%= partial 'modules/gist/_metadata'.to_sym, :locals => {:unrenderable => unrenderable} %>
 </section>
+
+<script>
+  (function() {
+    gist = {};
+
+    gist.id = "<%= @gist.id %>";
+
+    window.Gist = gist;
+  })();
+</script>

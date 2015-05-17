@@ -1,12 +1,10 @@
 (function($) {
-  if(window.location.pathname.match(/^\/([\d]+)$/) ) {
+  if(window.Gist) {
     $.ajax({
       dataType: "json",
-      url: window.location.pathname + '/comments.json',
+      url: window.Gist.id + '/comments.json',
       success: function(data) {
-
         var author = window.location.host.split('.').shift();
-
         var comments = document.createElement('ul');
         comments.style.display = 'none';
 
@@ -27,7 +25,7 @@
         $('#comments').append(comments);
 
         $('#toggle-comments').on('click', function(event) {
-          $('#comments ul').toggle();
+          $('#comments > ul').toggle();
         });
 
         pretty();

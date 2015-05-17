@@ -47,6 +47,7 @@ class GistComments
           comment.body_rendered = pipeline(comment.body).gsub(/<pre (.+?)>\s+<code>/, '<pre \1><code>').gsub(/<\/code>\s+<\/pre>/, '</code></pre>')
           comment.created_at_formatted = comment.created_at.strftime("%b %-d, %Y")
           comment.user.delete_if { |key| key.to_s.match /^(.*url|id|type)$/ }
+          comment.user = comment.user.to_hash
           comments << comment.to_hash
         end
 
