@@ -15,3 +15,5 @@ tmp/*
 .rvmrc
 dump.rdb
 node_modules
+public/css
+public/js
