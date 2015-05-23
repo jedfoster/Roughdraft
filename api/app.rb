@@ -1,3 +1,5 @@
+$LOAD_PATH.unshift(File.dirname(File.realpath(__FILE__)))
+
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra/base'
@@ -12,14 +14,14 @@ require 'html/pipeline'
 require 'RedCloth'
 require 'haml'
 
-require './lib/rack/request.rb'
-require './lib/gist.rb'
-require './lib/user.rb'
-require './lib/gist_list.rb'
-require './lib/gist_comments.rb'
-require './lib/html/pipeline/haml.rb'
-require './lib/html/pipeline/gist.rb'
-require './lib/roughdraft.rb'
+require 'lib/rack/request'
+require 'lib/gist'
+require 'lib/user'
+require 'lib/gist_list'
+require 'lib/gist_comments'
+require 'lib/html/pipeline/haml'
+require 'lib/html/pipeline/gist'
+require 'lib/roughdraft'
 
 
 class RoughdraftApp < Sinatra::Base
