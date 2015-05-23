@@ -8,4 +8,5 @@ gulp.task('minifyCss', ['sass'], function() {
     .pipe(minifyCSS())
     .pipe(gulp.dest(config.dest + '/css/'))
     .pipe(size());
-})
+});
+
