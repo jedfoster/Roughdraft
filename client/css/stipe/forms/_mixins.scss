@@ -1,0 +1,101 @@
+////////////// Form mixins ////////////////
+@mixin input_fields($height: $form_field_height, $padding: $form_field_padding, $font-size: $large_point_size) {
+  border: 1px solid $form_field_border;
+  background: $form_field_background_color;
+  font-size: em($font-size);
+  height: em($height);
+  @include border_radius(em($form_field_border_radius));
+  @include grid(12.25, alphaomega, $grid_padding_l:$padding, $grid_padding_r:$padding);
+  @include input_placeholder($placeholder_text);
+
+  @include field_focus;
+  color: $form_field_text;
+  + .horizontal_selectors {
+    margin-top: -0.5em;
+  }
+}
+
+@mixin disabled_inputs {
+  background-color: $input_disabled_bkg;
+  border-color: $input_disabled_border;
+  color: $input_disabled_text;
+  &:hover {
+    border-color: $input_disabled_border;
+  }
+}
+
+@mixin fail {
+  border-color: $form_field_border_fail !important;
+  color: $form_field_text_fail !important;
+  input & {
+    background: $form_field_fail_bkg;
+  }
+  &:focus {
+    background: $form_field_fail_bkg !important;
+  }
+  label {
+    color: $form_field_text_fail !important;
+  }
+  select, input[type="text"], input[type="date"], input[type="password"] {
+    background: $form_field_fail_bkg;
+    border-color: $form_field_border_fail;
+    color: $form_field_text_fail;
+    @include input_placeholder($form_field_text_fail);
+    &:focus {
+      background: $form_field_fail_bkg;
+    }
+  }
+}
+
+@mixin inline_alert {
+  line-height: em($inline_alert_lineheight);
+  font-weight: $inline_alert_weight;
+  @include border_radius(em($form_field_border_radius));
+  border: #{$inline_alert_border_width}px $standard_border_style $form_field_border_fail;
+  padding-left: em($inline_alert_left_padding);
+  background: $inline_alert_bkg_color;
+  color: $inline_alert_text_color;
+  margin-top: em($inline_alert_top_margin);
+}
+
+// this mixin need to be refactored for use
+@mixin alert_boxes ($background_color, $padding_tb: $grid_padding_tb, $padding_l: $grid_padding_l, $padding_r: $grid_padding_r, $margin_bottom: 0) {
+  background-color: $background_color;
+  @include grid(12.25, $grid_uom:combo, $grid_child: alphaomega, $grid_padding_l: $padding_l, $grid_padding_r: $padding_r);
+  padding-top: #{$padding_tb / $em}em;
+  padding-bottom: #{$padding_tb / $em}em;
+  margin-bottom: #{$margin_bottom / $em}em;
+}
+
+@mixin field_focus {
+  &:hover {
+    border-color: $form_field_focus_border_color;
+  }
+  &:focus {
+    background-color: $form_field_focus_color;
+    border-color: $form_field_focus_border_color;
+    outline: none;
+  }
+}
+
+
+@mixin form_labels {
+  display: block;
+  font-weight: $form_label_weight;
+  line-height: em($form_label_lineheight);
+  color: $form_label_color;
+  span {
+    padding-left: .25em;
+    font-weight: normal;
+    color: $optional_field_text_color;
+  }
+  fieldset & {
+    @include grid(12, alphaomega);
+  }
+}
+
+@mixin instructional {
+  color: $instructional_text;
+  line-height: 1.5em;
+  margin-top: 0.5em;
+}

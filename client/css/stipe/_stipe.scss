@@ -1,0 +1,50 @@
+// Base variables
+
+$imgDir:    "/images/" !default;
+
+$font_size: 12 !default;
+$line:      $font_size * 1.5 !default;
+
+//// !do not edit! ////
+$em:          $font_size; // $em ALWAYS == $font-size
+$line_height: #{$line / $em}em;
+
+$standard_round_corner:                3 !default;                // sets default border radius
+$standard_corner_width:                1px !default;              // sets default border width
+$standard_border_color:                $border_color !default;    // sets default border color
+
+
+
+// Config defaults for ``standard_block_spacing`` mixin
+// -----------------------------------------------------------------------------
+$default_block_spacing:                20 !default;               // sets margin-bottom
+
+
+
+// Config defaults for site border style
+// -----------------------------------------------------------------------------
+$standard_border_style:                solid !default;
+
+
+
+// Config defaults for ``standard_hr`` mixin
+// -----------------------------------------------------------------------------
+$standard_hr_spacing:                  40 !default;               // sets padding and margin bottom
+$standard_hr_color:                    $delta_gray !default;
+$standard_hr_width:                    1px !default;
+
+
+
+// Config values for all default shadows
+// -----------------------------------------------------------------------------
+$h-shadow:                             0 !default;                // horizontal shadow settings
+$v-shadow:                             2 !default;                // vertical shaddow settings
+$blur:                                 3 !default;                // blur settings
+
+$inset_color:                          $shadow_color !default;    // for use with ``dual_box_shadow`` mixin
+$ih-shadow:                            0 !default;                // inset horizontal shadow settings
+$iv-shadow:                            2 !default;                // inset vertical shaddow settings
+$iblur:                                3 !default;                // inset blur settings
+
+@import "stipe/mixins";
+@import "stipe/extends";

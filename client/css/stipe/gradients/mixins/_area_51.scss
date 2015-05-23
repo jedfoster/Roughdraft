@@ -1,0 +1,24 @@
+// Code is depricated!
+// ALERT!!!!!!!!!!!
+// In future releases of Stipe, all references to this document will be deleted and all gradient support moved over to Compass
+
+// ----------------------------------------------------------------------
+
+@mixin linear_gradient_w3c ($default_color, $color_values, $prefixes: $prefix_defaults) {
+	background: $default_color; // default fallback
+	background: -webkit-linear-gradient(top, $color_values);
+	background: -moz-linear-gradient(top, $color_values);
+	background: -ms-linear-gradient(top, $color_values);
+	background: -o-linear-gradient(top, $color_values);
+}
+
+@mixin linear_gradient_legacy_safari ($color_values) {
+	background: -webkit-gradient(linear, left top, left bottom, #{$color_values});
+}
+
+@mixin linear_gradient_legacy_ie ($start_color, $end_color) {
+	// IE6 & 7 //
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, startColorstr='#{ie_hex_str($start_color)}', endColorstr='#{ie_hex_str($end_color)}');
+	// IE8 & 9 //
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie_hex_str($start_color)}', endColorstr='#{ie_hex_str($end_color)}')";
+}

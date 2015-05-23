@@ -1,0 +1,39 @@
+// gloss-default
+// -----------------------------------------------------------
+@mixin gloss-default ($color: $button-color, $text-shadow: $button-text-shadow, $box-shadow: $button-box-shadow) {
+  $base-color: $color;
+  $grad-1: $base-color;
+  $grad-2: lighten($base-color, 15%);
+  $grad-3: lighten($base-color, 3%);
+  $grad-4: lighten($base-color, 30%);
+  $dark-color: darken($base-color, 5%);
+  
+  @include button-default;
+
+  background-color: $base-color; // Old browsers
+  @include filter-gradient($grad-1, $grad-4, vertical); // IE6-9
+  @include background-image(linear-gradient(top, $grad-1 0%,$grad-2 50%,$grad-3 51%,$grad-4 100%));
+  border: 1px solid $dark-color;
+
+  @if $text-shadow == true {
+    text-shadow: 0px 3px 3px $dark-color;
+  }
+  @if $box-shadow == true {
+    box-shadow: 0 em(2) em(6) em(0) $shadow-color;
+  }
+
+  &:hover {
+    $base-color: darken($base-color, 10%);
+    $grad-1: darken($grad-1, 10%);
+    $grad-2: darken($grad-2, 10%);
+    $grad-3: darken($grad-3, 10%);
+    $grad-4: darken($grad-4, 10%);
+    background-color: $base-color; // Old browsers
+    @include filter-gradient($grad-1, $grad-4, vertical); // IE6-9
+    @include background-image(linear-gradient(top, $grad-1 0%,$grad-2 50%,$grad-3 51%,$grad-4 100%));
+  }
+  
+  @media #{$mobile} {
+    width: 100%;
+  }
+}

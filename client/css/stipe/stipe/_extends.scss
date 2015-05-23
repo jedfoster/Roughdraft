@@ -1,0 +1,54 @@
+// Use "!optional" flag of silent extend is allowed to fail
+// example: "@extend %minimal !optional"
+
+//* Generic global UI objects */
+//* ------------------------- */
+%clearfix {
+	@include clearfix;
+}
+
+%hide_text {
+	@include hide_text;
+}
+
+%mobile_hide {
+	@media #{$mobile} {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+%standard_block_spacing {
+	@include standard_block_spacing;
+}
+
+%standard_hr {
+	@include standard_hr;
+}
+
+%standard_rounded_borders {
+	@include standard_rounded_border;
+}
+
+%box_sizing {
+	@include box_sizing;
+}
+
+// Standardized uses for box and text shadows //
+//* text shadows */
+//* ------------ */
+%primary_text_shadow {
+	@include primary_text_shadow;
+}
+%disabled_text_shadow {
+	@include disabled_text_shadow;
+}
+
+//* box shadows */
+//* ----------- */
+%primary_box_shadow {
+	@include primary_box_shadow;
+}
+%disabled_box_shadow {
+	@include disabled_box_shadow;
+}

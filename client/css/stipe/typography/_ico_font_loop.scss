@@ -1,0 +1,23 @@
+%ico-font-base {
+  font-family: $icon_font_alpha;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+@each $icon in $icons {              // <-- create listing of PUA pseudo selectors
+  %icon-#{nth($icon, 1)}:before {
+    @extend %ico-font-base;
+    content: nth($icon, 2);
+    margin-right: 0.25em
+  }
+}
+
+@each $icon in $icons {              // <-- create listing of PUA pseudo selectors
+  %icon-#{nth($icon, 1)}-after:after {
+    @extend %ico-font-base;
+    content: nth($icon, 2);
+  }
+}
