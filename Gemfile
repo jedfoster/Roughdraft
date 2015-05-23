@@ -5,13 +5,8 @@ gem 'rack-contrib', git: 'git://github.com/rack/rack-contrib.git'
 gem 'sinatra'
 gem 'sinatra-partial'
 gem 'unicorn'
-gem 'jammit'
 gem 'rack-cache'
 
-gem 'closure-compiler'
-gem 'sass'
-gem 'compass'
-gem 'stipe'
 gem 'sinatra-respond_to'
 gem 'newrelic_rpm'
 
