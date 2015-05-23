@@ -63,45 +63,9 @@
     <p><a href="http://www.<%= APP_DOMAIN %>/">Roughdraft</a>. Gist-powered writing.</p>
   </footer>
 
-  <% if settings.environment == :production %>
-    <script src="/js/app.js"></script>
-    <% if @action.match(/edit|new/) %>
-      <script src="/js/editor.js"></script>
-    <% end %>
-  <% else %>
-    <script src="/js/vendor/jquery-1.8.2.js"></script>
-    <script src="/js/vendor/Prettify/prettify.js"></script>
-    <script src="/js/vendor/Prettify/lang-css.js"></script>
-    <script src="/js/vendor/Prettify/lang-scss.js"></script>
-    <script src="/js/vendor/Prettify/lang-sql.js"></script>
-    <script src="/js/vendor/Prettify/lang-vim.js"></script>
-    <script src="/js/vendor/Prettify/lang-yaml.js"></script>
-    <script src="/js/vendor/Prettify/lang-apollo.js"></script>
-    <script src="/js/vendor/Prettify/lang-clj.js"></script>
-    <script src="/js/vendor/Prettify/lang-go.js"></script>
-    <script src="/js/vendor/Prettify/lang-hs.js"></script>
-    <script src="/js/vendor/Prettify/lang-lisp.js"></script>
-    <script src="/js/vendor/Prettify/lang-lua.js"></script>
-    <script src="/js/vendor/Prettify/lang-ml.js"></script>
-    <script src="/js/vendor/Prettify/lang-n.js"></script>
-    <script src="/js/vendor/Prettify/lang-proto.js"></script>
-    <script src="/js/vendor/Prettify/lang-scala.js"></script>
-    <script src="/js/vendor/Prettify/lang-tex.js"></script>
-    <script src="/js/vendor/Prettify/lang-vb.js"></script>
-    <script src="/js/vendor/Prettify/lang-vhdl.js"></script>
-    <script src="/js/vendor/Prettify/lang-wiki.js"></script>
-    <script src="/js/vendor/Prettify/lang-xq.js"></script>
-    <script src="/js/vendor/Prettify/prettify-loader.js"></script>
-    <script src="/js/main.js"></script>
-    <script src="/js/comments.js"></script>
-    <% if @action.match(/edit|new/) || ( @github.user_authenticated? ) %>
-      <script src="/js/vendor/ACE-noconflict/ace.js"></script>
-      <script src="/js/vendor/ACE-noconflict/theme-tomorrow.js"></script>
-      <script src="/js/vendor/jquery.foundation.reveal.js"></script>
-      <script src="/js/vendor/rails.js"></script>
-      <script src="/js/vendor/bindWithDelay.js"></script>
-      <script src="/js/edit.js"></script>
-    <% end %>
+  <script src="/js/app.js"></script>
+  <% if @action.match(/edit|new/) %>
+    <script src="/js/editor.js"></script>
   <% end %>
 </body>
 </html>

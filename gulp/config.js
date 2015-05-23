@@ -21,7 +21,6 @@ module.exports = {
     src: src + '/js/**/*.js*',
     dest: dest + '/js/'
   },
-
   markup: {
     src: [src + '/*.jade', '!' + src + '/_*.jade'],
     dest: dest
@@ -33,6 +32,18 @@ module.exports = {
       entries: src + '/js/app.coffee',
       dest: dest + '/js/',
       outputName: 'app.js',
+      // Additional file extentions to make optional
+      extensions: ['.coffee', '.hbs']
+      // list of modules to make require-able externally
+      // require: ['jquery', 'underscore']
+
+      // list of externally available modules to exclude from the bundle
+      // external: ['jquery', 'underscore']
+    },
+    {
+      entries: src + '/js/editor.coffee',
+      dest: dest + '/js/',
+      outputName: 'editor.js',
       // Additional file extentions to make optional
       extensions: ['.coffee', '.hbs']
       // list of modules to make require-able externally
