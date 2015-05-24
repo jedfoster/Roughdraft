@@ -59,7 +59,7 @@ class Gist
   end
 
   def update(description, files, session)
-    Chairman.session(session[:github_token]).gists.edit(id, description: description, files: files)
+    @github.edit_gist(id, description: description, files: files)
     @content = fetch
   end
 
