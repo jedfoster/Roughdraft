@@ -2,22 +2,22 @@
 <item>
   <author><%= @user.id %></author>
   <title><%=
-  if gist['description'].nil? || gist['description'].empty?
-    gist['id']
+  if gist[:description].nil? || gist[:description].empty?
+    gist[:id]
   else
-    gist['description']
+    gist[:description]
   end %></title>
   <description>
-    
-  <%= 
-    @gist = Gist.new(gist['id'])
+
+  <%=
+    @gist = Gist.new(gist[:id], @github)
     erb :gist
   %>
 
   </description>
-  <link>http://<%= "#{@user.id}.#{APP_DOMAIN}/#{gist['id']}" %></link>
-  <guid>http://<%= "#{@user.id}.#{APP_DOMAIN}/#{gist['id']}" %></guid>
-  <pubDate><%= Time.parse(gist['created_at']).strftime("%a, %d %b %Y %H:%M:%S GMT") %></pubDate>
+  <link>http://<%= "#{@user.id}.#{APP_DOMAIN}/#{gist[:id]}" %></link>
+  <guid>http://<%= "#{@user.id}.#{APP_DOMAIN}/#{gist[:id]}" %></guid>
+  <pubDate><%= gist[:created_at].strftime("%a, %d %b %Y %H:%M:%S GMT") %></pubDate>
 </item>
 
 <% end %>

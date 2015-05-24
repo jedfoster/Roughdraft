@@ -8,7 +8,7 @@
     <description>
       <%= @user.name %>'s Drafts from Roughdraft.io | Gist-powered writing. 
     </description>
-    <pubDate><%= Time.now().strftime("%a, %d %b %Y %H:%M:%S +0000") %></pubDate>
+    <pubDate><%= Time.now.strftime("%a, %d %b %Y %H:%M:%S +0000") %></pubDate>
 
     <%= yield %>
     
