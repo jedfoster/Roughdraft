@@ -165,7 +165,7 @@ class RoughdraftApp < Sinatra::Base
     params[:title]
     params[:contents]
 
-    data = Chairman.session(session[:github_token]).gists.create(description: params[:title], public: true, files: params[:contents])
+    data = @github.create_gist(description: params[:title], public: true, files: params[:contents])
 
     respond_to do |wants|
       wants.json { "/#{data.id.to_s}/edit".to_json }

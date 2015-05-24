@@ -57,6 +57,10 @@ class Gist
   def html_url
     @content[:html_url].to_s
   end
+  def create(description, files)
+    @github.create_gist(description: description, files: files)
+  end
+
 
   def update(description, files, session)
     @github.edit_gist(id, description: description, files: files)
