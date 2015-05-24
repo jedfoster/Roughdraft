@@ -27,7 +27,7 @@
 
 <% elsif @action == 'edit' %>
   <nav>
-    <a href="https://gist.github.com/<%= @gist.roughdraft_url %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
+    <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
     <button type="submit" id="save-edit">Save</button>
     <a href="/preview.json" class="button preview" id="preview-edit">Preview</a>
     <a href="/<%= @gist.roughdraft_url %>" class="button cancel" id="cancel-edit">Cancel</a>
