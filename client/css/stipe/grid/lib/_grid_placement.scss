@@ -1,0 +1,52 @@
+// supporting mixin for @mixin the_grid
+// 'grid_placement' sets display, float and margin for the block
+@mixin grid_placement($grid_align, $grid_uom, $grid_child, $grid_context_width, $margin) {
+
+	@if $grid_align == center {
+		margin: 0 auto;
+	}
+	@else if $grid_align == left {
+		margin: 0;
+	}
+
+	@else {
+		@if $grid_child == alpha {
+			@if $grid_uom == em {
+				$margin_calc: #{$margin / $em}em;
+				@include grid_margin($grid_child, $margin_calc);
+			}
+			@else if $grid_uom == percent {
+				$margin_calc: $margin / $grid_context_width * 100%;
+				@include grid_margin($grid_child, $margin_calc);
+			}
+		}
+
+		@else if $grid_child == omega {
+			@if $grid_uom == em {
+				$margin_calc: #{$margin / $em}em;
+				@include grid_margin($grid_child, $margin_calc);
+			}
+			@else if $grid_uom == percent {
+				$margin_calc: $margin / $grid_context_width * 100%;
+				@include grid_margin($grid_child, $margin_calc);
+			}
+		}
+
+		@else if $grid_child == none {
+			@if $grid_uom == em {
+				$margin_calc: #{$margin / $em}em;
+				@include grid_margin($grid_child, $margin_calc);
+			}
+			@else if $grid_uom == percent {
+				$margin_calc: $margin / $grid_context_width * 100%;
+				@include grid_margin($grid_child, $margin_calc);
+			}
+		}
+
+		@else if $grid_child == alphaomega {
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+	}
+}

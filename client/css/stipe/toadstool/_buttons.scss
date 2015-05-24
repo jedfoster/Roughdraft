@@ -1,0 +1,37 @@
+[class*="toadstool"] {
+	.nav_toggle {
+    background-color: $alpha_gray; // Old browsers
+    @include background-image(linear-gradient(top,  $delta_gray 0%, $alpha_gray 100%));
+    &:hover {
+      background-color: $alpha_gray; // Old browsers
+      @include background-image(linear-gradient(top,  $alpha_gray 0%, $delta_gray 100%));
+      border-color: $alpha_gray;
+      box-shadow: 0 0 0;
+    }
+		text-shadow: 0 0 0;
+		box-shadow: 0 0 0;
+		border-color: $alpha_gray;
+		float: right;
+		display: none;
+		color: $white;
+		@media #{$mobile} {
+			display: block;
+			width: auto;
+      line-height: 1em;
+			padding: {
+        top: rem(15);
+        left: rem(10);
+        right: rem(10);
+        bottom: rem(10);
+      }
+			font-weight: normal;
+			span {
+				&:after {
+					content: "\e001";
+					font-family: $icon_font_alpha;
+					font-size: 2em;
+				}
+			}
+		}
+	}
+}

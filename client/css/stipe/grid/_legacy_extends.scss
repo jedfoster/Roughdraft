@@ -1,0 +1,165 @@
+// These are legacy placeholder classes. You shouldn't use them. They will be removed in a future release.
+
+%grid_1 {
+  @extend %grid_1of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_1of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_1of4;
+  }
+}
+
+%grid_2 {
+  @extend %grid_2of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_2of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_2of4;
+  }
+}
+
+%grid_3 {
+  @extend %grid_3of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_3of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_3of4;
+  }
+}
+
+%grid_4 {
+  @extend %grid_4of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_4of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_5 {
+  @extend %grid_5of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_5of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_6 {
+  @extend %grid_6of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_6of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_7 {
+  @extend %grid_7of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_7of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_8 {
+  @extend %grid_8of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_8of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_9 {
+  @extend %grid_9of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_9of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_10 {
+  @extend %grid_10of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_10of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_11 {
+  @extend %grid_11of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_10of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+%grid_12 {
+  @extend %grid_12of12;
+  @media #{$tablet_portrait} {
+    @extend %grid_10of10;
+  }
+  @media #{$mobile} {
+    @extend %grid_4of4;
+  }
+}
+
+
+@media #{$mobile} {
+  %grid_full_mobile {
+    /* grid_full_mobile */
+    @include full_width_block(12, $main_grid_align: left);
+  }
+}
+@media #{$mobile_portrait} {
+  %grid_full_mobile_portrait {
+    /* grid_full_mobile_portrait */
+    @include full_width_block(12, $main_grid_align: left);
+  }
+}
+@media #{$mobile_landscape}	{
+  %grid_full_mobile_landscape {
+    /* grid_full_mobile_landscape */
+    @include full_width_block(12, $main_grid_align: left);
+  }
+}
+@media #{$tablet} {
+  %grid_full_tablet {
+    /* grid_full_tablet */
+    @include full_width_block(12, $main_grid_align: left);
+  }
+}
+@media #{$tablet_portrait} {
+  %grid_full_tablet_portrait {
+    /* grid_full_tablet_portrait */
+    @include full_width_block(12, $main_grid_align: left);
+  }
+}
+@media #{$tablet_landscape} {
+  %grid_full_tablet_landscape {
+    /* grid_full_tablet_landscape */
+    @include full_width_block(12, $main_grid_align: left);
+  }
+}
+@media #{$desktop} {
+  %grid_full_desktop {
+    /* grid_full_mobile */
+    @include full_width_block(12, $main_grid_align: left);
+  }
+}

@@ -1,0 +1,7 @@
+@each $icon in $icons {
+  .icon-#{nth($icon, 1)}:before {
+    @extend %ico-font-base;
+    content: nth($icon, 2);
+    margin-right: 0.25em;
+  }
+}

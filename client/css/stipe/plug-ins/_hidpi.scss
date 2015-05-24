@@ -1,0 +1,32 @@
+// Inspired by Tim Kadlec | Media Query & Asset Downloading Results
+// http://timkadlec.com/2012/04/media-query-asset-downloading-results/
+
+// Inspired by kaelig / hidpi
+// https://github.com/kaelig/hidpi
+// hidpi() is a Sass mixin that serves high resolution graphics to high density (Retina-like) displays
+
+$extension: png !default;
+
+@mixin hidpi($image: false, $extension: $extension) {
+  @if $image {
+    background: url('#{$imgDir}#{$image}.#{$extension}') no-repeat;
+  }
+  @media #{$hidpi} {
+    @if $image {
+      $image-hidpi-fullname: '#{$imgDir}#{$image}_x2.#{$extension}';
+      background: url($image-hidpi-fullname) no-repeat;
+      @content;
+    } 
+    @else {
+      @content;
+    }
+  }
+}
+
+@mixin hidpi-image ($image: false, $width: false, $height: false, $extension: $extension) {
+  width: em($width);
+  height: em($height);
+  @include hidpi ($image, $extension) {
+    background-size: em($width) em($height);
+  }
+}

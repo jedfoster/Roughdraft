@@ -1,0 +1,49 @@
+<section class="content instapaper-body">
+  <header>
+    <h1>Roughdraft. Gist-powered writing.</h1>
+  </header>
+
+  <p>Sometimes you have something to say that's longer than a Tweet, but too small for a blog. Enter Roughdraft. The concept is simple: writing for the web, backed by <a href="https://gist.github.com">GitHub Gists</a>.</p>
+
+  <h2 id="how_it_works">How it works</h2>
+
+  <ol>
+    <li>Create a public <a href="https://gist.github.com">Gist on Github</a> with at least one <a href="http://daringfireball.net/projects/markdown/">Markdown</a>, <a href="http://redcloth.org/hobix.com/textile/">Textile</a>, <a href="http://haml.info/">Haml</a>, or plain text file.</li>
+    <li>Note the Gist ID. It’s at the end of the URL: <code class="no-prettify">gist.github.com/jedfoster/<b>4339935</b></code>.</li>
+    <li>See your Gist, made pretty, at <code>roughdraft.io/<b>gist-id</b></code></li>
+  </ol>
+
+  <h5 id="bookmarklet_steps"><b>Or</b></h5>
+
+  <ol>
+    <li>Drag the bookmarklet to your bookmarks bar.</li>
+    <li>From a Gist page, click the bookmarklet to open the Gist in Roughdraft.
+    <li>Click it elsewhere on the web to append Roughdraft links to every Gist link on the page.</li>
+  </ol>
+
+  <p id="roughdraft-bookmarklet"><a href="javascript:(function(){var t=/^https:\/\/gist\.github\.com\/([\w-]+)\/(\w+)*$/i,o=/^\/?(\d+)$/,r=t.test(location.href);r?(i=location.pathname.split(/\/([\w-]+)\/(\w+)/),location.href='http://'+i[1]+'.roughdraft.io/'+i[2]):Array.prototype.forEach.call(document.querySelectorAll('a'),function(a){var e=a.getAttribute('href')||'',i=e.match(t);!r||i&&i[2]||(i=e.match(o)),i&&i[2]&&('undefined'==typeof i[1]&&(i[1]='www'),a.insertAdjacentHTML('afterend',' <a href=&quot;http://'+i[1]+'.roughdraft.io/'+i[2]+'&quot;>[roughdraft.io]</a>'))})})();" title="Drag me to your bookmarks bar.">Roughdraft Bookmarklet</a></p>
+
+  <h3 id="user_pages">User Pages</h3>
+
+  <p>Roughdraft is built with the GitHub API, so we can do some really cool stuff, like give every GitHub user their own Roughdraft namespace!</p>
+
+  <p>Visit <code><b>username</b>.roughdraft.io</code> to see a list of all the public, Markdown-formatted Gists belonging to <code><b>username</b></code>.</p>
+
+  <h3 id="formatting">Formatting</h3>
+
+  <ul>
+    <li>Your Gist&#8217;s <code>description</code> field will be used as the headline for your post.</li>
+    <li>Roughdraft can render <a href="https://help.github.com/articles/github-flavored-markdown" target="new">GitHub-flavored Markdown</a>, <a href="http://redcloth.org/hobix.com/textile/">Textile</a>, <a href="http://haml.info/">Haml</a>, and plain text.</li>
+    <li>Use images and <a href="http://www.emoji-cheat-sheet.com/" target="new">emoji</a>! <img class="emoji" title=":metal:" alt=":metal:" src="/images/emoji/metal.png" height="20" width="20" align="absmiddle"></li>
+    <li>You can even <a href="http://jedfoster.roughdraft.io/5311961">embed other files from the same Gist</a> like this: <code>&lt;gist&gt;other_code.rb&lt;/gist&gt;</code>.</li>
+  </ul>
+
+  <h2 id="about_roughdraft">About Roughdraft</h2>
+
+  <p>Roughdraft is project of <a href="http://jedfoster.com/">Jed Foster</a>. The <a href="https://github.com/jedfoster/Roughdraft/">source code for Roughdraft</a> is available on GitHub. </p>
+
+  <p class="legal">All content on Roughdraft is copyrighted by, and belongs to, the respective author(s). Roughdraft is not affiliated with GitHub.</p>
+
+  <p>This project was inspired by <a href="http://gazit.me">Idan Gazit&#8217;s</a> <a href="http://gist.io">gist.io</a>.</p>
+
+</section>

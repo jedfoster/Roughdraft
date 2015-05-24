@@ -1,0 +1,107 @@
+// 'the_grid' determines width by taking column count, calculates gutter count
+// default setting for grid is ``em`` this is specified in ``_config.scss``
+
+@mixin the_grid($col_count, $col_width, $grid_uom, $grid_padding_l, $grid_padding_r, $grid_padding_tb, $grid_border, $grid_child, $col_gutter, $grid_align, $grid_context, $border_color, $border_place) {
+
+  //determines full col width with gutters
+  $col_gutter_width: ($col_count - 1) * $col_gutter + ($col_count * $col_width);
+
+  // determines width of contextual grid block for calculating percentages
+  $grid_context_width: $grid_context * ($col_width + $col_gutter);
+
+  $grid_padding_lr: $grid_padding_l + $grid_padding_r;
+
+  @include grid_placement($grid_align, $grid_uom, $grid_child, $grid_context_width, $margin: $col_gutter / 2);
+
+  // fallback for unsupported browsers
+  $grid_width_fallback: $col_gutter_width - (($grid_padding_l + $grid_padding_r) + ($grid_border * 2));
+
+
+
+  @if $grid_uom == em {
+    @if $grid_border > 0 {
+
+      @if $border_place != '' {
+        border-#{$border_place}-width: #{$grid_border}px;
+      }
+      @else {
+        border-width: #{$grid_border}px;
+      }
+      border-color: $border_color;
+      border-style: $standard_border_style;
+    }
+
+    @if $grid_padding_lr > 0 {
+      padding: {
+        left: em($grid_padding_l);
+        right: em($grid_padding_r);
+      }
+    }
+    @if $grid_padding_tb > 0 {
+      padding: {
+        top: em($grid_padding_tb);
+        bottom: em($grid_padding_tb);
+      }
+    }
+    $grid_width: em($col_gutter_width);
+    width: $grid_width;
+
+
+    @if $grid_width_fallback < $col_gutter_width {
+      @if $border_place != '' {
+        $grid_width_fallback: $grid_width_fallback + $grid_border;
+        .no-boxsizing & {
+          width: #{$grid_width_fallback}px;
+        }
+      }
+      @else {
+        .no-boxsizing & {
+          width: #{$grid_width_fallback}px;
+        }
+      }
+    }
+  }
+
+  @else if $grid_uom == percent {
+    @if $grid_border > 0 {
+
+      @if $border_place != '' {
+        border-#{$border_place}-width: #{$grid_border}px;
+      }
+      @else {
+        border-width: #{$grid_border}px;
+      }
+      border-color: $border_color;
+      border-style: $standard_border_style;
+    }
+
+    $grid_width: $col_gutter_width / $grid_context_width * 100%;
+    @if $grid_padding_lr > 0 {
+      padding: {
+        left: $grid_padding_l / $grid_context_width * 100%;
+        right: $grid_padding_r / $grid_context_width * 100%;
+      }
+    }
+    @if $grid_padding_tb > 0 {
+      padding: {
+        top: $grid_padding_tb / $grid_context_width * 100%;
+        bottom: $grid_padding_tb / $grid_context_width * 100%;
+      }
+    }
+    width: $grid_width;
+
+     @if $grid_width_fallback < $col_gutter_width {
+      @if $border_place != '' {
+        $grid_width_fallback: $grid_width_fallback + $grid_border;
+        .no-boxsizing & {
+          width: #{$grid_width_fallback}px;
+        }
+      }
+      @else {
+        .no-boxsizing & {
+          width: #{$grid_width_fallback}px;
+        }
+      }
+    }
+  }
+}

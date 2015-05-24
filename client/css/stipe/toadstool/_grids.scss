@@ -1,0 +1,99 @@
+
+.col_4_grid, .col_8_grid, .col_10_grid, .col_18_grid {
+	display: none;
+}
+
+@media #{$tablet_portrait} {
+	.col_10_grid, .col_18_grid {
+		display: block;
+	}
+	.col_12_grid, .col_24_grid {
+		display: none;
+	}
+}
+
+@media #{$mobile} {
+	.col_4_grid, .col_8_grid {
+		display: block;
+	}
+	.col_12_grid, .col_10_grid, .col_18_grid {
+		display: none;
+	}
+}
+
+
+[class^=grid] {
+  margin-bottom: 1em;
+  text-align: center;
+  padding: em(10) 0;
+  @include box_shadow (inset $shadow_color, 0 0 em(20) em(10));
+}
+
+
+// 12 col grid support --------------------
+@for $i from 1 through 12 {
+  .grid-#{$i} {
+    @extend %grid_#{$i}of12;
+  }
+}
+
+@media #{$tablet_portrait} {
+  @for $i from 1 through 10 {
+    .grid-#{$i} {
+      @extend %grid_#{$i}of10;
+    }
+  }
+  @for $i from 11 through 12 {
+    .grid-#{$i} {
+      @extend %grid_#{$i}of10;
+    }
+  }
+}
+
+@media #{$mobile} {
+  @for $i from 1 through 4 {
+    .grid-#{$i} {
+      @extend %grid_#{$i}of4;
+    }
+  }
+  @for $i from 5 through 12 {
+    .grid-#{$i} {
+      @extend %grid_#{$i}of4;
+    }
+  }
+}
+
+
+
+// 24 col grid support --------------------
+@for $i from 1 through 24 {
+  .grid-#{$i}-24 {
+    @extend %grid_#{$i}of24;
+  }
+}
+
+@media #{$tablet_portrait} {
+  @for $i from 1 through 19 {
+    .grid-#{$i}-24 {
+      @extend %grid_#{$i}of19;
+    }
+  }
+  @for $i from 20 through 24 {
+    .grid-#{$i}-24 {
+      @extend %grid_#{$i}of19;
+    }
+  }
+}
+
+@media #{$mobile} {
+  @for $i from 1 through 8 {
+    .grid-#{$i}-24 {
+      @extend %grid_#{$i}of8;
+    }
+  }
+  @for $i from 9 through 24 {
+    .grid-#{$i}-24 {
+      @extend %grid_#{$i}of8;
+    }
+  }
+}

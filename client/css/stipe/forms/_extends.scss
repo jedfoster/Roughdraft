@@ -1,0 +1,100 @@
+// Deprecated Notice!
+// Extends that are not prefixed with `stipe_` are deprecated and will be removed from future updates
+
+
+// input fields
+// ------------------------------------------------------------
+%stipe_input_fields {
+  @include input_fields;
+}
+
+%input_fields {
+  @include input_fields;
+}
+
+// disabled input fields
+// ------------------------------------------------------------
+%stipe_disabled_inputs {
+  @include disabled_inputs;
+}
+
+%disabled_inputs {
+  @include disabled_inputs;
+}
+
+// form labels
+// ------------------------------------------------------------
+%stipe_form_labels {
+  @include form_labels;
+}
+
+%form_labels {
+  @include form_labels;
+}
+
+// default error
+// ------------------------------------------------------------
+%stipe_fail {
+  @include fail;
+}
+
+%fail {
+  @include fail;
+}
+
+// instructional text
+// ------------------------------------------------------------
+%stipe_instructional {
+  @include instructional;
+}
+
+%instructional {
+  @include instructional;
+}
+
+// inline form alert UI
+// ------------------------------------------------------------
+%stipe_inline_alert {
+  @include inline_alert;
+}
+
+%inline_alert {
+  @include inline_alert;
+}
+
+
+// notification alerts / panels
+// ------------------------------------------------------------
+// these extend need to be refactored for use
+// see mixin as well
+// %default_alert_panel {
+//   @include alert_boxes ($alert_background_color, 10, 14, 10);
+// }
+
+// %notification_panel {
+//   @extend %default_alert_panel;
+// }
+
+// %alert_panel {
+//   @extend %default_alert_panel;
+//   background: $alpha_color;
+//   color: $white;
+//   font-weight: bold;
+// }
+// these extend need to be refactored for use
+
+
+// form text
+// ------------------------------------------------------------
+// These all need to be refacotred to see if they are really necessary
+// %note {
+//   @extend %instructional;
+//   @include small;
+//   margin-top: #{5 / $em}em;
+// }
+
+// %informational {
+//   @extend %instructional;
+//   line-height: 1.3em;
+//   margin-bottom: 1em;
+// }

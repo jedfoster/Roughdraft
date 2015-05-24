@@ -1,0 +1,31 @@
+// Stipe comes with a series of pre-designed buttons that are easily useable and configutable
+// gloss-default, shiny-default, flat-default and three-dee
+// -----------------------------------------------------------
+
+// Default values - edit in `_config.scss` file
+// -----------------------------------------------------------
+$button-color:  $button-color !default;
+$button-text-color: $white !default;
+$button-line-height: 32 !default;
+$button-border-radius: 3 !default;
+$button-padding: 20 !default;
+$button-font-size: 18 !default;
+$button-weight: bold !default;
+$button-text-shadow: true !default;
+$button-box-shadow: true !default;
+
+// button-default
+// -----------------------------------------------------------
+@mixin button-default ($text-color: $button-text-color, $line-height: $button-line-height, $border-radius: $button-border-radius, $padding: $button-padding, $font-size: $button-font-size, $weight: $button-weight){
+  color: $text-color;
+  line-height: em($line-height);
+  border-radius: em($border-radius);
+  padding: 0 em($padding);
+  font-size: em($font-size);
+  font-weight: $weight;
+}
+
+@import "lib/flat-default";
+@import "lib/gloss-default";
+@import "lib/shiny-default";
+@import "lib/three-dee";

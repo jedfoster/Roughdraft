@@ -1,0 +1,86 @@
+
+//////// heading text mixin //////////
+// ------------------------------------------------
+// default values are being set in /stipe/stylesheets/stipe/_typography.scss
+@mixin heading ($heading_size: $heading_size, $heading_font_family: $heading_font_family, $heading_color: $heading_color, $heading_font_weight: $heading_font_weight) {
+  font-size: em($heading_size);
+  line-height: baseline($heading_size);
+  margin-bottom: baseline-margin($heading_size);
+  color: $heading_color;
+  font-weight: $heading_font_weight;
+  font-family: $heading_font_family;
+}
+
+
+/////// text arguments w/baseline rythem //////////
+// -----------------------------------------------------
+@mixin text ($baseline_size, $margin: auto) {
+  font-size: em($baseline_size);
+  line-height: baseline($baseline_size);
+
+  @if $margin == auto {
+    margin-bottom: baseline-margin($baseline_size);
+  }
+  @else if $margin == 0 {
+    // no op
+  }
+  @else {
+    margin-bottom: em($margin);
+  }
+}
+
+
+//////// standard text mixins //////////
+// ------------------------------------------------
+@mixin small ($baseline_size: $small_point_size) {
+  @include text($baseline_size);
+}
+
+@mixin medium ($baseline_size: $font_size) {
+  @include text($baseline_size);
+}
+
+@mixin large ($baseline_size: $large_point_size) {
+  @include text($baseline_size);
+}
+
+
+////////// Standard bulleted list //////////////
+// --------------------------------------------
+@mixin bulleted_list {
+  ul {
+    list-style: disc;
+    margin: 0 0 1.5em em(20);
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  li {
+    float: none;
+    margin-bottom: 1em;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+////////// @font-face builder //////////////
+// --------------------------------------------
+$webfont_font_family: zocial !default;
+$webfont-file: zocial-regular-webfont !default;
+$webfont_weight: normal !default;
+$webfont_style: normal !default;
+$webfont_directory: "/fonts/" !default;
+
+
+@mixin font-face($font_family: $webfont_font_family, $font-file: $webfont-file, $font_weight: $webfont_weight, $font_style: $webfont_style, $webfont_directory: $webfont_directory ) {
+  font-family: '#{$font_family}';
+  font-style: $font_style;
+  font-weight: $font_weight;
+  src: url('#{$webfont_directory}#{$font-file}.eot');
+  src: url('#{$webfont_directory}#{$font-file}.eot?#iefix') format('embedded-opentype'),
+         url('#{$webfont_directory}#{$font-file}.woff') format('woff'),
+         url('#{$webfont_directory}#{$font-file}.ttf') format('truetype'),
+         url('#{$webfont_directory}#{$font-file}.svg##{$font-file}') format('svg');
+}

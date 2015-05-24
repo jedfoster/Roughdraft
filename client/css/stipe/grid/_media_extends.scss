@@ -1,0 +1,25 @@
+@media #{$tablet_portrait} {
+  @for $i from 1 through 10 {
+    %grid_#{$i}of10 {
+      @include grid($i, $grid_context: 10);
+    }
+  }
+  @for $i from 11 through 12 {
+    %grid_#{$i}of10 {
+      @include grid(10, $grid_context: 10);
+    }
+  }
+}
+
+@media #{$mobile} {
+  @for $i from 1 through 4 {
+    %grid_#{$i}of4 {
+      @include grid($i, $grid_context: 4);
+    }
+  }
+  @for $i from 5 through 12 {
+    %grid_#{$i}of4 {
+      @include grid(4, $grid_context: 4);
+    }
+  }
+}

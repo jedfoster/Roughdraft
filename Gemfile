@@ -5,13 +5,8 @@ gem 'rack-contrib', git: 'git://github.com/rack/rack-contrib.git'
 gem 'sinatra'
 gem 'sinatra-partial'
 gem 'unicorn'
-gem 'jammit'
 gem 'rack-cache'
 
-gem 'closure-compiler'
-gem 'sass'
-gem 'compass'
-gem 'stipe'
 gem 'sinatra-respond_to'
 gem 'newrelic_rpm'
 
@@ -25,4 +20,6 @@ gem 'escape_utils'
 gem 'rinku'
 
 gem 'chairman', "~> 0.1.0"
+
+gem 'pry-remote', group: [:development]
 
