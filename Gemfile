@@ -21,3 +21,5 @@ gem 'rinku'
 
 gem 'chairman', "~> 0.1.0"
 
+gem 'pry-remote', group: [:development]
+
