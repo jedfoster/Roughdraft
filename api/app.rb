@@ -214,8 +214,7 @@ class RoughdraftApp < Sinatra::Base
     @action = 'delete'
     id = params[:captures].last
 
-    delete = Gist.new(id, @github).delete(session)
-    GistList.new(session[:github_id], @github).purge
+    delete = Gist.new(id, @github).delete
 
     respond_to do |wants|
       wants.json { id }

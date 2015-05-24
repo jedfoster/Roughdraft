@@ -63,8 +63,8 @@ class Gist
     @content = fetch
   end
 
-  def delete(session)
-    return Chairman.session(session[:github_token]).gists.delete(id)
+  def delete
+    @github.delete_gist @gist_id
   end
 
   private

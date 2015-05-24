@@ -5,7 +5,6 @@ module Roughdraft
       :gfm => true,
       :gist => gist,
       :asset_root => "http://#{RoughdraftApp::APP_DOMAIN}/images",
-      # :base_url   => "#{RoughdraftApp::APP_DOMAIN}"
       :current_filetype => html.language.to_s
     }
 
