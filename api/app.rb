@@ -7,6 +7,7 @@ require 'sinatra/partial'
 require 'sinatra/respond_to'
 require 'chairman'
 require 'json'
+require 'ostruct'
 
 require 'rack/request'
 require 'yaml'
@@ -134,12 +135,12 @@ class RoughdraftApp < Sinatra::Base
   post '/preview' do
     @action = 'preview'
 
-    hash = Hash.new
+    hash = {}
     hash['description'] = params[:title]
     hash['files'] = Array.new
 
     params[:contents].each do |key, value|
-      html = Hashie::Mash.new
+      html = OpenStruct.new
 
       ext = File.extname(key)
 
