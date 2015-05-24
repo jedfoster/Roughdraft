@@ -13,7 +13,12 @@
       else
         gist[:description]
       end %></a>
-    <span class="posted">posted: <time datetime="<%= gist[:created_at] %>"><%= gist[:created_at].strftime "%b %-d, %Y" %></time></span>
+    <span class="posted">
+      posted: 
+      <time datetime="<%= gist[:created_at] %>">
+        <%= gist[:created_at].strftime "%b %-d, %Y" %>
+      </time>
+    </span>
 
     </li>
   </ul>
@@ -24,34 +29,34 @@
   gists.list.shift if gists.page.to_i == 1
 
   gists.list.each do |gist| %>
-    <li id="<%= gist[:id] %>">
-      <a href="<%= gist[:url] %>"><%=
+    <li>
+      <a href="<%= gist[:url] %>" data-id="<%= gist[:id] %>" data-description="<%= gist[:description] %>"><%=
       if gist[:description].nil? || gist[:description].empty?
         gist[:id]
       else
         gist[:description]
       end %></a>
-      <span class="posted">posted: <time datetime="<%= gist[:created_at] %>"><%= gist[:created_at].strftime "%b %-d, %Y" %></time></span>
+      <span class="posted">
+        posted: 
+        <time datetime="<%= gist[:created_at] %>">
+          <%= gist[:created_at].strftime "%b %-d, %Y" %>
+        </time>
+      </span>
     </li>
   <% end %>
   </ul>
 
   <nav id="list-nav">
     <% if gists.links[:prev] %>
-      <% if @github.user_authenticated? && session[:github_id] == @user.id %>
-        <a href="/page/<%= gists.links[:prev] %>" class="prev-link" data-edit="true">Newer</a>
-      <% else %>
-        <a href="/page/<%= gists.links[:prev] %>" class="prev-link">Newer</a>
-      <% end %>
-
+      <a href="/page/<%= gists.links[:prev] %>" class="prev-link">Newer</a>
     <% end %>
 
     <% if gists.links[:next] %>
-      <% if @github.user_authenticated? && session[:github_id] == @user.id %>
-        <a href="/page/<%= gists.links[:next] %>" class="next-link" data-edit="true">Older</a>
-      <% else %>
-        <a href="/page/<%= gists.links[:next] %>" class="next-link">Older</a>
-      <% end %>
+      <a href="/page/<%= gists.links[:next] %>" class="next-link">Older</a>
     <% end %>
   </nav>
 </section>
+
+<script>
+  window.homePage = <%= gists.belong_to? session[:github_id] %>;
+</script>

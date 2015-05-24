@@ -20,19 +20,19 @@ class GistList
   def listify
     gists = Array.new
 
-    @_list[:list].each do |_gist|
+    @_list[:list].each do |gist|
       gists << {
-        id: _gist[:id],
-        url: _gist[:url],
-        description: _gist[:description] || false,
-        created_at: _gist[:created_at],
-        created_at_rendered: Time.parse(_gist[:created_at]).strftime("%b %-d, %Y")
+        id: gist[:id],
+        url: gist[:url],
+        description: gist[:description] || false,
+        created_at: gist[:created_at],
+        created_at_rendered: gist[:created_at].strftime("%b %-d, %Y")
       }
     end
 
     hash = {
       list: gists,
-      page_count: @list[:page_count],
+      page_count: @_list[:page_count],
       links: {
         next: links[:next],
         prev: links[:prev],
@@ -50,6 +50,11 @@ class GistList
     @_list[:links]
   end
 
+  def belong_to? user
+    # require 'pry-remote'; binding.remote_pry
+    @github.user_authenticated? && user == @user_id
+  end
+
 
   private
 
@@ -57,7 +62,7 @@ class GistList
       begin
         gists = Array.new
 
-        github_response = @github.gists(@user_id)
+        github_response = @github.gists(@user_id, per_page: 50, page: @page)
         ratelimit = Octokit::RateLimit.from_response @github.last_response
 
         log = Logger.new(STDOUT)
@@ -80,10 +85,10 @@ class GistList
 
         hash = {
           list: gists,
-          page_count: last_page.nil? ? 0 : last_page.href.match(/\Wpage=(\d+)$/)[1],
+          page_count: last_page.nil? ? 0 : last_page.href.match(/\Wpage=(\d+)/)[1],
           links: {
-            next: next_page.nil? ? nil : next_page.href.scan(/\Wpage=(\d)/).first.first,
-            prev: prev_page.nil? ? nil : prev_page.href.scan(/\Wpage=(\d)/).first.first,
+            next: next_page.nil? ? nil : next_page.href.match(/\Wpage=(\d+)/)[1],
+            prev: prev_page.nil? ? nil : prev_page.href.match(/\Wpage=(\d+)/)[1],
           }
         }
 

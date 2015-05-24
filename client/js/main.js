@@ -14,10 +14,21 @@
 
 
 (function($) {
+  var edit = window.homePage;
+
+  if(edit) {
+    $('.user-gist-list ul a').each(function() {
+      var val = {
+        id: $(this).data('id'),
+        description: $(this).data('description')
+      };
+
+      $(this).parent().append('<a href="/' + val.id + '/edit" class="edit">Edit</a> <a href="/' + val.id + '/delete.json" class="button delete" data-confirm="Are you sure you want to delete \'' + ( val.description ? val.description : val.id ) + '\'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>');
+    });
+  }
+
   $('#list-nav a').on('click', function() {
     event.preventDefault();
-
-    var edit = $(this).data('edit');
 
     $.getJSON($(this).attr('href') + '.json', function( data ) {
       var items = [];

@@ -64,7 +64,7 @@
   </footer>
 
   <script src="/js/app.js"></script>
-  <% if @action.match(/edit|new/) %>
+  <% if @github.user_authenticated? %>
     <script src="/js/editor.js"></script>
   <% end %>
 </body>

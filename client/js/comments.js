@@ -35,9 +35,6 @@
         });
 
         pretty();
-      },
-      error: function(data) {
-        // Do nothing
       }
     });
   }

@@ -36,6 +36,7 @@ class User < Hash
     @user[:blog].to_s
   end
 
+
   private
 
     def fetch(id)
