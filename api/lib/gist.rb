@@ -78,7 +78,7 @@ class Gist
         @gist = @github.gist(@gist_id)
         ratelimit = Octokit::RateLimit.from_response @github.last_response
 
-        @gist[:owner] = @gist.owner.login
+        @gist[:owner] = @gist.owner ? @gist.owner.login : 'anonymous'
         @gist[:updated_at] = @gist.updated_at
 
         log = Logger.new(STDOUT)

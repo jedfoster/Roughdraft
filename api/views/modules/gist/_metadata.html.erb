@@ -10,6 +10,7 @@
     </section>
   <% end %>
 
+  <% if @user.id %>
   <section class="author">
     <h3>The author</h3>
     <div class="frame">
@@ -22,5 +23,6 @@
       <%= "<br><a href=\"#{@user.homepage.start_with?('http') ? @user.homepage : 'http://' + @user.homepage}\" target=\"_blank\" rel=\"no-follow\">#{@user.homepage.gsub(/http(s)?\:\/\//, '')}</a>" if ! @user.homepage.empty? %>
     </div>
   </section>
+  <% end %>
 </aside>
 

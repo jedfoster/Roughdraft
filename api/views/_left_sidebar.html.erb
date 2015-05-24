@@ -1,13 +1,14 @@
 <% if @action == 'list' %>
   <nav>
-    <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
+    <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user.id %>
   </nav>
 
 
 <% elsif @action == 'view' %>
   <nav>
     <a href="https://gist.github.com/<%= @gist.id %>" id="gistid" data-gist-id="<%= @gist.id %>">See the original Gist</a>
-    <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" if @user %>
+
+    <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/\">#{@user.name}'s other Drafts</a>" unless @user.name.empty? %>
 
     <% if @github.user_authenticated? && @gist.belongs_to?(session[:github_id]) %>
       <a href="/<%= @gist.id %>/edit" class="button">Edit</a>
@@ -19,7 +20,7 @@
       end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
 
     <% else %>
-      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user %>
+      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user.id %>
 
     <% end %>
   </nav>
