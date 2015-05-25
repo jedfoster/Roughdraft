@@ -10,7 +10,7 @@
     </section>
   <% end %>
 
-  <% if @user.id %>
+  <% unless @user.name.empty? %>
   <section class="author">
     <h3>The author</h3>
     <div class="frame">

@@ -253,13 +253,11 @@ class RoughdraftApp < Sinatra::Base
       return erb :invalid_gist, :locals => { :gist_id => id }
     end
 
-    if params[:captures].first.nil?
+    unless @user.id
       @user = OpenStruct.new
       @user.name = ''
       @user.homepage = ''
     end
-
-    @user = User.new(params[:captures].first) unless @user
 
     if request.url == @gist.roughdraft_url
       last_modified @gist.content[:updated_at].httpdate

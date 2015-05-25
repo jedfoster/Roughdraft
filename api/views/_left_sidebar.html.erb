@@ -20,7 +20,7 @@
       end %>'? THERE IS NO UNDO!" data-method="delete" data-remote="true">Delete</a>
 
     <% else %>
-      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" if @user.id %>
+      <%= "<a href=\"http://#{@user.id}.#{APP_DOMAIN}/feed.xml\" class=\"rss\">RSS feed</a>" unless @user.name.empty? %>
 
     <% end %>
   </nav>
