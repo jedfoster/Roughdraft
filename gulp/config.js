@@ -3,7 +3,7 @@ var src = './client';
 
 module.exports = {
   sass: {
-    src: src + '/css/*.{sass,scss}',
+    src: src + '/css/**/*.{sass,scss}',
     dest: dest + '/css/',
     settings: {
       // indentedSyntax: true, // Enable .sass syntax!
