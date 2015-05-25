@@ -51,7 +51,6 @@ class GistList
   end
 
   def belong_to? user
-    # require 'pry-remote'; binding.remote_pry
     @github.user_authenticated? && user == @user_id
   end
 

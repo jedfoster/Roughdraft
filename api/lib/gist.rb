@@ -57,10 +57,10 @@ class Gist
   def html_url
     @content[:html_url].to_s
   end
+
   def create(description, files)
     @github.create_gist(description: description, files: files)
   end
-
 
   def update(description, files, session)
     @github.edit_gist(id, description: description, files: files)
@@ -79,7 +79,6 @@ class Gist
         ratelimit = Octokit::RateLimit.from_response @github.last_response
 
         @gist[:owner] = @gist.owner ? @gist.owner.login : 'anonymous'
-        @gist[:updated_at] = @gist.updated_at
 
         log = Logger.new(STDOUT)
         log.info("API Ratelimit: #{ratelimit.remaining}/#{ratelimit.limit} (in Gist.fetch)")
