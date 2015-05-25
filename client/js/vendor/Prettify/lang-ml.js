@@ -53,4 +53,4 @@ PR['registerLangHandler'](
          // A printable non-space non-special character
          [PR['PR_PUNCTUATION'], /^[^\t\n\r \xA0\"\'\w]+/]
         ]),
-    ['fs', 'ml']);
+    ['fs', 'ml', 'ocaml']);
