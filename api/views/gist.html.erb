@@ -2,6 +2,19 @@
 <% if ! ( @gist.description.nil? || @gist.description.empty? ) %>
   <header>
     <h1 class=" instapaper-title"><%= code @gist.description %></h1>
+
+    <time datetime="<%= @gist.content[:created_at] %>">
+      Posted: <%= @gist.content[:created_at].strftime "%b %-d, %Y" %>
+    </time>
+
+    <% if ((@gist.content[:updated_at] - @gist.content[:created_at]) / 86400).days > 7.days %>
+      <% ago = ((Time.now.utc - @gist.content[:updated_at]) / 86400).to_i %>
+
+      <time datetime="<%= @gist.content[:updated_at] %>">
+        (Updated <%= "#{ago} day".pluralize ago %> ago)
+      </time>
+
+    <% end %>
   </header>
 <% end
 

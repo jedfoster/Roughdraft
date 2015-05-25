@@ -6,11 +6,21 @@
   border-bottom: 1px solid $border_color;
 
   header {
+    margin-bottom: 1.5em;
+
+    @media #{$mobile} {
+      margin-bottom: 0.5em;
+    }
+
     h1 {
-      margin-bottom: 1.5em;
-      @media #{$mobile} {
-        margin-bottom: 0.5em;
-      }
+      margin-bottom: 0;
+    }
+
+    time {
+      @extend %headings_6;
+
+      padding-right: 1em;
+      color: $fox_gray;
     }
   }
   
